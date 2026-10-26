@@ -1,0 +1,712 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Trees | C Programs</title>
+
+<style>
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    scroll-behavior: smooth;
+}
+
+body {
+    font-family: Arial, sans-serif;
+    background: #0b1120;
+    color: #e5eaf5;
+    line-height: 1.6;
+}
+
+header {
+    padding: 25px 7%;
+    background: #131e33;
+    border-bottom: 1px solid #293750;
+}
+
+header h1 {
+    color: #6ee7b7;
+    font-size: 30px;
+}
+
+header p {
+    color: #aab8cc;
+}
+
+nav {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    padding: 15px 7%;
+    background: #10192b;
+    position: sticky;
+    top: 0;
+    z-index: 10;
+}
+
+nav a {
+    color: #d9e5f5;
+    text-decoration: none;
+    background: #1b2940;
+    padding: 8px 13px;
+    border-radius: 6px;
+    font-size: 13px;
+}
+
+nav a:hover {
+    background: #6ee7b7;
+    color: #07131b;
+}
+
+main {
+    max-width: 1200px;
+    margin: auto;
+    padding: 35px 5%;
+}
+
+.program {
+    background: #131e33;
+    border: 1px solid #293750;
+    border-radius: 12px;
+    margin-bottom: 30px;
+    overflow: hidden;
+    scroll-margin-top: 100px;
+}
+
+.program h2 {
+    color: #6ee7b7;
+    padding: 20px 22px 5px;
+    font-size: 22px;
+}
+
+.program p {
+    color: #aab8cc;
+    padding: 0 22px 15px;
+}
+
+.code-title {
+    background: #1b2940;
+    padding: 10px 22px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 12px;
+    color: #c7d4e8;
+    font-size: 13px;
+}
+
+button {
+    border: none;
+    background: #6ee7b7;
+    color: #07131b;
+    padding: 8px 13px;
+    border-radius: 6px;
+    cursor: pointer;
+    font-weight: bold;
+}
+
+button:hover {
+    background: #a7f3d0;
+}
+
+pre {
+    padding: 22px;
+    overflow-x: auto;
+    background: #080e1a;
+    color: #c5e7d7;
+    font-family: Consolas, monospace;
+    font-size: 13px;
+    line-height: 1.7;
+    tab-size: 4;
+}
+
+footer {
+    text-align: center;
+    padding: 25px;
+    background: #131e33;
+    color: #aab8cc;
+}
+
+@media(max-width: 600px) {
+    header { padding: 20px 5%; }
+    nav { padding: 12px 5%; }
+    main { padding: 25px 4%; }
+    .program h2 { font-size: 19px; }
+    pre { font-size: 12px; padding: 15px; }
+}
+</style>
+</head>
+
+<body>
+
+<header>
+    <h1>TREES / C PROGRAMS</h1>
+    <p>Data Structures | BCA Programming Notes</p>
+</header>
+
+<nav>
+    <a href="#representation">Representation</a>
+    <a href="#preorder">Preorder</a>
+    <a href="#inorder">Inorder</a>
+    <a href="#postorder">Postorder</a>
+    <a href="#levelorder">Level Order</a>
+    <a href="#search">Searching</a>
+    <a href="#insertion">Insertion</a>
+    <a href="#deletion">Deletion</a>
+    <a href="#bst">BST</a>
+</nav>
+
+<main>
+
+<!-- 1. Representation -->
+
+<div class="program" id="representation">
+<h2>01. Binary Tree Representation Using Array</h2>
+<p>Stores a binary tree in contiguous array storage.</p>
+<div class="code-title">
+<span>C Program</span>
+<button onclick="copyCode(this)">Copy Code</button>
+</div>
+<pre><code>#include &lt;stdio.h&gt;
+
+int main() {
+    int tree[7] = {1, 2, 3, 4, 5, 6, 7};
+    int i;
+
+    printf("Binary Tree in Array:\n");
+
+    for (i = 0; i &lt; 7; i++) {
+        printf("%d ", tree[i]);
+    }
+
+    printf("\nLeft child of index 0: %d", tree[1]);
+    printf("\nRight child of index 0: %d\n", tree[2]);
+
+    return 0;
+}</code></pre>
+</div>
+
+<!-- 2. Preorder -->
+
+<div class="program" id="preorder">
+<h2>02. Preorder Traversal</h2>
+<p>Order: Root → Left → Right</p>
+<div class="code-title">
+<span>C Program</span>
+<button onclick="copyCode(this)">Copy Code</button>
+</div>
+<pre><code>#include &lt;stdio.h&gt;
+#include &lt;stdlib.h&gt;
+
+struct Node {
+    int data;
+    struct Node *left, *right;
+};
+
+struct Node* createNode(int value) {
+    struct Node* n = malloc(sizeof(struct Node));
+    n-&gt;data = value;
+    n-&gt;left = n-&gt;right = NULL;
+    return n;
+}
+
+void preorder(struct Node* root) {
+    if (root != NULL) {
+        printf("%d ", root-&gt;data);
+        preorder(root-&gt;left);
+        preorder(root-&gt;right);
+    }
+}
+
+int main() {
+    struct Node* root = createNode(1);
+    root-&gt;left = createNode(2);
+    root-&gt;right = createNode(3);
+    root-&gt;left-&gt;left = createNode(4);
+    root-&gt;left-&gt;right = createNode(5);
+
+    printf("Preorder: ");
+    preorder(root);
+
+    return 0;
+}</code></pre>
+</div>
+
+<!-- 3. Inorder -->
+
+<div class="program" id="inorder">
+<h2>03. Inorder Traversal</h2>
+<p>Order: Left → Root → Right</p>
+<div class="code-title">
+<span>C Program</span>
+<button onclick="copyCode(this)">Copy Code</button>
+</div>
+<pre><code>#include &lt;stdio.h&gt;
+#include &lt;stdlib.h&gt;
+
+struct Node {
+    int data;
+    struct Node *left, *right;
+};
+
+struct Node* newNode(int value) {
+    struct Node* n = malloc(sizeof(struct Node));
+    n-&gt;data = value;
+    n-&gt;left = n-&gt;right = NULL;
+    return n;
+}
+
+void inorder(struct Node* root) {
+    if (root != NULL) {
+        inorder(root-&gt;left);
+        printf("%d ", root-&gt;data);
+        inorder(root-&gt;right);
+    }
+}
+
+int main() {
+    struct Node* root = newNode(1);
+    root-&gt;left = newNode(2);
+    root-&gt;right = newNode(3);
+    root-&gt;left-&gt;left = newNode(4);
+    root-&gt;left-&gt;right = newNode(5);
+
+    printf("Inorder: ");
+    inorder(root);
+
+    return 0;
+}</code></pre>
+</div>
+
+<!-- 4. Postorder -->
+
+<div class="program" id="postorder">
+<h2>04. Postorder Traversal</h2>
+<p>Order: Left → Right → Root</p>
+<div class="code-title">
+<span>C Program</span>
+<button onclick="copyCode(this)">Copy Code</button>
+</div>
+<pre><code>#include &lt;stdio.h&gt;
+#include &lt;stdlib.h&gt;
+
+struct Node {
+    int data;
+    struct Node *left, *right;
+};
+
+struct Node* newNode(int value) {
+    struct Node* n = malloc(sizeof(struct Node));
+    n-&gt;data = value;
+    n-&gt;left = n-&gt;right = NULL;
+    return n;
+}
+
+void postorder(struct Node* root) {
+    if (root != NULL) {
+        postorder(root-&gt;left);
+        postorder(root-&gt;right);
+        printf("%d ", root-&gt;data);
+    }
+}
+
+int main() {
+    struct Node* root = newNode(1);
+    root-&gt;left = newNode(2);
+    root-&gt;right = newNode(3);
+    root-&gt;left-&gt;left = newNode(4);
+    root-&gt;left-&gt;right = newNode(5);
+
+    printf("Postorder: ");
+    postorder(root);
+
+    return 0;
+}</code></pre>
+</div>
+
+<!-- 5. Level order -->
+
+<div class="program" id="levelorder">
+<h2>05. Level Order Traversal</h2>
+<p>Visits each level using a queue.</p>
+<div class="code-title">
+<span>C Program</span>
+<button onclick="copyCode(this)">Copy Code</button>
+</div>
+<pre><code>#include &lt;stdio.h&gt;
+#include &lt;stdlib.h&gt;
+
+struct Node {
+    int data;
+    struct Node *left, *right;
+};
+
+struct Node* newNode(int value) {
+    struct Node* n = malloc(sizeof(struct Node));
+    n-&gt;data = value;
+    n-&gt;left = n-&gt;right = NULL;
+    return n;
+}
+
+void levelOrder(struct Node* root) {
+    if (root == NULL) return;
+
+    struct Node* queue[100];
+    int front = 0, rear = 0;
+
+    queue[rear++] = root;
+
+    while (front &lt; rear) {
+        struct Node* current = queue[front++];
+        printf("%d ", current-&gt;data);
+
+        if (current-&gt;left != NULL)
+            queue[rear++] = current-&gt;left;
+
+        if (current-&gt;right != NULL)
+            queue[rear++] = current-&gt;right;
+    }
+}
+
+int main() {
+    struct Node* root = newNode(1);
+    root-&gt;left = newNode(2);
+    root-&gt;right = newNode(3);
+    root-&gt;left-&gt;left = newNode(4);
+    root-&gt;left-&gt;right = newNode(5);
+
+    printf("Level Order: ");
+    levelOrder(root);
+
+    return 0;
+}</code></pre>
+</div>
+
+<!-- 6. Search -->
+
+<div class="program" id="search">
+<h2>06. Searching in a Binary Tree</h2>
+<p>Searches for a value in a general binary tree.</p>
+<div class="code-title">
+<span>C Program</span>
+<button onclick="copyCode(this)">Copy Code</button>
+</div>
+<pre><code>#include &lt;stdio.h&gt;
+#include &lt;stdlib.h&gt;
+
+struct Node {
+    int data;
+    struct Node *left, *right;
+};
+
+struct Node* newNode(int value) {
+    struct Node* n = malloc(sizeof(struct Node));
+    n-&gt;data = value;
+    n-&gt;left = n-&gt;right = NULL;
+    return n;
+}
+
+int search(struct Node* root, int key) {
+    if (root == NULL)
+        return 0;
+
+    if (root-&gt;data == key)
+        return 1;
+
+    return search(root-&gt;left, key) ||
+           search(root-&gt;right, key);
+}
+
+int main() {
+    struct Node* root = newNode(10);
+    root-&gt;left = newNode(20);
+    root-&gt;right = newNode(30);
+    root-&gt;left-&gt;left = newNode(40);
+
+    int key = 30;
+
+    if (search(root, key))
+        printf("Element found");
+    else
+        printf("Element not found");
+
+    return 0;
+}</code></pre>
+</div>
+
+<!-- 7. Insertion -->
+
+<div class="program" id="insertion">
+<h2>07. Insertion in a Binary Search Tree</h2>
+<p>Inserts a new value at its correct BST position.</p>
+<div class="code-title">
+<span>C Program</span>
+<button onclick="copyCode(this)">Copy Code</button>
+</div>
+<pre><code>#include &lt;stdio.h&gt;
+#include &lt;stdlib.h&gt;
+
+struct Node {
+    int data;
+    struct Node *left, *right;
+};
+
+struct Node* newNode(int value) {
+    struct Node* n = malloc(sizeof(struct Node));
+    n-&gt;data = value;
+    n-&gt;left = n-&gt;right = NULL;
+    return n;
+}
+
+struct Node* insert(struct Node* root, int value) {
+    if (root == NULL)
+        return newNode(value);
+
+    if (value &lt; root-&gt;data)
+        root-&gt;left = insert(root-&gt;left, value);
+    else if (value &gt; root-&gt;data)
+        root-&gt;right = insert(root-&gt;right, value);
+
+    return root;
+}
+
+void inorder(struct Node* root) {
+    if (root != NULL) {
+        inorder(root-&gt;left);
+        printf("%d ", root-&gt;data);
+        inorder(root-&gt;right);
+    }
+}
+
+int main() {
+    struct Node* root = NULL;
+
+    root = insert(root, 50);
+    root = insert(root, 30);
+    root = insert(root, 70);
+    root = insert(root, 20);
+    root = insert(root, 40);
+    root = insert(root, 60);
+    root = insert(root, 80);
+
+    root = insert(root, 35);
+
+    printf("BST after insertion: ");
+    inorder(root);
+
+    return 0;
+}</code></pre>
+</div>
+
+<!-- 8. Deletion -->
+
+<div class="program" id="deletion">
+<h2>08. Deletion in a Binary Search Tree</h2>
+<p>Handles leaf nodes, nodes with one child and nodes with two children.</p>
+<div class="code-title">
+<span>C Program</span>
+<button onclick="copyCode(this)">Copy Code</button>
+</div>
+<pre><code>#include &lt;stdio.h&gt;
+#include &lt;stdlib.h&gt;
+
+struct Node {
+    int data;
+    struct Node *left, *right;
+};
+
+struct Node* newNode(int value) {
+    struct Node* n = malloc(sizeof(struct Node));
+    n-&gt;data = value;
+    n-&gt;left = n-&gt;right = NULL;
+    return n;
+}
+
+struct Node* insert(struct Node* root, int value) {
+    if (root == NULL)
+        return newNode(value);
+
+    if (value &lt; root-&gt;data)
+        root-&gt;left = insert(root-&gt;left, value);
+    else if (value &gt; root-&gt;data)
+        root-&gt;right = insert(root-&gt;right, value);
+
+    return root;
+}
+
+struct Node* minimum(struct Node* root) {
+    while (root != NULL &amp;&amp; root-&gt;left != NULL)
+        root = root-&gt;left;
+
+    return root;
+}
+
+struct Node* deleteNode(struct Node* root, int key) {
+    if (root == NULL)
+        return NULL;
+
+    if (key &lt; root-&gt;data) {
+        root-&gt;left = deleteNode(root-&gt;left, key);
+    } else if (key &gt; root-&gt;data) {
+        root-&gt;right = deleteNode(root-&gt;right, key);
+    } else {
+        if (root-&gt;left == NULL) {
+            struct Node* temp = root-&gt;right;
+            free(root);
+            return temp;
+        }
+
+        if (root-&gt;right == NULL) {
+            struct Node* temp = root-&gt;left;
+            free(root);
+            return temp;
+        }
+
+        struct Node* temp = minimum(root-&gt;right);
+        root-&gt;data = temp-&gt;data;
+        root-&gt;right = deleteNode(root-&gt;right, temp-&gt;data);
+    }
+
+    return root;
+}
+
+void inorder(struct Node* root) {
+    if (root != NULL) {
+        inorder(root-&gt;left);
+        printf("%d ", root-&gt;data);
+        inorder(root-&gt;right);
+    }
+}
+
+int main() {
+    struct Node* root = NULL;
+
+    root = insert(root, 50);
+    root = insert(root, 30);
+    root = insert(root, 70);
+    root = insert(root, 20);
+    root = insert(root, 40);
+    root = insert(root, 60);
+    root = insert(root, 80);
+
+    root = deleteNode(root, 30);
+
+    printf("BST after deletion: ");
+    inorder(root);
+
+    return 0;
+}</code></pre>
+</div>
+
+<!-- 9. BST -->
+
+<div class="program" id="bst">
+<h2>09. Binary Search Tree: Search Program</h2>
+<p>Searches efficiently by comparing the key with each node.</p>
+<div class="code-title">
+<span>C Program</span>
+<button onclick="copyCode(this)">Copy Code</button>
+</div>
+<pre><code>#include &lt;stdio.h&gt;
+#include &lt;stdlib.h&gt;
+
+struct Node {
+    int data;
+    struct Node *left, *right;
+};
+
+struct Node* insert(struct Node* root, int value) {
+    if (root == NULL) {
+        struct Node* n = malloc(sizeof(struct Node));
+        n-&gt;data = value;
+        n-&gt;left = n-&gt;right = NULL;
+        return n;
+    }
+
+    if (value &lt; root-&gt;data)
+        root-&gt;left = insert(root-&gt;left, value);
+    else if (value &gt; root-&gt;data)
+        root-&gt;right = insert(root-&gt;right, value);
+
+    return root;
+}
+
+int searchBST(struct Node* root, int key) {
+    while (root != NULL) {
+        if (key == root-&gt;data)
+            return 1;
+
+        if (key &lt; root-&gt;data)
+            root = root-&gt;left;
+        else
+            root = root-&gt;right;
+    }
+
+    return 0;
+}
+
+int main() {
+    struct Node* root = NULL;
+    int key = 60;
+
+    root = insert(root, 50);
+    root = insert(root, 30);
+    root = insert(root, 70);
+    root = insert(root, 20);
+    root = insert(root, 40);
+    root = insert(root, 60);
+    root = insert(root, 80);
+
+    if (searchBST(root, key))
+        printf("Element found in BST");
+    else
+        printf("Element not found in BST");
+
+    return 0;
+}</code></pre>
+</div>
+
+</main>
+<button><a href="tree.html"> Back </a></button>
+<footer>
+    <p>TreeDS | C Programming Collection</p>
+</footer>
+
+<script>
+function copyCode(button) {
+    const code = button.closest(".program").querySelector("pre code").innerText;
+
+    if (navigator.clipboard && window.isSecureContext) {
+        navigator.clipboard.writeText(code).then(() => {
+            button.textContent = "Copied!";
+            setTimeout(() => button.textContent = "Copy Code", 1500);
+        }).catch(() => fallbackCopy(code, button));
+    } else {
+        fallbackCopy(code, button);
+    }
+}
+
+function fallbackCopy(code, button) {
+    const textarea = document.createElement("textarea");
+    textarea.value = code;
+    textarea.style.position = "fixed";
+    textarea.style.opacity = "0";
+    document.body.appendChild(textarea);
+    textarea.select();
+
+    try {
+        document.execCommand("copy");
+        button.textContent = "Copied!";
+        setTimeout(() => button.textContent = "Copy Code", 1500);
+    } catch {
+        button.textContent = "Copy manually";
+    }
+
+    textarea.remove();
+}
+</script>
+</body>
+</html>

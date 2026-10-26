@@ -1,0 +1,311 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Graphs | Data Structures</title>
+
+<style>
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    scroll-behavior: smooth;
+}
+body {
+    font-family: Arial, sans-serif;
+    background: #0b1120;
+    color: #e5eaf5;
+    line-height: 1.7;
+}
+header {
+    background: #111c30;
+    padding: 22px 7%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 15px;
+    border-bottom: 1px solid #293750;
+}
+.logo { color: #6ee7b7; font-size: 25px; font-weight: bold; }
+nav { display: flex; flex-wrap: wrap; gap: 15px; }
+nav a { color: #dce6f5; text-decoration: none; }
+nav a:hover { color: #6ee7b7; }
+
+.hero {
+    padding: 85px 8%;
+    background: radial-gradient(circle at top right, #164e63, #111c30 55%, #0b1120);
+}
+.hero small { color: #6ee7b7; letter-spacing: 3px; }
+.hero h1 { font-size: clamp(40px, 6vw, 68px); line-height: 1.2; margin: 20px 0; }
+.hero h1 span { color: #6ee7b7; }
+.hero p { color: #bdc9dd; max-width: 650px; }
+.btn {
+    display: inline-block;
+    margin-top: 25px;
+    padding: 12px 22px;
+    background: #6ee7b7;
+    color: #07131b;
+    text-decoration: none;
+    border-radius: 7px;
+    font-weight: bold;
+}
+section { padding: 60px 8%; }
+h2 { font-size: 30px; margin-bottom: 12px; }
+.subtitle { color: #aab8cc; margin-bottom: 28px; }
+.grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(230px, 1fr));
+    gap: 20px;
+}
+.card {
+    padding: 25px;
+    background: #141f35;
+    border: 1px solid #293750;
+    border-radius: 13px;
+    transition: .25s;
+}
+.card:hover { transform: translateY(-5px); border-color: #6ee7b7; }
+.card h3 { color: #6ee7b7; margin-bottom: 10px; }
+.card p, li { color: #c2cde0; }
+ul { padding-left: 20px; }
+.diagram {
+    background: #080e1a;
+    padding: 20px;
+    border-radius: 10px;
+    margin-top: 20px;
+    overflow-x: auto;
+}
+pre { color: #6ee7b7; font-size: 15px; }
+.program-link {
+    display: inline-block;
+    margin-top: 15px;
+    color: #6ee7b7;
+    text-decoration: none;
+    font-weight: bold;
+}
+.program-link:hover { text-decoration: underline; }
+footer {
+    background: #111c30;
+    padding: 25px;
+    text-align: center;
+    color: #aab8cc;
+}
+@media(max-width: 600px) {
+    header, section { padding: 25px 5%; }
+    .hero { padding: 60px 5%; }
+}
+</style>
+</head>
+<body>
+
+<header>
+    <div class="logo">GraphDS</div>
+    <nav>
+        <a href="#intro">Introduction</a>
+        <a href="#memory">Representation</a>
+        <a href="#dfs">DFS</a>
+        <a href="#bfs">BFS</a>
+        <a href="graphs_programs.html">Programs</a>
+    </nav>
+</header>
+
+<div class="hero">
+    <small>BCA • DATA STRUCTURES</small>
+    <h1>Understand<br><span>Graphs.</span></h1>
+    <p>
+        Learn graph data structures, memory representation,
+        Depth First Search and Breadth First Search with
+        simple examples and C programs.
+    </p>
+    <a class="btn" href="#intro">Explore Topics →</a>
+    <a class="btn" href="graphs_programs.html" style="margin-left:8px">
+        View C Programs →
+    </a>
+</div>
+
+<section id="intro">
+    <h2>01. Introduction to Graphs</h2>
+    <p class="subtitle">
+        A graph is a non-linear data structure consisting of vertices and edges.
+    </p>
+    <div class="grid">
+        <div class="card">
+            <h3>Vertices</h3>
+            <p>Vertices, also called nodes, represent objects in a graph.</p>
+        </div>
+        <div class="card">
+            <h3>Edges</h3>
+            <p>Edges connect vertices and represent relationships between them.</p>
+        </div>
+        <div class="card">
+            <h3>Directed Graph</h3>
+            <p>Edges have a direction, such as A → B.</p>
+        </div>
+        <div class="card">
+            <h3>Undirected Graph</h3>
+            <p>Edges have no direction, such as A — B.</p>
+        </div>
+        <div class="card">
+            <h3>Weighted Graph</h3>
+            <p>Edges have values such as distance, time or cost.</p>
+        </div>
+        <div class="card">
+            <h3>Applications</h3>
+            <p>Maps, social networks, computer networks and route planning.</p>
+        </div>
+    </div>
+
+    <div class="diagram">
+<pre>
+       A -------- B
+       |          |
+       |          |
+       C -------- D
+
+Vertices = A, B, C, D
+Edges    = AB, AC, BD, CD
+</pre>
+    </div>
+</section>
+
+<section id="memory">
+    <h2>02. Memory Representation</h2>
+    <p class="subtitle">
+        Graphs are commonly represented using adjacency matrices or adjacency lists.
+    </p>
+    <div class="grid">
+        <div class="card">
+            <h3>Adjacency Matrix</h3>
+            <p>A two-dimensional array. Matrix[i][j] is 1 when an edge connects the vertices, otherwise 0 for this unweighted graph.</p>
+            <div class="diagram">
+<pre>
+    A B C
+A   0 1 1
+B   1 0 1
+C   1 1 0
+</pre>
+            </div>
+        </div>
+        <div class="card">
+            <h3>Adjacency List</h3>
+            <p>Each vertex stores a list of its neighboring vertices.</p>
+            <div class="diagram">
+<pre>
+A → B → C
+B → A → C
+C → A → B
+</pre>
+            </div>
+        </div>
+    </div>
+</section>
+
+<section id="dfs">
+    <h2>03. Depth First Search (DFS)</h2>
+    <p class="subtitle">
+        DFS explores one path as deeply as possible before backtracking.
+        It can be implemented using recursion or a stack.
+    </p>
+    <div class="grid">
+        <div class="card">
+            <h3>Working</h3>
+            <ul>
+                <li>Start at a vertex.</li>
+                <li>Mark it visited.</li>
+                <li>Visit an unvisited neighbor.</li>
+                <li>Backtrack when no unvisited neighbor remains.</li>
+            </ul>
+        </div>
+        <div class="card">
+            <h3>Applications</h3>
+            <ul>
+                <li>Finding connected components</li>
+                <li>Cycle detection</li>
+                <li>Maze solving</li>
+                <li>Path exploration</li>
+            </ul>
+        </div>
+    </div>
+    <div class="diagram">
+<pre>
+DFS Example:
+
+A → B → D
+    ↓
+    C
+
+Possible traversal:
+A → B → D → C
+(Neighbor order determines the output.)
+</pre>
+    </div>
+    <a class="program-link" href="graphs_programs.html#dfs-program">
+        Open DFS C Program →
+    </a>
+</section>
+
+<section id="bfs">
+    <h2>04. Breadth First Search (BFS)</h2>
+    <p class="subtitle">
+        BFS visits all neighboring vertices first and then moves to the next level.
+        It uses a queue.
+    </p>
+    <div class="grid">
+        <div class="card">
+            <h3>Working</h3>
+            <ul>
+                <li>Start at a vertex.</li>
+                <li>Mark it visited and enqueue it.</li>
+                <li>Remove a vertex from the queue.</li>
+                <li>Enqueue each unvisited neighbor.</li>
+            </ul>
+        </div>
+        <div class="card">
+            <h3>Applications</h3>
+            <ul>
+                <li>Shortest paths in unweighted graphs</li>
+                <li>Social network connections</li>
+                <li>Level-by-level exploration</li>
+                <li>Network broadcasting</li>
+            </ul>
+        </div>
+    </div>
+    <div class="diagram">
+<pre>
+BFS Example:
+
+       A
+      / \
+     B   C
+     |
+     D
+
+Traversal: A → B → C → D
+</pre>
+    </div>
+    <a class="program-link" href="graphs_programs.html#bfs-program">
+        Open BFS C Program →
+    </a>
+</section>
+
+<section>
+    <div class="card">
+        <h2>Practice C Programs</h2>
+        <p class="subtitle">
+            Open the separate programs page for graph representation,
+            DFS and BFS implementations in C.
+        </p>
+        <a class="btn" href="graphs_programs.html">Go to Programs Page →</a>
+          <a class="btn" href="units.html">Back →</a>
+    </div>
+</section>
+
+<footer>
+    GraphDS | Data Structures Learning Website
+</footer>
+
+</body>
+</html>

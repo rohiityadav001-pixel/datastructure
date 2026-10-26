@@ -1,0 +1,487 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Data Structures | Units</title>
+
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: "Poppins", Arial, sans-serif;
+        }
+
+        body {
+            min-height: 100vh;
+            background: linear-gradient(135deg, #230054,  #f6f3f3);
+            color: #222;
+        }
+
+        /* NAVBAR */
+        nav {
+            height: 70px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 0 8%;
+            background: rgba(255,255,255,0.85);
+            backdrop-filter: blur(10px);
+            box-shadow: 0 2px 15px rgba(0,0,0,0.08);
+        }
+
+        nav .logo {
+            font-size: 24px;
+            font-weight: bold;
+            color:  #230054;
+        }
+
+        nav a {
+            text-decoration: none;
+            color: #333;
+            margin-left: 25px;
+            font-weight: 500;
+        }
+
+        nav a:hover {
+            color: #230054;
+        }
+
+        /* HERO */
+        .hero {
+            text-align: center;
+            padding: 55px 20px 35px;
+        }
+
+        .hero h1 {
+            font-size: 45px;
+            color: #f0f1f3;
+            margin-bottom: 10px;
+        }
+
+        .hero p {
+            color: #f1efef;
+            font-size: 17px;
+        }
+
+        /* UNIT GRID */
+/* UNIT LIST - STACK STYLE */
+.units {
+    width: 75%;
+    max-width: 900px;
+    margin: 25px auto 60px;
+
+    display: flex;
+    flex-direction: column;
+    gap: 18px;
+}
+
+/* HORIZONTAL CARD */
+.card {
+    position: relative;
+    width: 100%;
+    min-height: 150px;
+
+    background: white;
+    padding: 25px 30px;
+    border-radius: 18px;
+    overflow: hidden;
+
+    box-shadow: 0 8px 25px rgba(0,0,0,0.08);
+
+    transition: 0.4s;
+
+    display: flex;
+    align-items: center;
+    gap: 25px;
+}
+
+.card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 18px 35px rgba(0,0,0,0.15);
+}
+
+/* ICON */
+.icon {
+    width: 60px;
+    height: 60px;
+    min-width: 60px;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    border-radius: 15px;
+    background: #eef2ff;
+
+    font-size: 28px;
+    margin-bottom: 0;
+}
+
+/* CARD CONTENT */
+.card h2 {
+    margin-bottom: 10px;
+}
+
+/* TOPICS */
+.topics {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    margin-bottom: 0;
+}
+
+/* BUTTON */
+.btn {
+    margin-left: auto;
+    white-space: nowrap;
+}
+
+/* NUMBER */
+.number {
+    position: absolute;
+    right: 20px;
+    top: 5px;
+
+    font-size: 60px;
+    font-weight: bold;
+
+    color: rgba(49, 65, 103, 0.06);
+}
+
+        /* CARD */
+        .card {
+            position: relative;
+            background: white;
+            padding: 30px;
+            border-radius: 20px;
+            overflow: hidden;
+
+            box-shadow: 0 10px 30px rgba(0,0,0,0.08);
+
+            transition: 0.4s;
+        }
+
+        .card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 20px 40px rgba(0,0,0,0.15);
+        }
+
+        .number {
+            position: absolute;
+            right: 20px;
+            top: 10px;
+
+            font-size: 70px;
+            font-weight: bold;
+
+            color: rgba(49, 68, 113, 0.08);
+        }
+
+        .icon {
+            width: 55px;
+            height: 55px;
+
+            display: flex;
+            justify-content: center;
+            align-items: center;
+
+            border-radius: 15px;
+            background: #eef2ff;
+
+            font-size: 28px;
+            margin-bottom: 20px;
+        }
+
+        .card h2 {
+            color: #182848;
+            margin-bottom: 15px;
+            font-size: 23px;
+        }
+
+        .topics {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+            margin-bottom: 22px;
+        }
+
+        .topics span {
+            background: #f1f4fa;
+            padding: 7px 12px;
+            border-radius: 20px;
+            font-size: 13px;
+            color: #555;
+        }
+
+        .btn {
+            display: inline-block;
+            padding: 10px 18px;
+            border-radius: 8px;
+
+            background:  #230054;
+            color: white;
+
+            text-decoration: none;
+            font-size: 14px;
+
+            transition: 0.3s;
+        }
+
+        .btn:hover {
+            background:  #230054;
+            transform: scale(1.05);
+        }
+
+        /* FOOTER */
+        footer {
+            text-align: center;
+            padding: 20px;
+            background: #230054;
+            color: white;
+        }
+
+        /* MOBILE */
+        @media(max-width: 700px) {
+
+            .units {
+                grid-template-columns: 1fr;
+                width: 90%;
+            }
+
+            .hero h1 {
+                font-size: 34px;
+            }
+
+            nav {
+                padding: 0 5%;
+            }
+
+            nav a {
+                margin-left: 10px;
+                font-size: 14px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <!-- NAVBAR -->
+    <nav>
+        <div class="logo">Data<span style="color #230054;">Structures</span></div>
+
+        <div>
+            <a href="index.html">Home</a>
+            <a href="units.html">Units</a>
+        </div>
+    </nav>
+
+
+    <!-- HERO -->
+    <section class="hero">
+        <h1>Explore Our Units</h1>
+        <p>Learn the core concepts of Data Structures</p>
+    </section>
+
+
+    <!-- UNITS -->
+    <section class="units">
+
+        <!-- UNIT 1 -->
+        <div class="card">
+
+            <div class="number">01</div>
+
+            <div class="icon">🗂️</div>
+
+            <h2>Data Structure </h2>
+
+            <div class="topics">
+                <span>Introduction </span>
+                <span>Complexity</span>
+                <span>Operations </span>
+                <span>Application </span>
+                <span>Basic </span>
+            </div>
+
+            <a href="unit1.html" class="btn">Explore →</a>
+
+        </div>
+
+
+        <!-- UNIT 2 -->
+        <div class="card">
+
+            <div class="number">02</div>
+
+            <div class="icon">📊</div>
+
+            <h2>Arrays </h2>
+
+            <div class="topics">
+                <span>Introduction</span>
+                <span>Types</span>
+                <span>Memory Representations</span>
+                <span>Application</span>
+                <span>Operations </span>
+            </div>
+
+            <a href="array.html" class="btn">Explore →</a>
+
+        </div>
+
+
+        <!-- UNIT 3 -->
+        <div class="card">
+
+            <div class="number">03</div>
+
+            <div class="icon">📚</div>
+
+            <h2>Stacks </h2>
+
+            <div class="topics">
+                <span>Introduction</span>
+                <span>Memory Representation</span>
+                <span>Application </span>
+                <span>Operations</span>
+                <span>Recursion </span>
+            </div>
+
+            <a href="stacks.html" class="btn">Explore →</a>
+
+        </div>
+
+
+        <!-- UNIT 4 -->
+        <div class="card">
+
+            <div class="number">04</div>
+
+            <div class="icon">🔗</div>
+
+            <h2>Linked List </h2>
+
+            <div class="topics">
+                <span>Definition </span>
+                <span>Types </span>
+                <span>Memory Representation </span>
+                <span>Application </span>
+                <span>Polynomial manipulation </span>
+                
+            </div>
+
+            <a href="linked_list.html" class="btn">Explore →</a>
+
+        </div>
+
+          <div class="card">
+
+            <div class="number">05</div>
+
+            <div class="icon">📥</div>
+
+            <h2>Queue</h2>
+
+            <div class="topics">
+                <span>Introduction</span>
+                <span> Types </span>
+                <span>Memory Representation</span>
+                <span>Application </span>
+            </div>
+
+            <a href="queue.html" class="btn">Explore →</a>
+
+        </div>
+
+  <div class="card">
+
+            <div class="number">06</div>
+
+            <div class="icon">🌳</div>
+
+            <h2>Trees </h2>
+
+            <div class="topics">
+                <span>Basic</span>
+                <span>Memory Representation</span>
+                <span>Binary Tree </span>
+                <span>Binary search </span>
+            </div>
+
+            <a href="tree.html" class="btn">Explore →</a>
+
+        </div>
+
+  <div class="card">
+
+            <div class="number">07</div>
+
+            <div class="icon">📈</div>
+
+            <h2>Graphs </h2>
+
+            <div class="topics">
+                <span>Introduction</span>
+                <span>Memory Representation</span>
+                <span>Graphs Transversal (DFS and BFS)</span>
+                
+            </div>
+
+            <a href="graph.html" class="btn">Explore →</a>
+
+        </div>
+
+  <div class="card">
+
+            <div class="number">08</div>
+
+            <div class="icon">🕵️</div>
+
+            <h2>Searching  </h2>
+
+            <div class="topics">
+                <span>Introduction</span>
+                <span>Type </span>
+                <span>Comparison of searching Algorithm  </span>
+                
+            </div>
+
+            <a href="searching.html" class="btn">Explore →</a>
+
+        </div>
+
+  <div class="card">
+
+            <div class="number">09</div>
+
+            <div class="icon">🧮</div>
+
+            <h2>Sorting  </h2>
+
+            <div class="topics">
+                <span>Introduction</span>
+                <span>Types </span>
+                <span>Comparison of Sorting Algorithms  </span>
+               </div>
+
+            <a href="sorting.html" class="btn">Explore →</a>
+
+        </div>
+
+
+
+
+    </section>
+
+
+    <!-- FOOTER -->
+    <footer>
+        <p>© 2026 Data Structures | BCA</p>
+    </footer>
+
+</body>
+</html>

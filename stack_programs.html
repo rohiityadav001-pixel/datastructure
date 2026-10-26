@@ -1,0 +1,637 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Stack Programs | DS.Learn</title>
+
+<style>
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    scroll-behavior: smooth;
+}
+
+body {
+    font-family: Arial, sans-serif;
+    background: #f3f7fc;
+    color: #172b4d;
+}
+
+header {
+    background: #102544;
+    color: white;
+    padding: 18px 5%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+header h2 {
+    font-size: 23px;
+}
+
+header a {
+    color: white;
+    text-decoration: none;
+    margin-left: 18px;
+}
+
+.layout {
+    display: grid;
+    grid-template-columns: 230px 1fr;
+}
+
+aside {
+    background: white;
+    padding: 25px 15px;
+    min-height: 100vh;
+    border-right: 1px solid #d9e6f5;
+    position: sticky;
+    top: 0;
+    height: 100vh;
+}
+
+aside h3 {
+    margin-bottom: 15px;
+    color: #1684e8;
+}
+
+aside a {
+    display: block;
+    padding: 12px;
+    margin-bottom: 5px;
+    text-decoration: none;
+    color: #263c5a;
+    border-radius: 7px;
+}
+
+aside a:hover {
+    background: #e3f2ff;
+    color: #0874d1;
+}
+
+main {
+    padding: 25px;
+    min-width: 0;
+}
+
+.section {
+    background: white;
+    margin-bottom: 22px;
+    border-radius: 10px;
+    border: 1px solid #d9e6f5;
+    overflow: hidden;
+    scroll-margin-top: 15px;
+}
+
+.section h2 {
+    background: #e8f3ff;
+    color: #153b70;
+    padding: 15px 18px;
+    font-size: 20px;
+}
+
+.section-body {
+    padding: 18px;
+}
+
+.code-card {
+    background: #101b2b;
+    border-radius: 8px;
+    overflow: hidden;
+    margin-bottom: 18px;
+}
+
+.code-card:last-child {
+    margin-bottom: 0;
+}
+
+.code-header {
+    background: #1d2e45;
+    color: white;
+    padding: 12px 15px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 10px;
+    font-size: 14px;
+}
+
+button {
+    background: #1684e8;
+    color: white;
+    border: none;
+    padding: 7px 12px;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+button:hover {
+    background: #0866bd;
+}
+
+pre {
+    padding: 18px;
+    color: #c7e7ff;
+    overflow-x: auto;
+    font-size: 13px;
+    line-height: 1.7;
+}
+
+.output {
+    background: #e7f8ef;
+    color: #087044;
+    padding: 12px 15px;
+    font-size: 13px;
+    white-space: pre-wrap;
+}
+
+@media(max-width: 750px) {
+    .layout {
+        grid-template-columns: 1fr;
+    }
+
+    aside {
+        position: static;
+        height: auto;
+        min-height: auto;
+    }
+
+    aside nav {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+    }
+
+    main {
+        padding: 12px;
+    }
+
+    header h2 {
+        font-size: 17px;
+    }
+}
+</style>
+</head>
+
+<body>
+
+<header>
+    <h2>Stack Programs</h2>
+    <nav>
+        <a href="index.html">Home</a>
+        <a href="arrays.html">Arrays</a>
+        <a href="stacks.html">Stacks</a>
+    </nav>
+</header>
+
+<div class="layout">
+
+<aside>
+    <h3>PROGRAMS</h3>
+    <nav>
+        <a href="#p1">01. Stack Introduction</a>
+        <a href="#p2">02. Array Representation</a>
+        <a href="#p3">03. Linked List Stack</a>
+        <a href="#p4">04. Reverse String</a>
+        <a href="#p5">05. Balanced Parentheses</a>
+        <a href="#p6">06. Push and Pop</a>
+        <a href="#p7">07. Stack Overflow</a>
+        <a href="#p8">08. Factorial Recursion</a>
+        <a href="#p9">09. Fibonacci Recursion</a>
+        <a href="#p10">10. Recursive Sum</a>
+    </nav>
+</aside>
+
+<main>
+
+<!-- PROGRAM 1 -->
+<section class="section" id="p1">
+<h2>01. Stack Introduction</h2>
+<div class="section-body">
+<div class="code-card">
+<div class="code-header">
+<span>Stack Declaration and Display</span>
+<button onclick="copyCode(this)">Copy Code</button>
+</div>
+<pre><code>#include &lt;stdio.h&gt;
+
+int main(void) {
+    int stack[5] = {10, 20, 30, 40, 50};
+    int top = 4;
+
+    printf("Top element: %d\n", stack[top]);
+
+    for (int i = top; i >= 0; i--) {
+        printf("%d ", stack[i]);
+    }
+
+    return 0;
+}</code></pre>
+<div class="output">Output:
+Top element: 50
+50 40 30 20 10</div>
+</div>
+</div>
+</section>
+
+<!-- PROGRAM 2 -->
+<section class="section" id="p2">
+<h2>02. Stack Memory Representation Using Array</h2>
+<div class="section-body">
+<div class="code-card">
+<div class="code-header">
+<span>Display Stack Memory Addresses</span>
+<button onclick="copyCode(this)">Copy Code</button>
+</div>
+<pre><code>#include &lt;stdio.h&gt;
+
+int main(void) {
+    int stack[3] = {10, 20, 30};
+    int top = 2;
+
+    printf("Index  Value  Address\n");
+
+    for (int i = 0; i <= top; i++) {
+        printf("%d      %d      %p\n",
+               i, stack[i], (void *)&stack[i]);
+    }
+
+    printf("Top index: %d\n", top);
+
+    return 0;
+}</code></pre>
+<div class="output">Output: Displays each element's index, value, and memory address. Addresses vary by system.</div>
+</div>
+</div>
+</section>
+
+<!-- PROGRAM 3 -->
+<section class="section" id="p3">
+<h2>03. Stack Using Linked List</h2>
+<div class="section-body">
+<div class="code-card">
+<div class="code-header">
+<span>Linked List Stack Program</span>
+<button onclick="copyCode(this)">Copy Code</button>
+</div>
+<pre><code>#include &lt;stdio.h&gt;
+#include &lt;stdlib.h&gt;
+
+struct Node {
+    int data;
+    struct Node *next;
+};
+
+int main(void) {
+    struct Node *top = NULL;
+    int values[] = {10, 20, 30};
+
+    for (int i = 0; i < 3; i++) {
+        struct Node *node = malloc(sizeof(struct Node));
+
+        if (node == NULL) {
+            while (top != NULL) {
+                struct Node *temp = top;
+                top = top->next;
+                free(temp);
+            }
+            return 1;
+        }
+
+        node->data = values[i];
+        node->next = top;
+        top = node;
+    }
+
+    while (top != NULL) {
+        struct Node *temp = top;
+        printf("%d ", temp->data);
+        top = top->next;
+        free(temp);
+    }
+
+    return 0;
+}</code></pre>
+<div class="output">Output: 30 20 10</div>
+</div>
+</div>
+</section>
+
+<!-- PROGRAM 4 -->
+<section class="section" id="p4">
+<h2>04. Reverse a String Using Stack</h2>
+<div class="section-body">
+<div class="code-card">
+<div class="code-header">
+<span>String Reversal Program</span>
+<button onclick="copyCode(this)">Copy Code</button>
+</div>
+<pre><code>#include &lt;stdio.h&gt;
+
+int main(void) {
+    char text[100], stack[100];
+    int top = -1;
+
+    printf("Enter a word: ");
+    scanf("%99s", text);
+
+    for (int i = 0; text[i] != '\0'; i++) {
+        stack[++top] = text[i];
+    }
+
+    printf("Reversed: ");
+
+    while (top >= 0) {
+        putchar(stack[top--]);
+    }
+
+    return 0;
+}</code></pre>
+<div class="output">Example Input: STACK
+Output: KCATS</div>
+</div>
+</div>
+</section>
+
+<!-- PROGRAM 5 -->
+<section class="section" id="p5">
+<h2>05. Balanced Parentheses</h2>
+<div class="section-body">
+<div class="code-card">
+<div class="code-header">
+<span>Check Balanced Parentheses</span>
+<button onclick="copyCode(this)">Copy Code</button>
+</div>
+<pre><code>#include &lt;stdio.h&gt;
+
+int main(void) {
+    char expr[100], stack[100];
+    int top = -1, balanced = 1;
+
+    printf("Enter expression: ");
+    if (fgets(expr, sizeof(expr), stdin) == NULL)
+        return 1;
+
+    for (int i = 0; expr[i] != '\0'; i++) {
+        char c = expr[i];
+
+        if (c == '(' || c == '[' || c == '{') {
+            stack[++top] = c;
+        }
+        else if (c == ')' || c == ']' || c == '}') {
+            if (top == -1) {
+                balanced = 0;
+                break;
+            }
+
+            char open = stack[top--];
+
+            if (!((open == '(' && c == ')') ||
+                  (open == '[' && c == ']') ||
+                  (open == '{' && c == '}'))) {
+                balanced = 0;
+                break;
+            }
+        }
+    }
+
+    if (top != -1)
+        balanced = 0;
+
+    printf("%s", balanced ? "Balanced" : "Not balanced");
+
+    return 0;
+}</code></pre>
+<div class="output">Example Input: {[a+b]*(c+d)}
+Output: Balanced</div>
+</div>
+</div>
+</section>
+
+<!-- PROGRAM 6 -->
+<section class="section" id="p6">
+<h2>06. Stack Operations: Push, Pop, Peek and Display</h2>
+<div class="section-body">
+<div class="code-card">
+<div class="code-header">
+<span>Stack Operations Program</span>
+<button onclick="copyCode(this)">Copy Code</button>
+</div>
+<pre><code>#include &lt;stdio.h&gt;
+#define MAX 5
+
+int stack[MAX];
+int top = -1;
+
+void push(int value) {
+    if (top == MAX - 1) {
+        printf("Stack Overflow\n");
+        return;
+    }
+
+    stack[++top] = value;
+}
+
+void pop(void) {
+    if (top == -1) {
+        printf("Stack Underflow\n");
+        return;
+    }
+
+    printf("Popped: %d\n", stack[top--]);
+}
+
+void peek(void) {
+    if (top == -1)
+        printf("Stack is empty\n");
+    else
+        printf("Top: %d\n", stack[top]);
+}
+
+void display(void) {
+    for (int i = top; i >= 0; i--)
+        printf("%d ", stack[i]);
+
+    printf("\n");
+}
+
+int main(void) {
+    push(10);
+    push(20);
+    push(30);
+
+    display();
+    peek();
+    pop();
+    display();
+
+    return 0;
+}</code></pre>
+<div class="output">Output:
+30 20 10
+Top: 30
+Popped: 30
+20 10</div>
+</div>
+</div>
+</section>
+
+<!-- PROGRAM 7 -->
+<section class="section" id="p7">
+<h2>07. Stack Overflow and Underflow</h2>
+<div class="section-body">
+<div class="code-card">
+<div class="code-header">
+<span>Overflow and Underflow Program</span>
+<button onclick="copyCode(this)">Copy Code</button>
+</div>
+<pre><code>#include &lt;stdio.h&gt;
+#define MAX 2
+
+int main(void) {
+    int stack[MAX];
+    int top = -1;
+
+    for (int i = 1; i <= 3; i++) {
+        if (top == MAX - 1) {
+            printf("Stack Overflow\n");
+        } else {
+            stack[++top] = i * 10;
+        }
+    }
+
+    while (top >= 0)
+        top--;
+
+    if (top == -1)
+        printf("Stack is empty\n");
+
+    return 0;
+}</code></pre>
+<div class="output">Output:
+Stack Overflow
+Stack is empty</div>
+</div>
+</div>
+</section>
+
+<!-- PROGRAM 8 -->
+<section class="section" id="p8">
+<h2>08. Factorial Using Recursion</h2>
+<div class="section-body">
+<div class="code-card">
+<div class="code-header">
+<span>Recursive Factorial Program</span>
+<button onclick="copyCode(this)">Copy Code</button>
+</div>
+<pre><code>#include &lt;stdio.h&gt;
+
+unsigned long long factorial(int n) {
+    if (n <= 1)
+        return 1;
+
+    return (unsigned long long)n * factorial(n - 1);
+}
+
+int main(void) {
+    int n = 5;
+
+    printf("Factorial = %llu", factorial(n));
+
+    return 0;
+}</code></pre>
+<div class="output">Output: Factorial = 120</div>
+</div>
+</div>
+</section>
+
+<!-- PROGRAM 9 -->
+<section class="section" id="p9">
+<h2>09. Fibonacci Using Recursion</h2>
+<div class="section-body">
+<div class="code-card">
+<div class="code-header">
+<span>Recursive Fibonacci Program</span>
+<button onclick="copyCode(this)">Copy Code</button>
+</div>
+<pre><code>#include &lt;stdio.h&gt;
+
+int fibonacci(int n) {
+    if (n <= 1)
+        return n;
+
+    return fibonacci(n - 1) + fibonacci(n - 2);
+}
+
+int main(void) {
+    for (int i = 0; i < 7; i++)
+        printf("%d ", fibonacci(i));
+
+    return 0;
+}</code></pre>
+<div class="output">Output: 0 1 1 2 3 5 8</div>
+</div>
+</div>
+</section>
+
+<!-- PROGRAM 10 -->
+<section class="section" id="p10">
+<h2>10. Sum of Numbers Using Recursion</h2>
+<div class="section-body">
+<div class="code-card">
+<div class="code-header">
+<span>Recursive Sum Program</span>
+<button onclick="copyCode(this)">Copy Code</button>
+</div>
+<pre><code>#include &lt;stdio.h&gt;
+
+int sum(int n) {
+    if (n <= 0)
+        return 0;
+
+    return n + sum(n - 1);
+}
+
+int main(void) {
+    printf("Sum = %d", sum(5));
+
+    return 0;
+}</code></pre>
+<div class="output">Output: Sum = 15</div>
+</div>
+</div>
+</section>
+
+</main>
+</div>
+
+<script>
+function copyCode(button) {
+    const code = button.closest(".code-card")
+                       .querySelector("pre code").innerText;
+
+    const area = document.createElement("textarea");
+    area.value = code;
+    document.body.appendChild(area);
+    area.select();
+
+    try {
+        document.execCommand("copy");
+        button.textContent = "Copied!";
+    } catch (error) {
+        button.textContent = "Copy failed";
+    }
+
+    area.remove();
+
+    setTimeout(() => {
+        button.textContent = "Copy Code";
+    }, 1500);
+}
+</script>
+
+</body>
+</html>

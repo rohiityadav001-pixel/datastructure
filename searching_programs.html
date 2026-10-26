@@ -1,0 +1,122 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Searching Programs | Data Structures</title>
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+body{font-family:Arial,sans-serif;background:#07111f;color:#e5e7eb;line-height:1.6}
+header{padding:28px 8%;background:#0d1b2a;border-bottom:1px solid #26364a}
+header h1{color:#6ee7b7}
+a{color:#6ee7b7;text-decoration:none}
+main{max-width:1000px;margin:auto;padding:25px 18px}
+.card{background:#101f30;border:1px solid #293750;border-radius:13px;overflow:hidden;margin-bottom:25px}
+.card h2{color:#6ee7b7;padding:18px 20px 0}
+.description{padding:8px 20px;color:#cbd5e1}
+.code-title,.output-title{padding:11px 20px;font-weight:bold;background:#18283a;color:#93c5fd}
+pre{padding:18px 20px;overflow-x:auto;white-space:pre;background:#081321;color:#d1fae5;font-size:14px}
+.output-title{background:#12352f;color:#6ee7b7;border-top:1px solid #293750}
+.output{background:#071a16;color:#a7f3d0}
+.copy{margin:0 20px 18px;padding:9px 15px;border:0;border-radius:7px;background:#10b981;color:#052e25;font-weight:bold;cursor:pointer}
+.back{display:inline-block;margin-top:12px}
+</style>
+</head>
+<body>
+<header>
+<h1>Searching — C Programs</h1>
+<p>Linear Search and Binary Search with outputs</p>
+<a class="back" href="searching.html">← Back to Topics</a>
+</header>
+
+<main>
+<div class="card">
+<h2>Program 1: Linear Search</h2>
+<p class="description">Searches for a key by checking every array element.</p>
+<div class="code-title">C Program</div>
+<pre><code id="code1">#include &lt;stdio.h&gt;
+
+int main() {
+    int a[] = {12, 25, 7, 40, 18};
+    int n = 5, key = 40;
+    int i, found = 0;
+
+    for (i = 0; i &lt; n; i++) {
+        if (a[i] == key) {
+            printf("Element found at position %d\n", i + 1);
+            found = 1;
+            break;
+        }
+    }
+
+    if (!found) {
+        printf("Element not found\n");
+    }
+
+    return 0;
+}</code></pre>
+<button class="copy" onclick="copyCode('code1')">Copy Code</button>
+<div class="output-title">Program Output</div>
+<pre class="output">Element found at position 4</pre>
+</div>
+
+<div class="card">
+<h2>Program 2: Binary Search</h2>
+<p class="description">Searches a sorted array by repeatedly dividing the search range in half.</p>
+<div class="code-title">C Program</div>
+<pre><code id="code2">#include &lt;stdio.h&gt;
+
+int main() {
+    int a[] = {10, 20, 30, 40, 50, 60, 70};
+    int n = 7, key = 60;
+    int low = 0, high = n - 1, mid;
+    int found = 0;
+
+    while (low &lt;= high) {
+        mid = low + (high - low) / 2;
+
+        if (a[mid] == key) {
+            printf("Element found at position %d\n", mid + 1);
+            found = 1;
+            break;
+        } else if (key &lt; a[mid]) {
+            high = mid - 1;
+        } else {
+            low = mid + 1;
+        }
+    }
+
+    if (!found) {
+        printf("Element not found\n");
+    }
+
+    return 0;
+}</code></pre>
+<button class="copy" onclick="copyCode('code2')">Copy Code</button>
+<div class="output-title">Program Output</div>
+<pre class="output">Element found at position 6</pre>
+</div>
+
+<div class="card">
+<h2>Important Points</h2>
+<p class="description">
+1. Linear Search works on sorted and unsorted arrays.<br>
+2. Binary Search requires sorted data.<br>
+3. Array positions in these programs start at 1 in the output, while C indexes start at 0.<br>
+4. Linear Search worst-case time: O(n).<br>
+5. Binary Search worst-case time: O(log n).
+</p>
+</div>
+</main>
+
+<script>
+function copyCode(id) {
+    const code = document.getElementById(id).innerText;
+    navigator.clipboard.writeText(code)
+        .then(() => alert("Code copied!"))
+        .catch(() => alert("Copy failed. Please select and copy the code manually."));
+}
+</script>
+</body>
+</html>

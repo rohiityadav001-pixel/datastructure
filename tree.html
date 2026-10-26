@@ -1,0 +1,805 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Trees | Data Structures</title>
+
+<style>
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    scroll-behavior: smooth;
+}
+
+body {
+    font-family: Arial, sans-serif;
+    background: #0b1020;
+    color: #e7ecf7;
+    line-height: 1.7;
+}
+
+header {
+    padding: 22px 8%;
+    background: #111a30;
+    border-bottom: 1px solid #263651;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 15px;
+}
+
+.logo {
+    font-size: 25px;
+    font-weight: bold;
+    color: #6ee7b7;
+}
+
+header a {
+    color: #d5def1;
+    text-decoration: none;
+    margin: 0 9px;
+    font-size: 14px;
+}
+
+header a:hover {
+    color: #6ee7b7;
+}
+
+.hero {
+    padding: 85px 8%;
+    background: radial-gradient(circle at top right, #164e63, #111a30 55%, #0b1020);
+}
+
+.tag {
+    color: #6ee7b7;
+    letter-spacing: 2px;
+    font-size: 13px;
+    font-weight: bold;
+}
+
+.hero h1 {
+    font-size: clamp(38px, 6vw, 68px);
+    line-height: 1.15;
+    margin: 20px 0;
+}
+
+.hero h1 span {
+    color: #6ee7b7;
+}
+
+.hero p {
+    color: #bdc9dd;
+    max-width: 650px;
+}
+
+.btn {
+    display: inline-block;
+    margin-top: 25px;
+    background: #6ee7b7;
+    color: #07131b;
+    text-decoration: none;
+    padding: 12px 22px;
+    border-radius: 8px;
+    font-weight: bold;
+}
+
+section {
+    padding: 65px 8%;
+    scroll-margin-top: 25px;
+}
+
+.section-title {
+    font-size: 32px;
+    margin-bottom: 12px;
+}
+
+.subtitle {
+    color: #a8b5ca;
+    margin-bottom: 30px;
+}
+
+.grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(230px, 1fr));
+    gap: 20px;
+}
+
+.card {
+    background: #141f35;
+    border: 1px solid #293954;
+    padding: 25px;
+    border-radius: 14px;
+    transition: 0.25s;
+    min-width: 0;
+}
+
+.card:hover {
+    transform: translateY(-5px);
+    border-color: #6ee7b7;
+}
+
+.card h3 {
+    color: #6ee7b7;
+    margin-bottom: 10px;
+}
+
+.card p, li {
+    color: #c2cde0;
+}
+
+ul, ol {
+    padding-left: 22px;
+}
+
+.diagram {
+    background: #091321;
+    padding: 22px;
+    margin-top: 18px;
+    border-radius: 10px;
+    overflow-x: auto;
+}
+
+pre {
+    color: #8debc6;
+    font-family: Consolas, monospace;
+    font-size: 14px;
+    line-height: 1.8;
+    white-space: pre;
+}
+
+.tree-visual {
+    display: flex;
+    justify-content: center;
+    padding: 20px 0;
+    overflow-x: auto;
+}
+
+.tree-visual svg {
+    width: 100%;
+    max-width: 480px;
+    min-width: 280px;
+    height: auto;
+}
+
+.node {
+    fill: #153d46;
+    stroke: #6ee7b7;
+    stroke-width: 2;
+}
+
+.node-text {
+    fill: #ffffff;
+    font-size: 15px;
+    text-anchor: middle;
+    dominant-baseline: middle;
+}
+
+.edge {
+    stroke: #6b819c;
+    stroke-width: 2;
+}
+
+.code {
+    background: #080f1c;
+    padding: 20px;
+    overflow-x: auto;
+    border-radius: 10px;
+    margin-top: 15px;
+}
+
+button {
+    background: #6ee7b7;
+    color: #07131b;
+    border: none;
+    padding: 11px 17px;
+    border-radius: 7px;
+    cursor: pointer;
+    font-weight: bold;
+    margin: 5px 4px 5px 0;
+}
+
+button:hover {
+    background: #a4f5d6;
+}
+
+input {
+    background: #091321;
+    color: white;
+    border: 1px solid #42536b;
+    border-radius: 7px;
+    padding: 11px;
+    width: 140px;
+    max-width: 100%;
+    margin: 5px 5px 5px 0;
+}
+
+.result {
+    margin-top: 16px;
+    color: #6ee7b7;
+    overflow-wrap: anywhere;
+}
+
+.note {
+    border-left: 4px solid #6ee7b7;
+    padding: 15px;
+    background: #111a30;
+    margin-top: 20px;
+}
+
+footer {
+    text-align: center;
+    padding: 30px;
+    background: #111a30;
+    color: #a8b5ca;
+}
+
+@media(max-width: 650px) {
+    header {
+        padding: 18px 5%;
+    }
+    header nav {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 10px;
+    }
+    header a {
+        margin: 0;
+    }
+    section {
+        padding: 45px 5%;
+    }
+    .hero {
+        padding: 60px 5%;
+    }
+}
+</style>
+</head>
+
+<body>
+
+<header>
+    <div class="logo">Tree<span style="color:white">DS</span></div>
+    <nav>
+        <a href="#basics">Basics</a>
+        <a href="#representation">Storage</a>
+        <a href="#binary">Binary Tree</a>
+        <a href="#traversal">Traversal</a>
+        <a href="#operations">Operations</a>
+        <a href="#bst">BST</a>
+        <a href="tree_programs.html">Programs</a>
+    </nav>
+</header>
+
+<div class="hero">
+    <div class="tag">DATA STRUCTURES • BCA NOTES</div>
+    <h1>Explore the World<br>of <span>Trees.</span></h1>
+    <p>
+        Understand tree data structures through simple explanations,
+        visual diagrams, algorithms and interactive examples.
+        Learn how trees store, search and organize data.
+    </p>
+    <a href="#basics" class="btn">Start Learning →</a>
+</div>
+
+<section id="basics">
+    <h2 class="section-title">01. Tree: Definition & Basic Concepts</h2>
+    <p class="subtitle">
+        A tree is a non-linear data structure that organizes data
+        in a hierarchical manner using nodes and edges.
+    </p>
+
+    <div class="grid">
+        <div class="card">
+            <h3>Root</h3>
+            <p>The topmost node of a tree. It has no parent.</p>
+        </div>
+        <div class="card">
+            <h3>Parent & Child</h3>
+            <p>A parent is a node connected to nodes below it. Those nodes are its children.</p>
+        </div>
+        <div class="card">
+            <h3>Leaf Node</h3>
+            <p>A node that has no children.</p>
+        </div>
+        <div class="card">
+            <h3>Edge</h3>
+            <p>A connection between two nodes.</p>
+        </div>
+        <div class="card">
+            <h3>Depth & Level</h3>
+            <p>Depth counts edges from the root. Level numbering depends on the convention used.</p>
+        </div>
+        <div class="card">
+            <h3>Subtree</h3>
+            <p>A node together with all its descendants forms a subtree.</p>
+        </div>
+    </div>
+
+    <div class="tree-visual">
+        <svg viewBox="0 0 400 270" role="img" aria-label="Tree diagram with root A, children B and C, and leaf nodes D, E and F">
+            <line class="edge" x1="200" y1="42" x2="115" y2="105"/>
+            <line class="edge" x1="200" y1="42" x2="285" y2="105"/>
+            <line class="edge" x1="115" y1="105" x2="70" y2="180"/>
+            <line class="edge" x1="115" y1="105" x2="160" y2="180"/>
+            <line class="edge" x1="285" y1="105" x2="285" y2="180"/>
+            <circle class="node" cx="200" cy="35" r="23"/>
+            <circle class="node" cx="115" cy="105" r="23"/>
+            <circle class="node" cx="285" cy="105" r="23"/>
+            <circle class="node" cx="70" cy="180" r="23"/>
+            <circle class="node" cx="160" cy="180" r="23"/>
+            <circle class="node" cx="285" cy="180" r="23"/>
+            <g class="node-text">
+                <text x="200" y="35">A</text>
+                <text x="115" y="105">B</text>
+                <text x="285" y="105">C</text>
+                <text x="70" y="180">D</text>
+                <text x="160" y="180">E</text>
+                <text x="285" y="180">F</text>
+            </g>
+            <text x="200" y="240" fill="#a8b5ca" text-anchor="middle" font-size="13">A is the root; D, E and F are leaves.</text>
+        </svg>
+    </div>
+</section>
+
+<section id="representation">
+    <h2 class="section-title">02. Representation in Contiguous Storage</h2>
+    <p class="subtitle">
+        A binary tree can be stored in an array, with parent and child
+        positions calculated using indices.
+    </p>
+
+    <div class="grid">
+        <div class="card">
+            <h3>Array Representation</h3>
+            <p>For a zero-based array at index i:</p>
+            <ul>
+                <li>Left child = 2i + 1</li>
+                <li>Right child = 2i + 2</li>
+                <li>Parent = floor((i − 1) / 2)</li>
+            </ul>
+        </div>
+        <div class="card">
+            <h3>Advantages</h3>
+            <p>Simple indexing, fast parent-child access and no pointer storage needed.</p>
+        </div>
+        <div class="card">
+            <h3>Limitations</h3>
+            <p>Sparse or irregular trees may waste array space. Linked representation is often more flexible.</p>
+        </div>
+    </div>
+
+    <div class="diagram">
+<pre>
+          A                Array index
+         / \               0: A
+        B   C              1: B    2: C
+       / \                 3: D    4: E
+      D   E
+
+Array: [A, B, C, D, E]
+
+For index 1 (B):
+Left child  = 2(1) + 1 = 3  → D
+Right child = 2(1) + 2 = 4  → E
+</pre>
+    </div>
+</section>
+
+<section id="binary">
+    <h2 class="section-title">03. Binary Tree</h2>
+    <p class="subtitle">
+        A binary tree is a tree in which each node has at most two children:
+        a left child and a right child.
+    </p>
+
+    <div class="grid">
+        <div class="card">
+            <h3>Full Binary Tree</h3>
+            <p>Every node has either zero or exactly two children.</p>
+        </div>
+        <div class="card">
+            <h3>Complete Binary Tree</h3>
+            <p>All levels are full except possibly the last, which fills from left to right.</p>
+        </div>
+        <div class="card">
+            <h3>Perfect Binary Tree</h3>
+            <p>All internal nodes have two children and all leaves are at the same depth.</p>
+        </div>
+        <div class="card">
+            <h3>Skewed Binary Tree</h3>
+            <p>Each node has at most one child, producing a left- or right-skewed shape.</p>
+        </div>
+    </div>
+</section>
+
+<section id="traversal">
+    <h2 class="section-title">04. Binary Tree Traversal</h2>
+    <p class="subtitle">
+        Traversal means visiting every node of a tree in a particular order.
+    </p>
+
+    <div class="grid">
+        <div class="card">
+            <h3>Preorder</h3>
+            <p>Root → Left → Right</p>
+            <div class="diagram"><pre>Visit root
+Traverse left
+Traverse right</pre></div>
+        </div>
+        <div class="card">
+            <h3>Inorder</h3>
+            <p>Left → Root → Right</p>
+            <div class="diagram"><pre>Traverse left
+Visit root
+Traverse right</pre></div>
+        </div>
+        <div class="card">
+            <h3>Postorder</h3>
+            <p>Left → Right → Root</p>
+            <div class="diagram"><pre>Traverse left
+Traverse right
+Visit root</pre></div>
+        </div>
+        <div class="card">
+            <h3>Level Order</h3>
+            <p>Visit nodes level by level, usually using a queue.</p>
+            <div class="diagram"><pre>Top to bottom
+Left to right</pre></div>
+        </div>
+    </div>
+
+    <div class="card" style="margin-top:22px">
+        <h3>Try the Traversal Example</h3>
+        <p>Tree: 1 is the root; 2 and 3 are its children; 4 and 5 are children of 2.</p>
+        <div class="tree-visual">
+            <svg viewBox="0 0 320 200" role="img" aria-label="Binary tree with root 1, children 2 and 3, and children 4 and 5 under node 2">
+                <line class="edge" x1="160" y1="32" x2="100" y2="90"/>
+                <line class="edge" x1="160" y1="32" x2="240" y2="90"/>
+                <line class="edge" x1="100" y1="90" x2="55" y2="150"/>
+                <line class="edge" x1="100" y1="90" x2="145" y2="150"/>
+                <circle class="node" cx="160" cy="30" r="20"/>
+                <circle class="node" cx="100" cy="90" r="20"/>
+                <circle class="node" cx="240" cy="90" r="20"/>
+                <circle class="node" cx="55" cy="150" r="20"/>
+                <circle class="node" cx="145" cy="150" r="20"/>
+                <g class="node-text">
+                    <text x="160" y="30">1</text>
+                    <text x="100" y="90">2</text>
+                    <text x="240" y="90">3</text>
+                    <text x="55" y="150">4</text>
+                    <text x="145" y="150">5</text>
+                </g>
+            </svg>
+        </div>
+        <button onclick="showTraversal('pre')">Preorder</button>
+        <button onclick="showTraversal('in')">Inorder</button>
+        <button onclick="showTraversal('post')">Postorder</button>
+        <button onclick="showTraversal('level')">Level Order</button>
+        <p id="traversalResult" class="result" aria-live="polite">Choose a traversal to see its output.</p>
+    </div>
+</section>
+
+<section id="operations">
+    <h2 class="section-title">05. Searching, Insertion & Deletion</h2>
+    <p class="subtitle">
+        These operations help locate nodes, add new nodes and remove existing nodes.
+        Their exact procedure depends on the type of binary tree.
+    </p>
+
+    <div class="grid">
+        <div class="card">
+            <h3>Searching</h3>
+            <p>Visit nodes until the required value is found. In a general binary tree, a search may need to examine every node.</p>
+        </div>
+        <div class="card">
+            <h3>Insertion</h3>
+            <p>In a general binary tree, insertion follows the chosen structural rule. In a BST, compare values to find the correct position.</p>
+        </div>
+        <div class="card">
+            <h3>Deletion</h3>
+            <p>Remove a node while preserving the tree's required structure and, for a BST, its ordering property.</p>
+        </div>
+    </div>
+
+    <div class="card" style="margin-top:22px">
+        <h3>Interactive Binary Search Tree</h3>
+        <p>Enter a number and try inserting, searching or deleting it. This example uses a BST.</p>
+        <input type="number" id="treeValue" placeholder="Enter a number" aria-label="Enter a number">
+        <div>
+            <button onclick="insertValue()">Insert</button>
+            <button onclick="searchValue()">Search</button>
+            <button onclick="deleteValue()">Delete</button>
+            <button onclick="resetTree()">Reset</button>
+        </div>
+        <p id="operationResult" class="result" aria-live="polite">Initial values: 50, 30, 70, 20, 40, 60, 80</p>
+        <div id="interactiveTree" class="diagram" aria-label="Interactive binary search tree visualization"></div>
+    </div>
+
+    <div class="note">
+        <strong>Deletion in a BST — three cases</strong>
+        <ol>
+            <li>Leaf node: remove it directly.</li>
+            <li>One child: connect its parent to its child.</li>
+            <li>Two children: replace it with its inorder successor or predecessor, then remove that replacement node from its original position.</li>
+        </ol>
+    </div>
+</section>
+
+<section id="bst">
+    <h2 class="section-title">06. Binary Search Tree (BST)</h2>
+    <p class="subtitle">
+        A BST is a binary tree organized by a comparison rule.
+    </p>
+
+    <div class="card">
+        <h3>BST Property</h3>
+        <p>For each node, values in the left subtree are smaller and values in the right subtree are larger. This example uses distinct values.</p>
+        <div class="diagram"><pre>
+            50
+           /  \
+         30    70
+        / \    / \
+       20 40  60 80
+
+Inorder: 20, 30, 40, 50, 60, 70, 80
+        </pre></div>
+    </div>
+
+    <div class="grid" style="margin-top:22px">
+        <div class="card">
+            <h3>Advantages</h3>
+            <ul>
+                <li>Supports efficient searching when balanced.</li>
+                <li>Inorder traversal produces sorted values.</li>
+                <li>Supports insertion and deletion.</li>
+            </ul>
+        </div>
+        <div class="card">
+            <h3>Time Complexity</h3>
+            <ul>
+                <li>Search: O(log n) average in a balanced BST.</li>
+                <li>Insert: O(log n) average in a balanced BST.</li>
+                <li>Worst case: O(n) in a skewed BST.</li>
+            </ul>
+        </div>
+    </div>
+
+    <div class="card" style="margin-top:22px">
+        <h3>BST Search Algorithm</h3>
+        <div class="code"><pre>
+SEARCH(root, key)
+
+1. If root is NULL:
+      Return NOT FOUND
+
+2. If key equals root.data:
+      Return FOUND
+
+3. If key is less than root.data:
+      Search root.left
+
+4. Otherwise:
+      Search root.right
+        </pre></div>
+    </div>
+    <button> <a href="units.html"> Back -></a></button>
+</section>
+
+<footer>
+    <p>TreeDS | Data Structures Learning Hub</p>
+    <p>Learn concepts • Explore diagrams • Practice operations</p>
+</footer>
+
+<script>
+function showTraversal(type) {
+    const outputs = {
+        pre: "1 → 2 → 4 → 5 → 3",
+        in: "4 → 2 → 5 → 1 → 3",
+        post: "4 → 5 → 2 → 3 → 1",
+        level: "1 → 2 → 3 → 4 → 5"
+    };
+    document.getElementById("traversalResult").textContent =
+        "Traversal output: " + outputs[type];
+}
+
+// Binary Search Tree implementation
+class Node {
+    constructor(value) {
+        this.value = value;
+        this.left = null;
+        this.right = null;
+    }
+}
+
+let root = null;
+
+function insertNode(node, value) {
+    if (!node) return new Node(value);
+    if (value < node.value) {
+        node.left = insertNode(node.left, value);
+    } else if (value > node.value) {
+        node.right = insertNode(node.right, value);
+    }
+    return node;
+}
+
+function findNode(node, value) {
+    while (node) {
+        if (value === node.value) return true;
+        node = value < node.value ? node.left : node.right;
+    }
+    return false;
+}
+
+function minimumNode(node) {
+    while (node.left) node = node.left;
+    return node;
+}
+
+function deleteNode(node, value) {
+    if (!node) return null;
+
+    if (value < node.value) {
+        node.left = deleteNode(node.left, value);
+    } else if (value > node.value) {
+        node.right = deleteNode(node.right, value);
+    } else {
+        if (!node.left) return node.right;
+        if (!node.right) return node.left;
+
+        const successor = minimumNode(node.right);
+        node.value = successor.value;
+        node.right = deleteNode(node.right, successor.value);
+    }
+    return node;
+}
+
+function getInputValue() {
+    const input = document.getElementById("treeValue");
+    if (input.value.trim() === "") {
+        document.getElementById("operationResult").textContent =
+            "Please enter a number first.";
+        return null;
+    }
+
+    const value = Number(input.value);
+    if (!Number.isFinite(value)) {
+        document.getElementById("operationResult").textContent =
+            "Please enter a valid number.";
+        return null;
+    }
+    return value;
+}
+
+function insertValue() {
+    const value = getInputValue();
+    if (value === null) return;
+
+    if (findNode(root, value)) {
+        message(value + " already exists in the BST.");
+        return;
+    }
+
+    root = insertNode(root, value);
+    message(value + " inserted successfully.");
+    renderTree();
+}
+
+function searchValue() {
+    const value = getInputValue();
+    if (value === null) return;
+
+    message(findNode(root, value)
+        ? value + " was found in the BST."
+        : value + " was not found.");
+}
+
+function deleteValue() {
+    const value = getInputValue();
+    if (value === null) return;
+
+    if (!findNode(root, value)) {
+        message(value + " does not exist in the BST.");
+        return;
+    }
+
+    root = deleteNode(root, value);
+    message(value + " deleted successfully.");
+    renderTree();
+}
+
+function resetTree() {
+    root = null;
+    [50, 30, 70, 20, 40, 60, 80].forEach(
+        value => root = insertNode(root, value)
+    );
+    document.getElementById("treeValue").value = "";
+    message("Tree reset to the original values.");
+    renderTree();
+}
+
+function message(text) {
+    document.getElementById("operationResult").textContent = text;
+}
+
+function renderTree() {
+    const container = document.getElementById("interactiveTree");
+    container.replaceChildren();
+
+    if (!root) {
+        container.textContent = "The tree is empty.";
+        return;
+    }
+
+    const nodes = [];
+    const edges = [];
+    const depthGap = 76;
+    const width = Math.max(320, Math.pow(2, Math.min(treeHeight(root), 6)) * 55);
+    const height = treeHeight(root) * depthGap + 50;
+
+    function walk(node, depth, left, right) {
+        if (!node) return;
+        const x = (left + right) / 2;
+        const y = 30 + depth * depthGap;
+        nodes.push({ value: node.value, x, y });
+
+        if (node.left) {
+            const childX = (left + x) / 2;
+            edges.push({ x1: x, y1: y, x2: childX, y2: y + depthGap });
+            walk(node.left, depth + 1, left, x);
+        }
+
+        if (node.right) {
+            const childX = (x + right) / 2;
+            edges.push({ x1: x, y1: y, x2: childX, y2: y + depthGap });
+            walk(node.right, depth + 1, x, right);
+        }
+    }
+
+    walk(root, 0, 25, width - 25);
+
+    const svg = document.createElementNS("http://www.w3.org/2000/svg", "svg");
+    svg.setAttribute("viewBox", `0 0 ${width} ${height}`);
+    svg.setAttribute("width", width);
+    svg.setAttribute("height", height);
+    svg.setAttribute("role", "img");
+    svg.setAttribute("aria-label", "Current binary search tree");
+
+    function element(name, attrs, content) {
+        const el = document.createElementNS("http://www.w3.org/2000/svg", name);
+        Object.entries(attrs).forEach(([key, val]) => el.setAttribute(key, val));
+        if (content !== undefined) el.textContent = content;
+        return el;
+    }
+
+    edges.forEach(e => svg.appendChild(element("line", {
+        x1: e.x1, y1: e.y1, x2: e.x2, y2: e.y2, class: "edge"
+    })));
+
+    nodes.forEach(n => {
+        svg.appendChild(element("circle", {
+            cx: n.x, cy: n.y, r: 20, class: "node"
+        }));
+        svg.appendChild(element("text", {
+            x: n.x, y: n.y, class: "node-text"
+        }, String(n.value)));
+    });
+
+    container.appendChild(svg);
+}
+
+function treeHeight(node) {
+    if (!node) return 0;
+    return 1 + Math.max(treeHeight(node.left), treeHeight(node.right));
+}
+
+resetTree();
+</script>
+
+</body>
+</html>
+.

@@ -1,0 +1,847 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Queue | Data Structures</title>
+
+<style>
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+:root {
+    --navy: #101c3b;
+    --blue: #2563eb;
+    --light: #eff6ff;
+    --text: #1e293b;
+    --muted: #64748b;
+    --border: #dbe4f0;
+}
+
+html {
+    scroll-behavior: smooth;
+    scroll-padding-top: 90px;
+}
+
+body {
+    font-family: "Segoe UI", Arial, sans-serif;
+    background: #f5f8ff;
+    color: var(--text);
+    line-height: 1.7;
+}
+
+header {
+    background: var(--navy);
+    color: white;
+    padding: 17px 6%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 18px;
+    flex-wrap: wrap;
+    position: sticky;
+    top: 0;
+    z-index: 10;
+}
+
+.logo {
+    font-size: 23px;
+    font-weight: 800;
+}
+
+.logo span {
+    color: #60a5fa;
+}
+
+nav {
+    display: flex;
+    gap: 18px;
+    flex-wrap: wrap;
+}
+
+nav a {
+    color: #e2e8f0;
+    text-decoration: none;
+    font-size: 14px;
+}
+
+nav a:hover {
+    color: #60a5fa;
+}
+
+.hero {
+    padding: 65px 7%;
+    background: linear-gradient(120deg, #101c3b, #1d4ed8);
+    color: white;
+}
+
+.tag {
+    display: inline-block;
+    background: #ffffff20;
+    padding: 5px 13px;
+    border-radius: 20px;
+    margin-bottom: 15px;
+    font-size: 13px;
+}
+
+.hero h1 {
+    font-size: clamp(34px, 5vw, 54px);
+    line-height: 1.2;
+    margin-bottom: 17px;
+}
+
+.hero p {
+    max-width: 700px;
+    color: #dbeafe;
+    font-size: 17px;
+}
+
+.hero-buttons {
+    display: flex;
+    gap: 12px;
+    margin-top: 25px;
+    flex-wrap: wrap;
+}
+
+.btn {
+    display: inline-block;
+    padding: 10px 19px;
+    background: white;
+    color: #1d4ed8;
+    text-decoration: none;
+    border-radius: 8px;
+    font-weight: 700;
+}
+
+.btn.secondary {
+    background: transparent;
+    border: 1px solid #bfdbfe;
+    color: white;
+}
+
+.layout {
+    max-width: 1450px;
+    margin: 30px auto;
+    padding: 0 20px;
+    display: grid;
+    grid-template-columns: 245px minmax(0, 1fr);
+    gap: 25px;
+    align-items: start;
+}
+
+.sidebar {
+    background: white;
+    border: 1px solid var(--border);
+    border-radius: 15px;
+    padding: 20px 14px;
+    position: sticky;
+    top: 90px;
+    max-height: calc(100vh - 110px);
+    overflow-y: auto;
+}
+
+.sidebar h3 {
+    padding: 0 10px 12px;
+    color: var(--navy);
+}
+
+.sidebar a {
+    display: block;
+    text-decoration: none;
+    color: #475569;
+    padding: 9px 11px;
+    border-radius: 7px;
+    font-size: 13px;
+    margin: 3px 0;
+}
+
+.sidebar a:hover {
+    background: var(--light);
+    color: var(--blue);
+}
+
+.content {
+    min-width: 0;
+}
+
+.section {
+    background: white;
+    padding: 27px;
+    border: 1px solid var(--border);
+    border-radius: 15px;
+    margin-bottom: 25px;
+    scroll-margin-top: 90px;
+}
+
+.section h2 {
+    font-size: 25px;
+    color: var(--navy);
+    margin-bottom: 15px;
+}
+
+.section h3 {
+    font-size: 18px;
+    color: #1d4ed8;
+    margin: 20px 0 10px;
+}
+
+.section p {
+    margin-bottom: 12px;
+}
+
+.note {
+    background: var(--light);
+    border-left: 4px solid var(--blue);
+    padding: 13px 16px;
+    border-radius: 7px;
+    margin: 15px 0;
+}
+
+.diagram {
+    background: #f8fafc;
+    border: 1px dashed #94a3b8;
+    border-radius: 10px;
+    padding: 22px 12px;
+    margin: 16px 0;
+    text-align: center;
+    overflow-x: auto;
+}
+
+.queue-row {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 0;
+    min-width: max-content;
+    padding: 12px;
+}
+
+.queue-cell {
+    width: 85px;
+    height: 65px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background: #dbeafe;
+    border: 2px solid #2563eb;
+    font-size: 20px;
+    font-weight: 700;
+}
+
+.queue-cell + .queue-cell {
+    border-left: none;
+}
+
+.cards {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    gap: 15px;
+    margin-top: 15px;
+}
+
+.card {
+    border: 1px solid var(--border);
+    background: #fbfdff;
+    border-radius: 11px;
+    padding: 17px;
+}
+
+.card h3 {
+    margin-top: 0;
+}
+
+.code-card {
+    border: 1px solid var(--border);
+    border-radius: 11px;
+    overflow: hidden;
+    margin-top: 15px;
+}
+
+.code-head {
+    background: #eaf1ff;
+    padding: 12px 15px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 12px;
+    flex-wrap: wrap;
+    font-weight: 700;
+}
+
+.copy {
+    background: var(--blue);
+    color: white;
+    border: 0;
+    padding: 7px 12px;
+    border-radius: 6px;
+    cursor: pointer;
+}
+
+pre {
+    background: #0f172a;
+    color: #e2e8f0;
+    padding: 18px;
+    overflow-x: auto;
+    font-size: 13px;
+    line-height: 1.65;
+}
+
+.output {
+    background: #f1f5f9;
+    border-top: 1px solid var(--border);
+    padding: 12px 16px;
+    font-family: monospace;
+    white-space: pre-wrap;
+}
+
+.table-wrap {
+    overflow-x: auto;
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 15px 0;
+}
+
+th, td {
+    border: 1px solid var(--border);
+    padding: 11px;
+    text-align: left;
+}
+
+th {
+    background: #eaf1ff;
+    color: var(--navy);
+}
+
+footer {
+    text-align: center;
+    padding: 28px;
+    background: var(--navy);
+    color: #dbeafe;
+    margin-top: 40px;
+}
+
+@media (max-width: 850px) {
+    .layout {
+        grid-template-columns: 1fr;
+    }
+
+    .sidebar {
+        position: static;
+        max-height: none;
+    }
+
+    header {
+        position: static;
+    }
+}
+
+@media (max-width: 500px) {
+    .section {
+        padding: 18px;
+    }
+
+    .hero {
+        padding: 42px 6%;
+    }
+}
+</style>
+</head>
+
+<body>
+
+<header>
+    <div class="logo">DS<span>•</span>Learn</div>
+
+    <nav>
+        <a href="units.html">Home</a>
+        <a href="#programs">Queue</a>
+    </nav>
+</header>
+
+<section class="hero">
+    <span class="tag">DATA STRUCTURES • QUEUE</span>
+    <h1>Queue</h1>
+    <p>Explore queue fundamentals, different types, memory representation and real-world applications with visual diagrams and C programs.</p>
+
+    <div class="hero-buttons">
+        <a href="#introduction" class="btn">Explore Topics ↓</a>
+        <a href="#programs" class="btn secondary">View C Programs</a>
+    </div>
+</section>
+
+<div class="layout">
+
+<aside class="sidebar">
+    <h3>Contents</h3>
+    <a href="#introduction">01. Introduction</a>
+    <a href="#operations">02. Basic Operations</a>
+    <a href="#memory">03. Memory Representation</a>
+    <a href="#types">04. Types of Queue</a>
+    <a href="#linear">05. Linear Queue</a>
+    <a href="#circular">06. Circular Queue</a>
+    <a href="#priority">07. Priority Queue</a>
+    <a href="#deque">08. Deque</a>
+    <a href="#applications">09. Applications</a>
+    <a href="#programs">10. C Programs</a>
+</aside>
+
+<main class="content">
+
+<section class="section" id="introduction">
+    <h2>01. Introduction to Queue</h2>
+
+    <p>A <b>queue</b> is a linear data structure in which insertion takes place at one end called the <b>REAR</b>, and deletion takes place at the other end called the <b>FRONT</b>.</p>
+
+    <p>A queue follows the <b>FIFO (First In, First Out)</b> principle. The element inserted first is removed first.</p>
+
+    <div class="diagram">
+        <p><b>FRONT</b> — Deletion</p>
+        <div class="queue-row">
+            <div class="queue-cell">10</div>
+            <div class="queue-cell">20</div>
+            <div class="queue-cell">30</div>
+            <div class="queue-cell">40</div>
+        </div>
+        <p>↑ First element &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Last element ↑</p>
+        <p><b>REAR</b> — Insertion</p>
+    </div>
+
+    <div class="note">
+        <b>Example:</b> People standing in a ticket line. The person who arrives first generally gets served first.
+    </div>
+</section>
+
+<section class="section" id="operations">
+    <h2>02. Basic Queue Operations</h2>
+
+    <div class="cards">
+        <div class="card">
+            <h3>Enqueue</h3>
+            <p>Adds a new element at the rear end of the queue.</p>
+        </div>
+
+        <div class="card">
+            <h3>Dequeue</h3>
+            <p>Removes an element from the front end of the queue.</p>
+        </div>
+
+        <div class="card">
+            <h3>Peek / Front</h3>
+            <p>Returns the front element without removing it.</p>
+        </div>
+
+        <div class="card">
+            <h3>isEmpty</h3>
+            <p>Checks whether the queue contains any elements.</p>
+        </div>
+
+        <div class="card">
+            <h3>isFull</h3>
+            <p>Checks whether an array-based queue has reached its capacity.</p>
+        </div>
+    </div>
+
+    <div class="note">
+        <b>Overflow:</b> Attempting to insert into a full fixed-size queue.
+        <br>
+        <b>Underflow:</b> Attempting to remove an element from an empty queue.
+    </div>
+</section>
+
+<section class="section" id="memory">
+    <h2>03. Memory Representation of Queue</h2>
+
+    <h3>Array Representation</h3>
+    <p>A queue can be represented using an array and two integer variables, <code>front</code> and <code>rear</code>.</p>
+
+    <div class="diagram">
+        <div class="queue-row">
+            <div class="queue-cell">10</div>
+            <div class="queue-cell">20</div>
+            <div class="queue-cell">30</div>
+            <div class="queue-cell">40</div>
+            <div class="queue-cell">—</div>
+        </div>
+        <p>Index: &nbsp; 0 &nbsp;&nbsp;&nbsp;&nbsp; 1 &nbsp;&nbsp;&nbsp;&nbsp; 2 &nbsp;&nbsp;&nbsp;&nbsp; 3 &nbsp;&nbsp;&nbsp;&nbsp; 4</p>
+        <p>Front = 0 &nbsp;&nbsp; Rear = 3</p>
+    </div>
+
+    <p>In a simple array queue, <code>front</code> identifies the first available element and <code>rear</code> identifies the last inserted element.</p>
+
+    <h3>Linked List Representation</h3>
+    <div class="diagram">
+        <div class="queue-row">
+            <div class="queue-cell">10</div>
+            <span style="font-size:25px;padding:8px;">→</span>
+            <div class="queue-cell">20</div>
+            <span style="font-size:25px;padding:8px;">→</span>
+            <div class="queue-cell">30</div>
+            <span style="font-size:25px;padding:8px;">→ NULL</span>
+        </div>
+        <p>Front points to 10; Rear points to 30.</p>
+    </div>
+
+    <p>In a linked-list queue, each node stores data and a pointer to the next node. The front and rear pointers help perform insertion and deletion efficiently.</p>
+</section>
+
+<section class="section" id="types">
+    <h2>04. Types of Queue</h2>
+
+    <div class="cards">
+        <div class="card">
+            <h3>1. Linear Queue</h3>
+            <p>Elements are inserted at the rear and removed from the front. In a simple array implementation, unused spaces at the beginning may not be reused without shifting elements.</p>
+        </div>
+
+        <div class="card">
+            <h3>2. Circular Queue</h3>
+            <p>The last array position connects logically to the first position. Freed spaces can be reused by wrapping around.</p>
+        </div>
+
+        <div class="card">
+            <h3>3. Priority Queue</h3>
+            <p>Elements are processed according to priority. Elements with higher priority are served first, depending on the implementation.</p>
+        </div>
+
+        <div class="card">
+            <h3>4. Double-Ended Queue</h3>
+            <p>A deque allows insertion and deletion at both the front and rear ends.</p>
+        </div>
+    </div>
+</section>
+
+<section class="section" id="linear">
+    <h2>05. Linear Queue</h2>
+
+    <p>A linear queue follows the FIFO rule. In a common array implementation, <code>front</code> starts at -1 and <code>rear</code> starts at -1. When the first element is inserted, both become 0.</p>
+
+    <div class="diagram">
+        <div class="queue-row">
+            <div class="queue-cell">10</div>
+            <div class="queue-cell">20</div>
+            <div class="queue-cell">30</div>
+            <div class="queue-cell">—</div>
+        </div>
+        <p>Front = 0 &nbsp;&nbsp;&nbsp; Rear = 2</p>
+    </div>
+
+    <div class="note">
+        In a simple linear array queue, the rear can reach the last index even when earlier positions are empty. A circular queue solves this space-reuse problem.
+    </div>
+</section>
+
+<section class="section" id="circular">
+    <h2>06. Circular Queue</h2>
+
+    <p>A circular queue treats the array as if its ends were connected. After reaching the last index, the next position can wrap around to index 0.</p>
+
+    <div class="diagram">
+        <div class="queue-row">
+            <div class="queue-cell">40</div>
+            <div class="queue-cell">50</div>
+            <div class="queue-cell">10</div>
+            <div class="queue-cell">20</div>
+            <div class="queue-cell">30</div>
+        </div>
+        <p>Rear wraps around to the beginning when space is available.</p>
+    </div>
+
+    <p>The next rear position is calculated using:</p>
+    <div class="note"><b>Next rear = (rear + 1) % capacity</b></div>
+</section>
+
+<section class="section" id="priority">
+    <h2>07. Priority Queue</h2>
+
+    <p>A priority queue stores elements with priorities. The element selected for removal depends on its priority rather than solely on its arrival time.</p>
+
+    <div class="table-wrap">
+        <table>
+            <tr>
+                <th>Element</th>
+                <th>Priority</th>
+            </tr>
+            <tr><td>A</td><td>3</td></tr>
+            <tr><td>B</td><td>1</td></tr>
+            <tr><td>C</td><td>2</td></tr>
+        </table>
+    </div>
+
+    <p>If a smaller number represents higher priority, B is processed first, followed by C and then A.</p>
+</section>
+
+<section class="section" id="deque">
+    <h2>08. Double-Ended Queue (Deque)</h2>
+
+    <p>A deque, pronounced “deck”, is a queue in which insertion and deletion are possible at both ends.</p>
+
+    <div class="cards">
+        <div class="card">
+            <h3>Input-Restricted Deque</h3>
+            <p>Insertion is allowed at one end, while deletion is allowed at both ends.</p>
+        </div>
+
+        <div class="card">
+            <h3>Output-Restricted Deque</h3>
+            <p>Deletion is allowed at one end, while insertion is allowed at both ends.</p>
+        </div>
+    </div>
+</section>
+
+<section class="section" id="applications">
+    <h2>09. Applications of Queue</h2>
+
+    <div class="cards">
+        <div class="card">
+            <h3>CPU Scheduling</h3>
+            <p>Processes can wait in a queue for CPU time.</p>
+        </div>
+
+        <div class="card">
+            <h3>Printer Queue</h3>
+            <p>Print jobs wait to be processed by a printer.</p>
+        </div>
+
+        <div class="card">
+            <h3>Breadth-First Search</h3>
+            <p>Queues help visit graph or tree vertices level by level.</p>
+        </div>
+
+        <div class="card">
+            <h3>Network Data</h3>
+            <p>Packets can wait in queues before transmission.</p>
+        </div>
+
+        <div class="card">
+            <h3>Customer Service</h3>
+            <p>Requests can be handled in arrival order.</p>
+        </div>
+
+        <div class="card">
+            <h3>Buffers</h3>
+            <p>Queues help manage data between devices or processes operating at different speeds.</p>
+        </div>
+    </div>
+</section>
+
+<section class="section" id="programs">
+    <h2>10. C Programs</h2>
+
+    <h3>Program 1: Queue Using Array</h3>
+
+    <div class="code-card">
+        <div class="code-head">
+            Linear Queue
+            <button class="copy" onclick="copyCode(this)">Copy Code</button>
+        </div>
+
+<pre><code>#include &lt;stdio.h&gt;
+#define SIZE 5
+
+int queue[SIZE];
+int front = -1, rear = -1;
+
+void enqueue(int value) {
+    if (rear == SIZE - 1) {
+        printf("Queue Overflow\n");
+        return;
+    }
+
+    if (front == -1)
+        front = 0;
+
+    queue[++rear] = value;
+    printf("%d inserted\n", value);
+}
+
+void dequeue(void) {
+    if (front == -1 || front &gt; rear) {
+        printf("Queue Underflow\n");
+        return;
+    }
+
+    printf("Deleted: %d\n", queue[front++]);
+
+    if (front &gt; rear)
+        front = rear = -1;
+}
+
+void display(void) {
+    int i;
+
+    if (front == -1) {
+        printf("Queue is empty\n");
+        return;
+    }
+
+    printf("Queue: ");
+    for (i = front; i &lt;= rear; i++)
+        printf("%d ", queue[i]);
+
+    printf("\n");
+}
+
+int main(void) {
+    enqueue(10);
+    enqueue(20);
+    enqueue(30);
+
+    display();
+    dequeue();
+    display();
+
+    return 0;
+}</code></pre>
+
+        <div class="output">10 inserted
+20 inserted
+30 inserted
+Queue: 10 20 30
+Deleted: 10
+Queue: 20 30</div>
+    </div>
+
+    <h3>Program 2: Circular Queue Using Array</h3>
+
+    <div class="code-card">
+        <div class="code-head">
+            Circular Queue
+            <button class="copy" onclick="copyCode(this)">Copy Code</button>
+        </div>
+
+<pre><code>#include &lt;stdio.h&gt;
+#define SIZE 5
+
+int queue[SIZE];
+int front = -1, rear = -1;
+
+void enqueue(int value) {
+    if ((rear + 1) % SIZE == front) {
+        printf("Queue is full\n");
+        return;
+    }
+
+    if (front == -1)
+        front = 0;
+
+    rear = (rear + 1) % SIZE;
+    queue[rear] = value;
+}
+
+void dequeue(void) {
+    if (front == -1) {
+        printf("Queue is empty\n");
+        return;
+    }
+
+    printf("Deleted: %d\n", queue[front]);
+
+    if (front == rear) {
+        front = rear = -1;
+    } else {
+        front = (front + 1) % SIZE;
+    }
+}
+
+void display(void) {
+    int i;
+
+    if (front == -1) {
+        printf("Queue is empty\n");
+        return;
+    }
+
+    printf("Queue: ");
+    i = front;
+
+    while (1) {
+        printf("%d ", queue[i]);
+
+        if (i == rear)
+            break;
+
+        i = (i + 1) % SIZE;
+    }
+
+    printf("\n");
+}
+
+int main(void) {
+    enqueue(10);
+    enqueue(20);
+    enqueue(30);
+    enqueue(40);
+
+    display();
+    dequeue();
+    enqueue(50);
+    enqueue(60);
+    display();
+
+    return 0;
+}</code></pre>
+
+        <div class="output">Queue: 10 20 30 40
+Deleted: 10
+Queue: 20 30 40 50 60</div>
+    </div>
+</section>
+
+</main>
+</div>
+
+<footer>
+    <p>DS•Learn | Data Structures and Algorithms</p>
+    <p>Learn • Practice • Build</p>
+</footer>
+
+<script>
+function copyCode(button) {
+    const code = button.closest(".code-card")
+        .querySelector("pre code").innerText;
+
+    if (navigator.clipboard && window.isSecureContext) {
+        navigator.clipboard.writeText(code).then(() => {
+            button.textContent = "Copied!";
+            setTimeout(() => {
+                button.textContent = "Copy Code";
+            }, 1500);
+        }).catch(() => fallbackCopy(code, button));
+    } else {
+        fallbackCopy(code, button);
+    }
+}
+
+function fallbackCopy(code, button) {
+    const area = document.createElement("textarea");
+    area.value = code;
+    area.style.position = "fixed";
+    area.style.opacity = "0";
+    document.body.appendChild(area);
+    area.select();
+
+    try {
+        document.execCommand("copy");
+        button.textContent = "Copied!";
+    } catch (error) {
+        button.textContent = "Select Code";
+    }
+
+    document.body.removeChild(area);
+
+    setTimeout(() => {
+        button.textContent = "Copy Code";
+    }, 1500);
+}
+</script>
+
+</body>
+</html>
+

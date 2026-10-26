@@ -1,0 +1,182 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Sorting Algorithms | Data Structures</title>
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+body{font-family:Arial,sans-serif;background:#07111f;color:#e5e7eb;line-height:1.7}
+header{padding:30px 8%;background:#0d1b2a;border-bottom:1px solid #26364a}
+h1{color:#6ee7b7}h2{color:#6ee7b7;margin-bottom:12px}
+h3{color:#93c5fd;margin:15px 0 8px}
+nav{display:flex;gap:18px;flex-wrap:wrap;margin-top:12px}
+nav a,a{color:#6ee7b7;text-decoration:none}
+main{max-width:1100px;margin:auto;padding:30px 20px}
+section{background:#101f30;border:1px solid #293750;border-radius:14px;padding:23px;margin-bottom:22px}
+p,li{color:#cbd5e1}
+ul,ol{padding-left:23px}
+.flow{white-space:pre-line;text-align:center;background:#071a16;color:#a7f3d0;border:1px solid #16634f;border-radius:10px;padding:16px;margin-top:12px}
+table{width:100%;border-collapse:collapse;margin-top:12px}
+th,td{border:1px solid #344256;padding:10px;text-align:left}
+th{color:#6ee7b7;background:#0b1725}
+.table-wrap{overflow-x:auto}
+.btn{display:inline-block;background:#10b981;color:#052e25;padding:11px 17px;border-radius:8px;margin-top:15px;font-weight:bold}
+code{color:#a7f3d0}
+footer{text-align:center;padding:25px;color:#94a3b8}
+@media(max-width:600px){section{padding:16px}header h1{font-size:25px}table{font-size:13px}}
+</style>
+</head>
+<body>
+<header>
+<h1>Sorting Algorithms</h1>
+<p>Learn how to arrange data efficiently.</p>
+<nav>
+<a href="#bubble">Bubble</a>
+<a href="#insertion">Insertion</a>
+<a href="#selection">Selection</a>
+<a href="#merge">Merge</a>
+<a href="#quick">Quick</a>
+<a href="#comparison">Comparison</a>
+<a href="sorting_programs.html">C Programs →</a>
+</nav>
+</header>
+
+<main>
+<section>
+<h2>Introduction to Sorting</h2>
+<p>Sorting is the process of arranging data in a particular order, usually ascending or descending. It makes searching and processing data easier.</p>
+<p><b>Example:</b> 40, 10, 30, 20 → 10, 20, 30, 40</p>
+</section>
+
+<section id="bubble">
+<h2>1. Bubble Sort</h2>
+<p>Bubble Sort repeatedly compares adjacent elements and swaps them if they are in the wrong order. After each pass, the largest unsorted element moves to the end.</p>
+<h3>Algorithm</h3>
+<ol><li>Compare adjacent elements.</li><li>Swap them if the first is greater than the second.</li><li>Repeat for all pairs in each pass.</li><li>Stop when the array is sorted or no swaps occur.</li></ol>
+<div class="flow">START → Compare adjacent elements
+↓
+Wrong order? → Swap
+↓
+Complete a pass
+↓
+Repeat until sorted → END</div>
+<p><b>Time:</b> Best O(n) with optimization; average/worst O(n²).</p>
+</section>
+
+<LearningViz type_id="BUBBLE_SORT" />
+
+<section id="insertion">
+<h2>2. Insertion Sort</h2>
+<p>Insertion Sort builds a sorted portion one element at a time. Each new element is inserted into its correct position among the already sorted elements.</p>
+<h3>Algorithm</h3>
+<ol><li>Start with the second element as the key.</li><li>Compare the key with elements on its left.</li><li>Shift larger elements one position right.</li><li>Insert the key in the correct position.</li><li>Repeat until all elements are sorted.</li></ol>
+<div class="flow">Select a key
+↓
+Compare with sorted portion
+↓
+Shift larger elements right
+↓
+Insert key
+↓
+Repeat → END</div>
+<p><b>Time:</b> Best O(n); average/worst O(n²).</p>
+</section>
+
+<LearningViz type_id="INSERTION_SORT" />
+
+<section id="selection">
+<h2>3. Selection Sort</h2>
+<p>Selection Sort repeatedly finds the smallest element from the unsorted portion and places it at the beginning of that portion.</p>
+<h3>Algorithm</h3>
+<ol><li>Assume the first unsorted element is the minimum.</li><li>Compare it with the remaining unsorted elements.</li><li>Find the smallest element.</li><li>Swap it with the first unsorted element.</li><li>Repeat for the remaining elements.</li></ol>
+<div class="flow">Find minimum in unsorted part
+↓
+Swap with first unsorted element
+↓
+Expand sorted portion
+↓
+Repeat → END</div>
+<p><b>Time:</b> Best, average, and worst O(n²).</p>
+</section>
+
+<LearningViz type_id="SELECTION_SORT" />
+
+<section id="merge">
+<h2>4. Merge Sort</h2>
+<p>Merge Sort uses the divide-and-conquer technique. It divides the array into smaller parts, sorts each part, and merges the sorted parts.</p>
+<h3>Algorithm</h3>
+<ol><li>Divide the array into two halves.</li><li>Recursively sort both halves.</li><li>Merge the two sorted halves.</li><li>Continue until the entire array is sorted.</li></ol>
+<div class="flow">Original array
+↓
+Divide into two halves
+↓
+Divide until single elements
+↓
+Merge in sorted order
+↓
+Sorted array</div>
+<p><b>Time:</b> Best, average, and worst O(n log n).</p>
+<p><b>Extra space:</b> O(n) for a typical array implementation.</p>
+</section>
+
+<LearningViz type_id="MERGE_SORT" />
+
+<section id="quick">
+<h2>5. Quick Sort</h2>
+<p>Quick Sort selects a pivot element and partitions the array so that smaller elements go before the pivot and larger elements go after it. It then sorts the partitions recursively.</p>
+<h3>Algorithm</h3>
+<ol><li>Select a pivot.</li><li>Partition elements around the pivot.</li><li>Apply Quick Sort to the left partition.</li><li>Apply Quick Sort to the right partition.</li><li>Stop when partitions have zero or one element.</li></ol>
+<div class="flow">Choose pivot
+↓
+Partition array
+↓
+Left part | Pivot | Right part
+↓
+Sort both parts recursively
+↓
+Sorted array</div>
+<p><b>Time:</b> Best/average O(n log n); worst O(n²).</p>
+<p><b>Extra space:</b> Typically O(log n) average recursion stack; worst O(n).</p>
+</section>
+
+<section id="comparison">
+<h2>Comparison of Sorting Algorithms</h2>
+<div class="table-wrap">
+<table>
+<tr><th>Algorithm</th><th>Best</th><th>Average</th><th>Worst</th><th>Stable?</th></tr>
+<tr><td>Bubble Sort*</td><td>O(n)</td><td>O(n²)</td><td>O(n²)</td><td>Yes</td></tr>
+<tr><td>Insertion Sort</td><td>O(n)</td><td>O(n²)</td><td>O(n²)</td><td>Yes</td></tr>
+<tr><td>Selection Sort</td><td>O(n²)</td><td>O(n²)</td><td>O(n²)</td><td>Usually no</td></tr>
+<tr><td>Merge Sort</td><td>O(n log n)</td><td>O(n log n)</td><td>O(n log n)</td><td>Yes</td></tr>
+<tr><td>Quick Sort</td><td>O(n log n)</td><td>O(n log n)</td><td>O(n²)</td><td>No</td></tr>
+</table>
+</div>
+<p><small>*Bubble Sort's best case assumes an early-stop optimization.</small></p>
+</section>
+
+<section>
+<h2>Comparison of Searching Algorithms</h2>
+<div class="table-wrap">
+<table>
+<tr><th>Feature</th><th>Linear Search</th><th>Binary Search</th></tr>
+<tr><td>Sorted data required?</td><td>No</td><td>Yes</td></tr>
+<tr><td>Best time</td><td>O(1)</td><td>O(1)</td></tr>
+<tr><td>Average time</td><td>O(n)</td><td>O(log n)</td></tr>
+<tr><td>Worst time</td><td>O(n)</td><td>O(log n)</td></tr>
+<tr><td>Method</td><td>Checks elements one by one</td><td>Repeatedly halves the search range</td></tr>
+</table>
+</div>
+</section>
+
+<section>
+<h2>Searching vs Sorting</h2>
+<p><b>Searching</b> locates a specific element in a collection. <b>Sorting</b> arranges elements into a chosen order. Sorting can make some later operations, such as Binary Search, more efficient.</p>
+<a class="btn" href="sorting_programs.html">View All C Programs & Outputs →</a>
+<a class="btn" href="units.html">back →</a>
+</section>
+</main>
+<footer>Data Structures | Searching and Sorting</footer>
+</body>
+</html>

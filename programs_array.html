@@ -1,0 +1,791 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Programs </title>
+    <style>
+      
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    scroll-behavior: smooth;
+}
+
+:root {
+    --bg: #0b1120;
+    --panel: #141d30;
+    --text: #e5e7eb;
+    --muted: #a5b4cc;
+    --accent: #38bdf8;
+    --border: #28364e;
+}
+
+body {
+    font-family: "Segoe UI", Arial, sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    line-height: 1.7;
+}
+
+/* Header */
+header {
+    background: rgba(11, 17, 32, 0.96);
+    border-bottom: 1px solid var(--border);
+    padding: 17px 7%;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    position: sticky;
+    top: 0;
+    z-index: 100;
+}
+
+.logo {
+    color: var(--accent);
+    font-size: 22px;
+    font-weight: 800;
+}
+
+header nav {
+    display: flex;
+    gap: 22px;
+}
+
+header nav a {
+    color: var(--text);
+    text-decoration: none;
+    font-size: 14px;
+}
+
+header nav a:hover {
+    color: var(--accent);
+}
+
+/* Hero */
+.hero {
+    padding: 75px 8% 65px;
+    background:
+        radial-gradient(ellipse at top right,
+        #173957 0%, transparent 55%);
+}
+
+.tag {
+    display: inline-block;
+    color: var(--accent);
+    background: #10283d;
+    border: 1px solid #245171;
+    padding: 5px 13px;
+    border-radius: 20px;
+    font-size: 13px;
+    margin-bottom: 18px;
+}
+
+.hero h1 {
+    font-size: clamp(38px, 6vw, 64px);
+    line-height: 1.15;
+    margin-bottom: 18px;
+}
+
+.hero h1 span {
+    color: var(--accent);
+}
+
+.hero p {
+    color: var(--muted);
+    max-width: 650px;
+    margin-bottom: 28px;
+}
+
+.btn {
+    display: inline-block;
+    background: var(--accent);
+    color: #06111f;
+    text-decoration: none;
+    padding: 11px 20px;
+    border-radius: 8px;
+    font-weight: 700;
+    transition: 0.25s;
+}
+
+.btn:hover {
+    transform: translateY(-3px);
+    background: #7dd3fc;
+}
+
+/* Layout */
+.layout {
+    display: grid;
+    grid-template-columns: 235px minmax(0, 1fr);
+    gap: 30px;
+    padding: 35px 7%;
+    align-items: start;
+}
+
+.sidebar {
+    position: sticky;
+    top: 90px;
+    background: var(--panel);
+    border: 1px solid var(--border);
+    border-radius: 14px;
+    padding: 20px;
+}
+
+.sidebar h3 {
+    font-size: 15px;
+    margin-bottom: 14px;
+    color: var(--accent);
+}
+
+.sidebar a {
+    display: block;
+    color: var(--muted);
+    text-decoration: none;
+    padding: 10px;
+    border-radius: 7px;
+    font-size: 14px;
+    margin-bottom: 4px;
+}
+
+.sidebar a:hover {
+    color: var(--accent);
+    background: #1c2a40;
+}
+
+.content {
+    min-width: 0;
+}
+
+.section {
+    margin-bottom: 35px;
+    scroll-margin-top: 100px;
+}
+
+.section-title {
+    font-size: 27px;
+    margin-bottom: 8px;
+}
+
+.description {
+    color: var(--muted);
+    margin-bottom: 20px;
+}
+
+/* Cards */
+.cards {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 15px;
+}
+
+.card {
+    background: var(--panel);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 20px;
+    transition: 0.25s;
+}
+
+.card:hover {
+    border-color: var(--accent);
+    transform: translateY(-3px);
+}
+
+.card h3 {
+    color: var(--accent);
+    margin-bottom: 8px;
+}
+
+.card p {
+    color: var(--muted);
+    font-size: 14px;
+}
+
+/* Information boxes */
+.info {
+    background: var(--panel);
+    border: 1px solid var(--border);
+    border-left: 4px solid var(--accent);
+    border-radius: 9px;
+    padding: 20px;
+    margin: 18px 0;
+}
+
+.info strong {
+    color: var(--accent);
+}
+
+/* Code blocks */
+.code-card {
+    background: #080d18;
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    overflow: hidden;
+    margin: 18px 0 25px;
+}
+
+.code-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 10px;
+    padding: 12px 17px;
+    background: #182338;
+    border-bottom: 1px solid var(--border);
+}
+
+.code-header span {
+    font-size: 14px;
+    font-weight: 600;
+}
+
+.code-header button {
+    background: #24354c;
+    color: var(--text);
+    border: 1px solid #40516b;
+    padding: 6px 11px;
+    border-radius: 6px;
+    cursor: pointer;
+}
+
+.code-header button:hover {
+    background: var(--accent);
+    color: #06111f;
+}
+
+pre {
+    padding: 20px;
+    overflow-x: auto;
+    color: #b8e2ff;
+    font-family: Consolas, monospace;
+    font-size: 13px;
+    line-height: 1.8;
+}
+
+code {
+    font-family: Consolas, monospace;
+}
+
+/* Memory representation */
+.memory {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0;
+    margin: 22px 0;
+}
+
+.memory-item {
+    flex: 1 1 75px;
+    text-align: center;
+    border: 1px solid var(--accent);
+    background: #10283d;
+    padding: 12px 5px;
+}
+
+.memory-item small {
+    display: block;
+    color: var(--muted);
+    font-size: 11px;
+}
+
+.memory-item strong {
+    color: var(--accent);
+}
+
+ul {
+    padding-left: 22px;
+    color: var(--muted);
+}
+
+li {
+    margin-bottom: 7px;
+}
+
+footer {
+    text-align: center;
+    padding: 28px 15px;
+    color: var(--muted);
+    border-top: 1px solid var(--border);
+    font-size: 13px;
+}
+
+@media (max-width: 850px) {
+    .layout {
+        grid-template-columns: 1fr;
+        padding: 25px 5%;
+    }
+
+    .sidebar {
+        position: static;
+    }
+
+    .sidebar nav {
+        display: grid;
+        grid-template-columns: repeat(2, 1fr);
+        gap: 3px;
+    }
+
+    header {
+        padding: 15px 5%;
+    }
+
+    header nav {
+        gap: 10px;
+    }
+}
+
+@media (max-width: 520px) {
+    header nav a {
+        font-size: 12px;
+    }
+
+    .cards {
+        grid-template-columns: 1fr;
+    }
+
+    .hero {
+        padding: 55px 6%;
+    }
+}
+    /* new memory representation */
+
+  
+.program-link {
+    display: block;
+    text-decoration: none;
+    color: inherit;
+    scroll-margin-top: 100px;
+}
+
+.program-link p {
+    color: #38bdf8;
+    margin-top: 8px;
+    font-size: 13px;
+}
+
+#programs,
+#programs ~ .section {
+    scroll-margin-top: 100px;
+}
+
+.code-card {
+    scroll-margin-top: 100px;
+}
+
+    </style>
+</head>
+<body>
+    
+<!-- PROGRAMS NAVIGATION -->
+<section class="section" id="programs">
+
+    <h2 class="section-title">Programs Library</h2>
+    <p class="description">Select a program to view its code.</p>
+
+    <div class="cards">
+
+        <a href="#program1" class="card program-link">
+            <h3>01. Array Declaration</h3>
+            <p>View C Program →</p>
+        </a>
+
+        <a href="#program2" class="card program-link">
+            <h3>02. One-Dimensional Array</h3>
+            <p>View C Program →</p>
+        </a>
+
+        <a href="#program3" class="card program-link">
+            <h3>03. Two-Dimensional Array</h3>
+            <p>View C Program →</p>
+        </a>
+
+        <a href="#program4" class="card program-link">
+            <h3>04. Array Traversal</h3>
+            <p>View C Program →</p>
+        </a>
+
+        <a href="#program5" class="card program-link">
+            <h3>05. Array Insertion</h3>
+            <p>View C Program →</p>
+        </a>
+
+        <a href="#program6" class="card program-link">
+            <h3>06. Array Deletion</h3>
+            <p>View C Program →</p>
+        </a>
+
+        <a href="#program7" class="card program-link">
+            <h3>07. Linear Search</h3>
+            <p>View C Program →</p>
+        </a>
+
+        <a href="#program8" class="card program-link">
+            <h3>08. Binary Search</h3>
+            <p>View C Program →</p>
+        </a>
+
+        <a href="#program9" class="card program-link">
+            <h3>09. Bubble Sort</h3>
+            <p>View C Program →</p>
+        </a>
+
+        <a href="#program10" class="card program-link">
+            <h3>10. Display Array Addresses</h3>
+            <p>View C Program →</p>
+        </a>
+
+        <a href="#program11" class="card program-link">
+            <h3>11. Row-Major Traversal</h3>
+            <p>View C Program →</p>
+        </a>
+
+        <a href="#program12" class="card program-link">
+            <h3>12. Column-Major Traversal</h3>
+            <p>View C Program →</p>
+        </a>
+
+    </div>
+</section>
+
+
+<!-- PROGRAM 1 -->
+<section class="section" id="program1">
+    <h2 class="section-title">01. Array Declaration</h2>
+    <div class="code-card">
+        <div class="code-header">
+            <span>Array Declaration and Display</span>
+            <button onclick="copyCode(this)">Copy Code</button>
+        </div>
+        <pre><code>#include &lt;stdio.h&gt;
+
+int main() {
+    int a[5] = {10, 20, 30, 40, 50};
+
+    for (int i = 0; i &lt; 5; i++) {
+        printf("%d ", a[i]);
+    }
+
+    return 0;
+}</code></pre>
+    </div>
+</section>
+
+
+<!-- PROGRAM 2 -->
+<section class="section" id="program2">
+    <h2 class="section-title">02. One-Dimensional Array</h2>
+    <div class="code-card">
+        <div class="code-header">
+            <span>One-Dimensional Array</span>
+            <button onclick="copyCode(this)">Copy Code</button>
+        </div>
+        <pre><code>#include &lt;stdio.h&gt;
+
+int main() {
+    int a[5] = {5, 10, 15, 20, 25};
+
+    for (int i = 0; i &lt; 5; i++) {
+        printf("%d ", a[i]);
+    }
+
+    return 0;
+}</code></pre>
+    </div>
+</section>
+
+
+<!-- PROGRAM 3 -->
+<section class="section" id="program3">
+    <h2 class="section-title">03. Two-Dimensional Array</h2>
+    <div class="code-card">
+        <div class="code-header">
+            <span>Two-Dimensional Array</span>
+            <button onclick="copyCode(this)">Copy Code</button>
+        </div>
+        <pre><code>#include &lt;stdio.h&gt;
+
+int main() {
+    int a[2][2] = {{1, 2}, {3, 4}};
+
+    for (int i = 0; i &lt; 2; i++) {
+        for (int j = 0; j &lt; 2; j++) {
+            printf("%d ", a[i][j]);
+        }
+        printf("\n");
+    }
+
+    return 0;
+}</code></pre>
+    </div>
+</section>
+
+
+<!-- PROGRAM 4 -->
+<section class="section" id="program4">
+    <h2 class="section-title">04. Array Traversal</h2>
+    <div class="code-card">
+        <div class="code-header">
+            <span>Array Traversal</span>
+            <button onclick="copyCode(this)">Copy Code</button>
+        </div>
+        <pre><code>#include &lt;stdio.h&gt;
+
+int main() {
+    int a[] = {5, 10, 15, 20, 25};
+
+    for (int i = 0; i &lt; 5; i++) {
+        printf("%d ", a[i]);
+    }
+
+    return 0;
+}</code></pre>
+    </div>
+</section>
+
+
+<!-- PROGRAM 5 -->
+<section class="section" id="program5">
+    <h2 class="section-title">05. Array Insertion</h2>
+    <div class="code-card">
+        <div class="code-header">
+            <span>Insertion at a Position</span>
+            <button onclick="copyCode(this)">Copy Code</button>
+        </div>
+        <pre><code>#include &lt;stdio.h&gt;
+
+int main() {
+    int a[10] = {10, 20, 30, 40};
+    int n = 4, pos = 2, value = 25;
+
+    if (n &lt; 10 &amp;&amp; pos &gt;= 0 &amp;&amp; pos &lt;= n) {
+        for (int i = n; i &gt; pos; i--) {
+            a[i] = a[i - 1];
+        }
+
+        a[pos] = value;
+        n++;
+
+        for (int i = 0; i &lt; n; i++) {
+            printf("%d ", a[i]);
+        }
+    }
+
+    return 0;
+}</code></pre>
+    </div>
+</section>
+
+
+<!-- PROGRAM 6 -->
+<section class="section" id="program6">
+    <h2 class="section-title">06. Array Deletion</h2>
+    <div class="code-card">
+        <div class="code-header">
+            <span>Deletion at a Position</span>
+            <button onclick="copyCode(this)">Copy Code</button>
+        </div>
+        <pre><code>#include &lt;stdio.h&gt;
+
+int main() {
+    int a[] = {10, 20, 30, 40, 50};
+    int n = 5, pos = 2;
+
+    if (pos &gt;= 0 &amp;&amp; pos &lt; n) {
+        for (int i = pos; i &lt; n - 1; i++) {
+            a[i] = a[i + 1];
+        }
+
+        n--;
+
+        for (int i = 0; i &lt; n; i++) {
+            printf("%d ", a[i]);
+        }
+    }
+
+    return 0;
+}</code></pre>
+    </div>
+</section>
+
+
+<!-- PROGRAM 7 -->
+<section class="section" id="program7">
+    <h2 class="section-title">07. Linear Search</h2>
+    <div class="code-card">
+        <div class="code-header">
+            <span>Linear Search</span>
+            <button onclick="copyCode(this)">Copy Code</button>
+        </div>
+        <pre><code>#include &lt;stdio.h&gt;
+
+int main() {
+    int a[] = {10, 20, 30, 40, 50};
+    int n = 5, key = 30, found = 0;
+
+    for (int i = 0; i &lt; n; i++) {
+        if (a[i] == key) {
+            printf("Found at index %d", i);
+            found = 1;
+            break;
+        }
+    }
+
+    if (!found) {
+        printf("Element not found");
+    }
+
+    return 0;
+}</code></pre>
+    </div>
+</section>
+
+
+<!-- PROGRAM 8 -->
+<section class="section" id="program8">
+    <h2 class="section-title">08. Binary Search</h2>
+    <div class="code-card">
+        <div class="code-header">
+            <span>Binary Search</span>
+            <button onclick="copyCode(this)">Copy Code</button>
+        </div>
+        <pre><code>#include &lt;stdio.h&gt;
+
+int main() {
+    int a[] = {10, 20, 30, 40, 50};
+    int n = 5, key = 40;
+    int low = 0, high = n - 1, found = 0;
+
+    while (low &lt;= high) {
+        int mid = low + (high - low) / 2;
+
+        if (a[mid] == key) {
+            printf("Found at index %d", mid);
+            found = 1;
+            break;
+        } else if (a[mid] &lt; key) {
+            low = mid + 1;
+        } else {
+            high = mid - 1;
+        }
+    }
+
+    if (!found) {
+        printf("Element not found");
+    }
+
+    return 0;
+}</code></pre>
+    </div>
+</section>
+
+
+<!-- PROGRAM 9 -->
+<section class="section" id="program9">
+    <h2 class="section-title">09. Bubble Sort</h2>
+    <div class="code-card">
+        <div class="code-header">
+            <span>Bubble Sort in Ascending Order</span>
+            <button onclick="copyCode(this)">Copy Code</button>
+        </div>
+        <pre><code>#include &lt;stdio.h&gt;
+
+int main() {
+    int a[] = {40, 10, 30, 20, 50};
+    int n = 5, temp;
+
+    for (int i = 0; i &lt; n - 1; i++) {
+        for (int j = 0; j &lt; n - 1 - i; j++) {
+            if (a[j] &gt; a[j + 1]) {
+                temp = a[j];
+                a[j] = a[j + 1];
+                a[j + 1] = temp;
+            }
+        }
+    }
+
+    for (int i = 0; i &lt; n; i++) {
+        printf("%d ", a[i]);
+    }
+
+    return 0;
+}</code></pre>
+    </div>
+</section>
+
+
+<!-- PROGRAM 10 -->
+<section class="section" id="program10">
+    <h2 class="section-title">10. Display Array Addresses</h2>
+    <div class="code-card">
+        <div class="code-header">
+            <span>Memory Addresses of Array Elements</span>
+            <button onclick="copyCode(this)">Copy Code</button>
+        </div>
+        <pre><code>#include &lt;stdio.h&gt;
+
+int main() {
+    int a[] = {10, 20, 30};
+
+    for (int i = 0; i &lt; 3; i++) {
+        printf("a[%d] = %d, Address = %p\n",
+               i, a[i], (void *)&amp;a[i]);
+    }
+
+    return 0;
+}</code></pre>
+    </div>
+</section>
+
+
+<!-- PROGRAM 11 -->
+<section class="section" id="program11">
+    <h2 class="section-title">11. Row-Major Traversal</h2>
+    <div class="code-card">
+        <div class="code-header">
+            <span>Row-Major Traversal of a Matrix</span>
+            <button onclick="copyCode(this)">Copy Code</button>
+        </div>
+        <pre><code>#include &lt;stdio.h&gt;
+
+int main() {
+    int a[2][3] = {{10, 20, 30}, {40, 50, 60}};
+
+    for (int i = 0; i &lt; 2; i++) {
+        for (int j = 0; j &lt; 3; j++) {
+            printf("%d ", a[i][j]);
+        }
+    }
+
+    return 0;
+}</code></pre>
+    </div>
+</section>
+
+
+<!-- PROGRAM 12 -->
+<section class="section" id="program12">
+    <h2 class="section-title">12. Column-Major Traversal</h2>
+    <div class="code-card">
+        <div class="code-header">
+            <span>Column-Major Traversal of a Matrix</span>
+            <button onclick="copyCode(this)">Copy Code</button>
+        </div>
+        <pre><code>#include &lt;stdio.h&gt;
+
+int main() {
+    int a[2][3] = {{10, 20, 30}, {40, 50, 60}};
+
+    for (int j = 0; j &lt; 3; j++) {
+        for (int i = 0; i &lt; 2; i++) {
+            printf("%d ", a[i][j]);
+        }
+    }
+
+    return 0;
+}</code></pre>
+    </div>
+</section>
+<a href="array.html" class="btn">back</a>
+</body>
+</html>

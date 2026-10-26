@@ -1,0 +1,135 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Searching | Data Structures</title>
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+body{font-family:Arial,sans-serif;background:#07111f;color:#e5e7eb;line-height:1.7}
+header{padding:30px 8%;background:#0d1b2a;border-bottom:1px solid #26364a}
+header h1{color:#6ee7b7;font-size:32px}
+nav{margin-top:12px;display:flex;gap:20px;flex-wrap:wrap}
+nav a{color:#a7f3d0;text-decoration:none}
+main{max-width:1050px;margin:auto;padding:30px 20px}
+section{background:#101f30;border:1px solid #293750;border-radius:14px;padding:24px;margin-bottom:22px}
+h2{color:#6ee7b7;margin-bottom:12px}
+h3{color:#93c5fd;margin:15px 0 8px}
+p,li{color:#cbd5e1}
+ul,ol{padding-left:24px}
+.flow{background:#071a16;border:1px solid #16634f;padding:16px;border-radius:10px;text-align:center;color:#a7f3d0;white-space:pre-line;margin-top:12px}
+table{width:100%;border-collapse:collapse;margin-top:12px}
+th,td{border:1px solid #344256;padding:10px;text-align:left}
+th{color:#6ee7b7;background:#0b1725}
+.btn{display:inline-block;margin-top:14px;background:#10b981;color:#052e25;padding:10px 18px;border-radius:8px;text-decoration:none;font-weight:bold}
+footer{text-align:center;padding:25px;color:#94a3b8}
+@media(max-width:600px){header h1{font-size:25px}section{padding:17px}table{font-size:13px}}
+</style>
+</head>
+<body>
+<header>
+<h1>Searching in Data Structures</h1>
+<p>Find an element efficiently in a collection of data.</p>
+<nav>
+<a href="#linear">Linear Search</a>
+<a href="#binary">Binary Search</a>
+<a href="#compare">Comparison</a>
+<a href="searching_programs.html">C Programs →</a>
+</nav>
+</header>
+
+<main>
+<section>
+<h2>Introduction to Searching</h2>
+<p>Searching is the process of finding a particular element, called a key, in a list or array. It helps determine whether the element exists and, if found, its position.</p>
+<h3>Types of Searching</h3>
+<ul>
+<li><b>Linear Search:</b> Checks elements one by one.</li>
+<li><b>Binary Search:</b> Repeatedly divides a sorted array into halves.</li>
+</ul>
+</section>
+
+<section id="linear">
+<h2>1. Linear Search</h2>
+<p>Linear Search compares the key with each element, starting from the first element. It stops when the key is found or the list ends.</p>
+<h3>Algorithm</h3>
+<ol>
+<li>Start from the first element.</li>
+<li>Compare the current element with the key.</li>
+<li>If equal, return its position.</li>
+<li>Otherwise, move to the next element.</li>
+<li>If all elements are checked, report that the key was not found.</li>
+</ol>
+<h3>Example</h3>
+<p>Array: 12, 25, 7, 40, 18</p>
+<p>Key: 40</p>
+<p>Comparisons: 12 → 25 → 7 → 40</p>
+<p>Result: Found at position 4 (index 3).</p>
+<div class="flow">START
+  ↓
+Read array and key
+  ↓
+Check each element
+  ↓
+Element equals key?
+  ├── YES → Display position → END
+  └── NO → Check next element
+                 ↓
+        List finished?
+          ├── YES → Not found → END
+          └── NO → Repeat</div>
+</section>
+
+<section id="binary">
+<h2>2. Binary Search</h2>
+<p>Binary Search finds an element by repeatedly dividing the search range into two halves. <b>The array must be sorted</b> before using this method.</p>
+<h3>Algorithm</h3>
+<ol>
+<li>Set <code>low = 0</code> and <code>high = n - 1</code>.</li>
+<li>Calculate <code>mid = low + (high - low) / 2</code>.</li>
+<li>If the middle element equals the key, return its position.</li>
+<li>If the key is smaller, search the left half.</li>
+<li>If the key is larger, search the right half.</li>
+<li>Repeat until found or <code>low &gt; high</code>.</li>
+</ol>
+<h3>Example</h3>
+<p>Sorted array: 10, 20, 30, 40, 50, 60, 70</p>
+<p>Key: 60</p>
+<p>Middle = 40 → search right half.</p>
+<p>Middle = 60 → element found at position 6 (index 5).</p>
+<div class="flow">START
+  ↓
+Set low = 0, high = n - 1
+  ↓
+Is low ≤ high?
+  ├── NO → Not found → END
+  └── YES → Calculate mid
+                 ↓
+          Compare key with A[mid]
+          ├── Equal → Found → END
+          ├── Smaller → high = mid - 1
+          └── Larger → low = mid + 1
+                         ↓
+                       Repeat</div>
+</section>
+
+<section id="compare">
+<h2>Linear Search vs Binary Search</h2>
+<table>
+<tr><th>Feature</th><th>Linear Search</th><th>Binary Search</th></tr>
+<tr><td>Method</td><td>Checks one by one</td><td>Divides search range in half</td></tr>
+<tr><td>Sorted data required?</td><td>No</td><td>Yes</td></tr>
+<tr><td>Best-case time</td><td>O(1)</td><td>O(1)</td></tr>
+<tr><td>Average-case time</td><td>O(n)</td><td>O(log n)</td></tr>
+<tr><td>Worst-case time</td><td>O(n)</td><td>O(log n)</td></tr>
+<tr><td>Suitable for</td><td>Small or unsorted lists</td><td>Sorted arrays</td></tr>
+</table>
+<a class="btn" href="searching_programs.html">View C Programs & Outputs →</a>
+<a class="btn" href="units.html">Back →</a>
+</section>
+</main>
+
+<footer>Data Structures | Searching Techniques</footer>
+</body>
+</html>

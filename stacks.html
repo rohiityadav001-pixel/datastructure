@@ -1,0 +1,332 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Stacks | DS.Learn</title>
+<style>
+:root {
+  --navy:#102544; --navy2:#17375f; --blue:#1684e8; --pale:#edf6ff;
+  --purple:#7657e8; --green:#159b70; --ink:#172b4d; --muted:#5d6f89;
+  --line:#d8e5f4; --white:#fff; --code:#101b2b;
+}
+*{box-sizing:border-box;margin:0;padding:0;scroll-behavior:smooth}
+body{font-family:Segoe UI,Arial,sans-serif;color:var(--ink);background:#f5f8fc;line-height:1.6}
+header{height:70px;background:linear-gradient(100deg,var(--navy),var(--navy2));color:white;display:flex;align-items:center;justify-content:space-between;padding:0 5%;position:sticky;top:0;z-index:10;box-shadow:0 3px 14px #10254420}
+.brand{display:flex;align-items:center;gap:12px;font-size:22px;font-weight:800}
+.brand-icon{font-size:30px;color:#65d4ff}
+header nav{display:flex;gap:24px}
+header nav a{color:#e9f2ff;text-decoration:none;font-size:14px}
+header nav a:hover,header nav a.active{color:#67d6ff}
+.page{display:grid;grid-template-columns:235px minmax(0,1fr);min-height:calc(100vh - 70px)}
+aside{background:#fff;border-right:1px solid var(--line);padding:24px 15px;position:sticky;top:70px;height:calc(100vh - 70px);overflow:auto}
+aside h3{font-size:15px;margin:0 8px 15px;color:#173b70}
+aside a{display:block;padding:10px 12px;margin:4px 0;border-radius:9px;text-decoration:none;color:#324b6d;font-size:14px;font-weight:600}
+aside a:hover,aside a.active{background:#e2f2ff;color:#096cc4}
+main{padding:22px;min-width:0;max-width:1500px;width:100%;margin:auto}
+.panel{background:white;border:1px solid var(--line);border-radius:11px;margin-bottom:16px;overflow:hidden;scroll-margin-top:88px;box-shadow:0 3px 12px #17375f06}
+.panel-heading{display:flex;align-items:center;gap:12px;padding:10px 15px;background:linear-gradient(90deg,#eaf4ff,#f8fbff);border-bottom:1px solid #e2edf9}
+.panel-heading.purple{background:linear-gradient(90deg,#f0edff,#fbfaff)}
+.panel-heading.green{background:linear-gradient(90deg,#e7f8f2,#f8fffc)}
+.panel-heading h2{font-size:19px;color:#153b70}
+.panel-heading.purple h2{color:#41318d}.panel-heading.green h2{color:#075b4b}
+.icon{display:grid;place-items:center;width:36px;height:36px;border-radius:10px;background:var(--blue);color:white;font-size:20px;flex-shrink:0}
+.purple .icon{background:var(--purple)}.green .icon{background:var(--green)}
+.panel-body{padding:16px}
+p{margin-bottom:9px}
+.muted{color:var(--muted)}
+.two-col{display:grid;grid-template-columns:1.15fr 1fr;gap:18px;align-items:start}
+.keybox,.example{border:1px solid #b9ddff;background:#f2f9ff;border-radius:8px;padding:13px}
+.keybox h3,.example h3{font-size:14px;color:#096cc4;margin-bottom:6px}
+.keybox ul,.app-list{padding-left:20px}
+.diagram{display:flex;gap:5px;align-items:flex-end;justify-content:center;margin:18px 0 6px;min-height:120px}
+.stack-cell{width:64px;height:39px;border:1px solid #1684e8;background:#eef7ff;display:grid;place-items:center;font-weight:700;color:#1456a0;border-radius:4px}
+.stack-visual{display:flex;flex-direction:column-reverse;align-items:center;gap:4px}
+.top-label{font-size:13px;color:#096cc4;font-weight:700;margin-bottom:6px}
+.caption{text-align:center;font-size:12px;color:var(--muted);margin-top:7px}
+.cards{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px}
+.card{border:1px solid var(--line);border-radius:9px;padding:14px;background:#fff}
+.card h3{font-size:15px;color:#096cc4;margin-bottom:5px}.card p{font-size:14px;color:var(--muted);margin:0}
+table{border-collapse:collapse;width:100%;font-size:13px}
+th,td{border:1px solid var(--line);padding:9px 10px;text-align:left}
+th{background:#f0efff;color:#40318e}
+.code-card{background:var(--code);border-radius:9px;overflow:hidden;color:#d9e7f8;border:1px solid #253a56;margin-top:8px}
+.code-head{display:flex;justify-content:space-between;gap:12px;align-items:center;background:#1d2e45;padding:10px 13px;font-size:13px;font-weight:700}
+button.copy{border:1px solid #526b89;background:#344a64;color:white;padding:5px 10px;border-radius:5px;cursor:pointer}
+button.copy:hover{background:#1684e8}
+pre{padding:15px;overflow-x:auto;font:13px/1.7 Consolas,Monaco,monospace;color:#c7e7ff;white-space:pre}
+.output{padding:10px 13px;background:#eaf8f2;border-top:1px solid #c9eadc;color:#096344;font-size:13px}
+.inline-code{font-family:Consolas,monospace;background:#edf4ff;padding:2px 5px;border-radius:4px}
+footer{text-align:center;padding:22px;color:var(--muted);font-size:13px}
+@media(max-width:850px){.page{grid-template-columns:1fr}aside{position:static;height:auto;border-right:0;border-bottom:1px solid var(--line)}aside nav{display:grid;grid-template-columns:repeat(2,minmax(0,1fr))}main{padding:14px}header{padding:0 4%}.two-col{grid-template-columns:1fr}}
+@media(max-width:520px){.brand{font-size:17px}header nav{gap:12px}header nav a{font-size:12px}.cards{grid-template-columns:1fr}.panel-heading h2{font-size:16px}.panel-body{padding:12px}}
+</style>
+</head>
+<body>
+<header>
+  <div class="brand"><span class="brand-icon">▤</span> Stacks in Data Structures</div>
+  <nav><a href="units.html">Home</a>
+    <a href="array.html">Arrays</a><a class="active" href="stack_programs.html">Programs  </a></nav>
+</header>
+<div class="page">
+<aside>
+  <h3>STACK TOPICS</h3>
+  <nav>
+    <a href="#intro">▣ &nbsp; Introduction</a>
+    <a href="#memory">▦ &nbsp; Memory Representation</a>
+    <a href="#applications">⚙ &nbsp; Applications</a>
+    <a href="#operations">☷ &nbsp; Operations</a>
+    <a href="#recursion">↻ &nbsp; Recursion</a>
+    <a href="#linked">▤ &nbsp; Linked-List Stack</a>
+  </nav>
+</aside>
+<main>
+<section class="panel" id="intro">
+  <div class="panel-heading"><span class="icon">▣</span><h2>1. Introduction to Stacks</h2></div>
+  <div class="panel-body two-col">
+    <div>
+      <p>A <b>stack</b> is a linear data structure that follows the <b>Last In, First Out (LIFO)</b> principle. The last element inserted is the first one removed.</p>
+      <p>Insertion and deletion both take place at one end, called the <b>top</b>.</p>
+      <div class="code-card"><div class="code-head"><span>Program: Basic Stack Concept (C)</span><button class="copy" onclick="copyCode(this)">Copy Code</button></div>
+<pre><code>#include &lt;stdio.h&gt;
+
+int main(void) {
+    int stack[3] = {10, 20, 30};
+    int top = 2;
+
+    printf("Top element: %d\\n", stack[top]);
+    return 0;
+}</code></pre><div class="output">Output: Top element: 30</div></div>
+    </div>
+    <div class="keybox"><h3>💡 Key Points</h3><ul>
+      <li>Follows LIFO (Last In, First Out).</li><li>Push adds an item to the top.</li>
+      <li>Pop removes the top item.</li><li>Peek reads the top without removing it.</li>
+      <li>Also known as a pushdown stack.</li>
+    </ul>
+    <div class="diagram"><div class="stack-visual"><span class="top-label">TOP ↓</span><div class="stack-cell">30</div><div class="stack-cell">20</div><div class="stack-cell">10</div></div></div>
+    <div class="caption">30 was inserted last, so it comes out first.</div></div>
+  </div>
+</section>
+
+<section class="panel" id="memory">
+  <div class="panel-heading purple"><span class="icon">▦</span><h2>2. Memory Representation</h2></div>
+  <div class="panel-body">
+    <p>A stack can be implemented using an <b>array</b> or a <b>linked list</b>. In an array implementation, a variable called <span class="inline-code">top</span> stores the index of the top element.</p>
+    <div class="two-col">
+      <div class="example"><h3>Array Representation</h3>
+        <div class="diagram"><div class="stack-visual"><span class="top-label">TOP = 3 ↓</span><div class="stack-cell">40</div><div class="stack-cell">30</div><div class="stack-cell">20</div><div class="stack-cell">10</div></div></div>
+        <div class="caption">Array indexes: 0, 1, 2, 3 (bottom to top)</div>
+      </div>
+      <div class="example"><h3>Linked-List Representation</h3>
+        <div class="stack-visual" style="align-items:center;gap:3px;margin:14px">
+          <div style="color:#096cc4;font-weight:700">TOP →</div>
+          <div class="stack-cell" style="width:150px">40 → NULL</div><div style="color:#789">↓</div>
+          <div class="stack-cell" style="width:150px">30 → next</div><div style="color:#789">↓</div>
+          <div class="stack-cell" style="width:150px">20 → next</div><div style="color:#789">↓</div>
+          <div class="stack-cell" style="width:150px">10 → NULL</div>
+        </div>
+      </div>
+    </div>
+    <div class="keybox" style="margin-top:12px"><b>Array stack:</b> fixed capacity in a basic array implementation. &nbsp; <b>Linked-list stack:</b> grows dynamically as nodes are allocated.</div>
+  </div>
+</section>
+
+<section class="panel" id="applications">
+  <div class="panel-heading green"><span class="icon">⚙</span><h2>3. Applications of Stacks</h2></div>
+  <div class="panel-body two-col">
+    <div><p>Stacks are useful when the most recent action or item must be handled first.</p>
+      <div class="cards">
+        <div class="card"><h3>Function Calls</h3><p>Stores function-call information.</p></div>
+        <div class="card"><h3>Undo / Redo</h3><p>Tracks recent editing actions.</p></div>
+        <div class="card"><h3>Expression Evaluation</h3><p>Helps evaluate expressions and manage operators.</p></div>
+        <div class="card"><h3>Backtracking</h3><p>Remembers previous states or choices.</p></div>
+      </div>
+    </div>
+    <div class="keybox"><h3>★ Real-World Example: Browser Back</h3><p>As you visit pages, each page can be placed on a history stack. Pressing Back returns to the most recently visited page.</p>
+      <div style="display:flex;align-items:center;justify-content:center;gap:7px;flex-wrap:wrap;margin:20px 0">
+        <span style="background:#159b70;color:white;padding:8px;border-radius:6px">Stack</span><span>→</span><span class="stack-cell">Page 1</span><span>→</span><span class="stack-cell">Page 2</span><span>→</span><span class="stack-cell">Page 3</span>
+      </div><div class="caption">The most recent page is at the top.</div>
+    </div>
+  </div>
+</section>
+
+<section class="panel" id="operations">
+  <div class="panel-heading purple"><span class="icon">☷</span><h2>4. Stack Operations</h2></div>
+  <div class="panel-body">
+    <div class="two-col">
+      <div>
+        <table><thead><tr><th>Operation</th><th>Description</th></tr></thead><tbody>
+          <tr><td><b>push()</b></td><td>Adds an element to the top.</td></tr>
+          <tr><td><b>pop()</b></td><td>Removes the top element.</td></tr>
+          <tr><td><b>peek()</b></td><td>Returns the top element.</td></tr>
+          <tr><td><b>isEmpty()</b></td><td>Checks whether the stack is empty.</td></tr>
+          <tr><td><b>isFull()</b></td><td>Checks whether an array stack is full.</td></tr>
+        </tbody></table>
+      </div>
+      <div><p class="muted">Complete C program for push, pop, peek and display.</p>
+        <div class="code-card"><div class="code-head"><span>Stack Operations (C)</span><button class="copy" onclick="copyCode(this)">Copy Code</button></div>
+<pre><code>#include &lt;stdio.h&gt;
+#define MAX 5
+
+int stack[MAX];
+int top = -1;
+
+void push(int value) {
+    if (top == MAX - 1) {
+        printf("Stack Overflow\\n");
+        return;
+    }
+    stack[++top] = value;
+}
+
+void pop(void) {
+    if (top == -1) {
+        printf("Stack Underflow\\n");
+        return;
+    }
+    printf("Popped: %d\\n", stack[top--]);
+}
+
+void peek(void) {
+    if (top == -1)
+        printf("Stack is empty\\n");
+    else
+        printf("Top: %d\\n", stack[top]);
+}
+
+void display(void) {
+    if (top == -1) {
+        printf("Stack is empty\\n");
+        return;
+    }
+    for (int i = top; i &gt;= 0; i--)
+        printf("%d\\n", stack[i]);
+}
+
+int main(void) {
+    push(10);
+    push(20);
+    push(30);
+    display();
+    peek();
+    pop();
+    display();
+    return 0;
+}</code></pre><div class="output">Output begins: 30, 20, 10 — Top: 30 — Popped: 30</div></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="panel" id="recursion">
+  <div class="panel-heading"><span class="icon">↻</span><h2>5. Recursion</h2></div>
+  <div class="panel-body two-col">
+    <div>
+      <p><b>Recursion</b> is a programming technique in which a function calls itself to solve a smaller version of a problem.</p>
+      <p>Every recursive function needs a <b>base case</b> to stop the calls. Function calls are managed using the program's call stack.</p>
+      <div class="keybox"><b>Remember:</b> A missing or incorrect base case can cause too many recursive calls and exhaust the call stack.</div>
+    </div>
+    <div class="code-card"><div class="code-head"><span>Program: Factorial Using Recursion</span><button class="copy" onclick="copyCode(this)">Copy Code</button></div>
+<pre><code>#include &lt;stdio.h&gt;
+
+int factorial(int n) {
+    if (n &lt;= 1)
+        return 1;
+
+    return n * factorial(n - 1);
+}
+
+int main(void) {
+    int n = 5;
+    printf("Factorial = %d\\n", factorial(n));
+    return 0;
+}</code></pre><div class="output">Output: Factorial = 120</div></div>
+  </div>
+</section>
+
+<section class="panel" id="linked">
+  <div class="panel-heading green"><span class="icon">▤</span><h2>6. Stack Using a Linked List</h2></div>
+  <div class="panel-body">
+    <p>This implementation creates a new node for each push and removes the first node for pop. It does not require a fixed array capacity.</p>
+    <div class="code-card"><div class="code-head"><span>Linked-List Stack (C)</span><button class="copy" onclick="copyCode(this)">Copy Code</button></div>
+<pre><code>#include &lt;stdio.h&gt;
+#include &lt;stdlib.h&gt;
+
+struct Node {
+    int data;
+    struct Node *next;
+};
+
+struct Node *top = NULL;
+
+void push(int value) {
+    struct Node *node = malloc(sizeof(struct Node));
+    if (node == NULL) {
+        printf("Memory allocation failed\\n");
+        return;
+    }
+    node-&gt;data = value;
+    node-&gt;next = top;
+    top = node;
+}
+
+void pop(void) {
+    if (top == NULL) {
+        printf("Stack Underflow\\n");
+        return;
+    }
+    struct Node *temp = top;
+    printf("Popped: %d\\n", temp-&gt;data);
+    top = top-&gt;next;
+    free(temp);
+}
+
+void display(void) {
+    struct Node *current = top;
+    while (current != NULL) {
+        printf("%d ", current-&gt;data);
+        current = current-&gt;next;
+    }
+    printf("\\n");
+}
+
+int main(void) {
+    push(10);
+    push(20);
+    push(30);
+    display();
+    pop();
+    display();
+
+    while (top != NULL)
+        pop();
+
+    return 0;
+}</code></pre><div class="output">Output: 30 20 10 &nbsp; | &nbsp; Popped: 30 &nbsp; | &nbsp; 20 10</div></div>
+  </div>
+</section>
+<footer> Data Structure<br>Learn the concept. Understand the logic. </footer>
+</main>
+</div>
+<script>
+function copyCode(button) {
+  const code = button.closest('.code-card').querySelector('pre code').innerText;
+  if (!navigator.clipboard) {
+    const area = document.createElement('textarea');
+    area.value = code;
+    document.body.appendChild(area);
+    area.select();
+    document.execCommand('copy');
+    area.remove();
+    button.textContent = 'Copied!';
+    setTimeout(() => button.textContent = 'Copy Code', 1400);
+    return;
+  }
+  navigator.clipboard.writeText(code).then(() => {
+    button.textContent = 'Copied!';
+    setTimeout(() => button.textContent = 'Copy Code', 1400);
+  }).catch(() => button.textContent = 'Copy failed');
+}
+</script>
+</body>
+</html>

@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>My Website</title>
+    
+    <style> 
+        * {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: Arial, sans-serif;
+    background: #f5f7ff;
+    color: #222;
+}
+
+
+/* Hero Section */
+.hero {
+    min-height: 600px;
+    width: 90%;
+    max-width: 1200px;
+    margin: auto;
+
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.hero-content {
+    width: 55%;
+}
+
+.hero-content h1 {
+    font-size: 55px;
+    line-height: 1.15;
+    margin-bottom: 20px;
+}
+
+.hero-content h1 span {
+    color: #5b4cff;
+}
+
+.hero-content p {
+    font-size: 19px;
+    color: #666;
+    line-height: 1.6;
+    max-width: 550px;
+    margin-bottom: 30px;
+}
+
+/* Buttons */
+.buttons {
+    display: flex;
+    gap: 15px;
+}
+
+.btn {
+    text-decoration: none;
+    padding: 14px 28px;
+    border-radius: 30px;
+    font-weight: bold;
+}
+
+.primary {
+    background: #5b4cff;
+    color: white;
+}
+
+.secondary {
+    border: 2px solid #5b4cff;
+    color: #5b4cff;
+}
+
+/* Hero Graphic */
+.hero-image {
+    width: 40%;
+    display: flex;
+    justify-content: center;
+}
+
+.code-box {
+    width: 280px;
+    height: 280px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    background: #5b4cff;
+    color: white;
+    border-radius: 50%;
+
+    font-size: 80px;
+    font-weight: bold;
+
+    box-shadow: 0 20px 40px rgba(91, 76, 255, 0.3);
+}
+    </style>
+</head>
+<body>
+
+ 
+    <!-- Hero Section -->
+    <section class="hero">
+        <div class="hero-content">
+            <h1>Data <span>Structure</span></h1>
+
+            <p>
+             BCA | Semster III . . .  
+            </p>
+
+            <div class="buttons">
+                <a href="units.html" class="btn primary">Get Started</a>
+                <a href="learn_more.html" class="btn secondary">Learn More</a>
+            </div>
+        </div>
+
+        <div class="hero-image">
+            <div class="code-box">
+                &lt;/&gt;
+            </div>
+        </div>
+    </section>
+
+</body>
+</html>

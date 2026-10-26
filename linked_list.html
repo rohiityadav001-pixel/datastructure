@@ -1,0 +1,1111 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Linked List | Data Structures</title>
+
+<style>
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+:root {
+    --navy: #101c3b;
+    --blue: #2563eb;
+    --light: #eff6ff;
+    --text: #1e293b;
+    --muted: #64748b;
+    --border: #dbe4f0;
+}
+
+html {
+    scroll-behavior: smooth;
+    scroll-padding-top: 85px;
+}
+
+body {
+    font-family: "Segoe UI", Arial, sans-serif;
+    background: #f5f8ff;
+    color: var(--text);
+    line-height: 1.7;
+}
+
+header {
+    background: var(--navy);
+    color: white;
+    padding: 17px 6%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 18px;
+    flex-wrap: wrap;
+    position: sticky;
+    top: 0;
+    z-index: 10;
+}
+
+.logo {
+    font-size: 23px;
+    font-weight: 800;
+}
+
+.logo span {
+    color: #60a5fa;
+}
+
+nav {
+    display: flex;
+    gap: 18px;
+    flex-wrap: wrap;
+}
+
+nav a {
+    color: #e2e8f0;
+    text-decoration: none;
+    font-size: 14px;
+}
+
+nav a:hover {
+    color: #60a5fa;
+}
+
+.hero {
+    padding: 65px 7%;
+    background: linear-gradient(120deg, #101c3b, #1d4ed8);
+    color: white;
+}
+
+.hero .tag {
+    display: inline-block;
+    background: #ffffff20;
+    padding: 5px 13px;
+    border-radius: 20px;
+    margin-bottom: 15px;
+    font-size: 13px;
+}
+
+.hero h1 {
+    font-size: clamp(32px, 5vw, 52px);
+    line-height: 1.2;
+    margin-bottom: 17px;
+}
+
+.hero p {
+    max-width: 700px;
+    color: #dbeafe;
+    font-size: 17px;
+}
+
+.hero-buttons {
+    display: flex;
+    gap: 12px;
+    margin-top: 25px;
+    flex-wrap: wrap;
+}
+
+.btn {
+    display: inline-block;
+    padding: 10px 19px;
+    background: white;
+    color: #1d4ed8;
+    text-decoration: none;
+    border-radius: 8px;
+    font-weight: 700;
+}
+
+.btn.secondary {
+    background: transparent;
+    border: 1px solid #bfdbfe;
+    color: white;
+}
+
+.layout {
+    max-width: 1450px;
+    margin: 30px auto;
+    padding: 0 20px;
+    display: grid;
+    grid-template-columns: 245px minmax(0, 1fr);
+    gap: 25px;
+    align-items: start;
+}
+
+.sidebar {
+    background: white;
+    border: 1px solid var(--border);
+    border-radius: 15px;
+    padding: 20px 14px;
+    position: sticky;
+    top: 90px;
+    max-height: calc(100vh - 110px);
+    overflow-y: auto;
+}
+
+.sidebar h3 {
+    padding: 0 10px 12px;
+    color: var(--navy);
+}
+
+.sidebar a {
+    display: block;
+    text-decoration: none;
+    color: #475569;
+    padding: 9px 11px;
+    border-radius: 7px;
+    font-size: 13px;
+    margin: 3px 0;
+}
+
+.sidebar a:hover {
+    background: var(--light);
+    color: var(--blue);
+}
+
+.content {
+    min-width: 0;
+}
+
+.section {
+    background: white;
+    padding: 27px;
+    border: 1px solid var(--border);
+    border-radius: 15px;
+    margin-bottom: 25px;
+    scroll-margin-top: 90px;
+}
+
+.section h2 {
+    font-size: 25px;
+    color: var(--navy);
+    margin-bottom: 15px;
+}
+
+.section h3 {
+    font-size: 18px;
+    color: #1d4ed8;
+    margin: 22px 0 10px;
+}
+
+.section p {
+    margin-bottom: 12px;
+}
+
+.note {
+    background: var(--light);
+    border-left: 4px solid var(--blue);
+    padding: 13px 16px;
+    border-radius: 7px;
+    margin: 15px 0;
+}
+
+.diagram {
+    background: #f8fafc;
+    border: 1px dashed #94a3b8;
+    border-radius: 10px;
+    padding: 22px 12px;
+    margin: 16px 0;
+    text-align: center;
+    overflow-x: auto;
+}
+
+.nodes {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 8px;
+    min-width: max-content;
+}
+
+.node {
+    display: inline-flex;
+    flex-direction: column;
+    min-width: 88px;
+    border: 2px solid var(--blue);
+    background: white;
+    border-radius: 7px;
+    overflow: hidden;
+    font-weight: 700;
+}
+
+.node span {
+    padding: 7px 10px;
+}
+
+.node span + span {
+    border-top: 1px solid #93c5fd;
+    background: #dbeafe;
+    color: #1d4ed8;
+}
+
+.arrow {
+    color: var(--blue);
+    font-size: 23px;
+    font-weight: 800;
+}
+
+.cards {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(210px, 1fr));
+    gap: 15px;
+    margin-top: 15px;
+}
+
+.card {
+    border: 1px solid var(--border);
+    background: #fbfdff;
+    border-radius: 11px;
+    padding: 17px;
+}
+
+.card h3 {
+    margin-top: 0;
+}
+
+.code-card {
+    border: 1px solid var(--border);
+    border-radius: 11px;
+    overflow: hidden;
+    margin-top: 15px;
+}
+
+.code-head {
+    background: #eaf1ff;
+    padding: 12px 15px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 12px;
+    flex-wrap: wrap;
+    font-weight: 700;
+}
+
+.copy {
+    background: var(--blue);
+    color: white;
+    border: 0;
+    padding: 7px 12px;
+    border-radius: 6px;
+    cursor: pointer;
+}
+
+pre {
+    background: #0f172a;
+    color: #e2e8f0;
+    padding: 18px;
+    overflow-x: auto;
+    font-size: 13px;
+    line-height: 1.65;
+    tab-size: 4;
+}
+
+.output {
+    background: #f1f5f9;
+    border-top: 1px solid var(--border);
+    padding: 12px 16px;
+    font-family: monospace;
+    white-space: pre-wrap;
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 15px 0;
+}
+
+th, td {
+    border: 1px solid var(--border);
+    padding: 11px;
+    text-align: left;
+}
+
+th {
+    background: #eaf1ff;
+    color: var(--navy);
+}
+
+.table-wrap {
+    overflow-x: auto;
+}
+
+footer {
+    text-align: center;
+    padding: 28px;
+    background: var(--navy);
+    color: #dbeafe;
+    margin-top: 40px;
+}
+
+@media (max-width: 850px) {
+    .layout {
+        grid-template-columns: 1fr;
+    }
+
+    .sidebar {
+        position: static;
+        max-height: none;
+    }
+
+    .sidebar nav {
+        display: block;
+    }
+
+    header {
+        position: static;
+    }
+}
+
+@media (max-width: 500px) {
+    .section {
+        padding: 18px;
+    }
+
+    .hero {
+        padding: 42px 6%;
+    }
+}
+</style>
+</head>
+
+<body>
+
+<header>
+    <div class="logo">DS<span>•</span>Learn</div>
+    <nav>
+        <a href="units.html">Home</a>
+        <a href="#programs">Linked List</a>
+    </nav>
+</header>
+
+<section class="hero">
+    <span class="tag">DATA STRUCTURES • UNIT 2</span>
+    <h1>Linked List</h1>
+    <p>Explore linked-list types, memory representation, traversal, searching, insertion, deletion, applications and polynomial manipulation with diagrams and C programs.</p>
+    <div class="hero-buttons">
+        <a href="#types" class="btn">Explore Topics ↓</a>
+        <a href="#programs" class="btn secondary">View C Programs</a>
+    </div>
+</section>
+
+<div class="layout">
+
+<aside class="sidebar">
+    <h3>Contents</h3>
+    <a href="#definition">01. Definition</a>
+    <a href="#memory">02. Memory Representation</a>
+    <a href="#types">03. Types of Linked List</a>
+    <a href="#traversing">04. Traversing</a>
+    <a href="#searching">05. Searching</a>
+    <a href="#inserting">06. Inserting</a>
+    <a href="#deleting">07. Deleting</a>
+    <a href="#singly">08. Singly Linked List</a>
+    <a href="#doubly">09. Doubly Linked List</a>
+    <a href="#applications">10. Applications</a>
+    <a href="#polynomial">11. Polynomial Manipulation</a>
+    <a href="#programs">12. C Programs</a>
+</aside>
+
+<main class="content">
+
+<section class="section" id="definition">
+    <h2>01. Definition of Linked List</h2>
+    <p>A <b>linked list</b> is a linear data structure made up of nodes. Each node contains data and one or more links (pointers) that connect it to other nodes.</p>
+    <p>Unlike an array, linked-list nodes do not need to occupy consecutive memory locations. Nodes are connected through pointers.</p>
+
+    <div class="diagram">
+        <div class="nodes">
+            <div class="node"><span>Data: 10</span><span>Next</span></div>
+            <div class="arrow">→</div>
+            <div class="node"><span>Data: 20</span><span>Next</span></div>
+            <div class="arrow">→</div>
+            <div class="node"><span>Data: 30</span><span>NULL</span></div>
+        </div>
+        <p style="margin-top:15px;">Head → First Node → Second Node → Last Node</p>
+    </div>
+
+    <div class="note"><b>Important:</b> The head pointer stores the address of the first node. The last node of a standard singly linked list points to NULL.</div>
+</section>
+
+<section class="section" id="memory">
+    <h2>02. Memory Representation</h2>
+    <p>Each node is stored at a memory location and contains data and pointer fields. The pointer stores the address of another node.</p>
+
+    <div class="diagram">
+        <div class="nodes">
+            <div class="node"><span>Data: 15</span><span>Next: 2040</span></div>
+            <div class="arrow">→</div>
+            <div class="node"><span>Data: 25</span><span>Next: 3090</span></div>
+            <div class="arrow">→</div>
+            <div class="node"><span>Data: 35</span><span>Next: NULL</span></div>
+        </div>
+        <p style="margin-top:15px;">Illustrative addresses only — actual memory addresses vary.</p>
+    </div>
+
+    <h3>Node structure in C</h3>
+    <div class="code-card">
+        <div class="code-head">C Structure <button class="copy" onclick="copyCode(this)">Copy Code</button></div>
+        <pre><code>struct Node {
+    int data;
+    struct Node *next;
+};</code></pre>
+    </div>
+
+    <p>The <code>data</code> field stores the value, while <code>next</code> stores the address of the next node.</p>
+</section>
+
+<section class="section" id="types">
+    <h2>03. Types of Linked List</h2>
+
+    <div class="cards">
+        <div class="card">
+            <h3>1. Singly Linked List</h3>
+            <p>Each node contains data and a pointer to the next node. Traversal normally takes place in the forward direction.</p>
+            <div class="diagram">
+                <div class="nodes">
+                    <div class="node"><span>10</span><span>Next</span></div>
+                    <span class="arrow">→</span>
+                    <div class="node"><span>20</span><span>Next</span></div>
+                    <span class="arrow">→</span>
+                    <div class="node"><span>30</span><span>NULL</span></div>
+                </div>
+            </div>
+        </div>
+
+        <div class="card">
+            <h3>2. Doubly Linked List</h3>
+            <p>Each node has three fields: previous pointer, data and next pointer. It supports forward and backward traversal.</p>
+            <div class="diagram">
+                <div class="nodes">
+                    <span class="arrow">NULL ←</span>
+                    <div class="node"><span>Prev | 10</span><span>Next</span></div>
+                    <span class="arrow">⇄</span>
+                    <div class="node"><span>Prev | 20</span><span>Next</span></div>
+                    <span class="arrow">→ NULL</span>
+                </div>
+            </div>
+        </div>
+
+        <div class="card">
+            <h3>3. Header Linked List</h3>
+            <p>A special header node appears at the beginning. It may store information such as the list length or a pointer to the first data node.</p>
+            <div class="diagram">
+                <div class="nodes">
+                    <div class="node"><span>Header</span><span>Next</span></div>
+                    <span class="arrow">→</span>
+                    <div class="node"><span>10</span><span>Next</span></div>
+                    <span class="arrow">→</span>
+                    <div class="node"><span>20</span><span>NULL</span></div>
+                </div>
+            </div>
+        </div>
+
+        <div class="card">
+            <h3>4. Circular Linked List</h3>
+            <p>The last node points back to the first node instead of NULL. It may be singly circular or doubly circular.</p>
+            <div class="diagram">
+                <div class="nodes">
+                    <div class="node"><span>10</span><span>Next</span></div>
+                    <span class="arrow">→</span>
+                    <div class="node"><span>20</span><span>Next</span></div>
+                    <span class="arrow">→</span>
+                    <div class="node"><span>30</span><span>Next</span></div>
+                </div>
+                <p style="margin-top:10px;">The final node links back to the first node.</p>
+            </div>
+        </div>
+    </div>
+</section>
+
+<section class="section" id="traversing">
+    <h2>04. Traversing a Linked List</h2>
+    <p>Traversing means visiting each node one by one, starting from the head pointer, until the end of the list is reached.</p>
+    <div class="note"><b>Algorithm:</b> Start at head → process current node → move to next → repeat until current becomes NULL.</div>
+</section>
+
+<section class="section" id="searching">
+    <h2>05. Searching in a Linked List</h2>
+    <p>Searching means finding whether a particular value exists in the linked list. Each node is checked sequentially until the value is found or the list ends.</p>
+    <p><b>Time complexity:</b> \(O(n)\) in the worst case.</p>
+</section>
+
+<section class="section" id="inserting">
+    <h2>06. Insertion Operations</h2>
+    <div class="cards">
+        <div class="card">
+            <h3>At the Beginning</h3>
+            <p>Make the new node point to the current head, then update head to the new node.</p>
+            <div class="diagram">New Node → Old Head → ...</div>
+        </div>
+        <div class="card">
+            <h3>At the End</h3>
+            <p>Traverse to the last node and make its next pointer point to the new node.</p>
+            <div class="diagram">... → Last Node → New Node → NULL</div>
+        </div>
+        <div class="card">
+            <h3>At a Given Position</h3>
+            <p>Reach the node before the required position and adjust the links to include the new node.</p>
+            <div class="diagram">Previous → New Node → Next</div>
+        </div>
+    </div>
+</section>
+
+<section class="section" id="deleting">
+    <h2>07. Deletion Operations</h2>
+    <div class="cards">
+        <div class="card">
+            <h3>Delete First Node</h3>
+            <p>Store the current head temporarily, move head to head's next node and free the old first node.</p>
+        </div>
+        <div class="card">
+            <h3>Delete Last Node</h3>
+            <p>Find the second-last node, set its next pointer to NULL and free the last node.</p>
+        </div>
+        <div class="card">
+            <h3>Delete by Value or Position</h3>
+            <p>Find the target node, connect its previous node to its next node and free the target node.</p>
+        </div>
+    </div>
+    <div class="note">Always check for an empty list and handle the case where the first node is the one being deleted.</div>
+</section>
+
+<section class="section" id="singly">
+    <h2>08. Operations on Singly Linked List</h2>
+    <p>A singly linked list supports traversal, searching, insertion and deletion using a single next pointer in every node.</p>
+    <div class="table-wrap">
+        <table>
+            <tr><th>Operation</th><th>Typical Time</th></tr>
+            <tr><td>Traverse / Search</td><td>O(n)</td></tr>
+            <tr><td>Insert at beginning</td><td>O(1)</td></tr>
+            <tr><td>Insert at end (without tail pointer)</td><td>O(n)</td></tr>
+            <tr><td>Delete first node</td><td>O(1)</td></tr>
+            <tr><td>Delete by value</td><td>O(n)</td></tr>
+        </table>
+    </div>
+</section>
+
+<section class="section" id="doubly">
+    <h2>09. Operations on Doubly Linked List</h2>
+    <p>A doubly linked list contains both <code>prev</code> and <code>next</code> pointers. When inserting or deleting a node, both links must be updated correctly.</p>
+    <div class="code-card">
+        <div class="code-head">Doubly Linked List Node <button class="copy" onclick="copyCode(this)">Copy Code</button></div>
+        <pre><code>struct DNode {
+    int data;
+    struct DNode *prev;
+    struct DNode *next;
+};</code></pre>
+    </div>
+    <div class="note">Advantages: forward and backward traversal, and easier deletion when the node to remove is already known. Disadvantage: extra memory is required for the previous pointer.</div>
+</section>
+
+<section class="section" id="applications">
+    <h2>10. Applications of Linked List</h2>
+    <div class="cards">
+        <div class="card"><h3>Music Player</h3><p>Connect songs and move to the next or previous track.</p></div>
+        <div class="card"><h3>Browser History</h3><p>Maintain navigation between previously visited pages.</p></div>
+        <div class="card"><h3>Memory Management</h3><p>Maintain free lists and dynamically allocated blocks.</p></div>
+        <div class="card"><h3>Stacks and Queues</h3><p>Implement dynamic stacks and queues.</p></div>
+        <div class="card"><h3>Round-Robin Scheduling</h3><p>Use a circular list to cycle through processes.</p></div>
+        <div class="card"><h3>Polynomial Operations</h3><p>Store polynomial terms and their coefficients.</p></div>
+    </div>
+</section>
+
+<section class="section" id="polynomial">
+    <h2>11. Polynomial Manipulation</h2>
+    <p>A polynomial can be represented as a linked list in which each node stores a coefficient, an exponent and a pointer to the next term.</p>
+
+    <div class="diagram">
+        <div class="nodes">
+            <div class="node"><span>Coeff: 5</span><span>Exp: 2</span></div>
+            <span class="arrow">→</span>
+            <div class="node"><span>Coeff: 3</span><span>Exp: 1</span></div>
+            <span class="arrow">→</span>
+            <div class="node"><span>Coeff: 2</span><span>Exp: 0</span></div>
+        </div>
+        <p style="margin-top:12px;">Represents: 5x² + 3x + 2</p>
+    </div>
+
+    <h3>C Structure for a Polynomial Term</h3>
+    <div class="code-card">
+        <div class="code-head">Polynomial Node <button class="copy" onclick="copyCode(this)">Copy Code</button></div>
+        <pre><code>struct Poly {
+    int coeff;
+    int exp;
+    struct Poly *next;
+};</code></pre>
+    </div>
+
+    <h3>Adding Two Polynomials</h3>
+    <p>Compare the exponents of the terms in both lists. If the exponents match, add their coefficients. Otherwise, copy the term with the larger exponent into the result. Continue until both lists are processed.</p>
+
+    <div class="note"><b>Example:</b> (3x² + 2x + 1) + (4x² + 5x + 6) = 7x² + 7x + 7.</div>
+</section>
+
+<section class="section" id="programs">
+    <h2>12. C Programs</h2>
+    <p>Use the Copy Code button to copy each program.</p>
+
+    <h3>Program 1: Create and Display a Singly Linked List</h3>
+    <div class="code-card">
+        <div class="code-head">Singly Linked List <button class="copy" onclick="copyCode(this)">Copy Code</button></div>
+        <pre><code>#include &lt;stdio.h&gt;
+#include &lt;stdlib.h&gt;
+
+struct Node {
+    int data;
+    struct Node *next;
+};
+
+int main(void) {
+    struct Node *head = NULL, *tail = NULL, *newNode, *temp;
+    int n, i, value;
+
+    printf("Enter number of nodes: ");
+    scanf("%d", &amp;n);
+
+    for (i = 0; i &lt; n; i++) {
+        newNode = malloc(sizeof(struct Node));
+        if (newNode == NULL) {
+            printf("Memory allocation failed.\n");
+            return 1;
+        }
+
+        printf("Enter value: ");
+        scanf("%d", &amp;value);
+
+        newNode-&gt;data = value;
+        newNode-&gt;next = NULL;
+
+        if (head == NULL) {
+            head = tail = newNode;
+        } else {
+            tail-&gt;next = newNode;
+            tail = newNode;
+        }
+    }
+
+    printf("Linked List: ");
+    temp = head;
+    while (temp != NULL) {
+        printf("%d -&gt; ", temp-&gt;data);
+        temp = temp-&gt;next;
+    }
+    printf("NULL\n");
+
+    while (head != NULL) {
+        temp = head;
+        head = head-&gt;next;
+        free(temp);
+    }
+
+    return 0;
+}</code></pre>
+        <div class="output">Example Output:
+Enter number of nodes: 3
+Enter value: 10
+Enter value: 20
+Enter value: 30
+Linked List: 10 -> 20 -> 30 -> NULL</div>
+    </div>
+
+    <h3>Program 2: Search for a Value</h3>
+    <div class="code-card">
+        <div class="code-head">Linked List Search <button class="copy" onclick="copyCode(this)">Copy Code</button></div>
+        <pre><code>#include &lt;stdio.h&gt;
+#include &lt;stdlib.h&gt;
+
+struct Node {
+    int data;
+    struct Node *next;
+};
+
+int main(void) {
+    struct Node *head = NULL, *tail = NULL, *node, *temp;
+    int n, i, value, key, position = 1;
+
+    printf("Enter number of nodes: ");
+    scanf("%d", &amp;n);
+
+    for (i = 0; i &lt; n; i++) {
+        node = malloc(sizeof(struct Node));
+        if (node == NULL) return 1;
+
+        printf("Enter value: ");
+        scanf("%d", &amp;value);
+
+        node-&gt;data = value;
+        node-&gt;next = NULL;
+
+        if (head == NULL) head = tail = node;
+        else {
+            tail-&gt;next = node;
+            tail = node;
+        }
+    }
+
+    printf("Enter value to search: ");
+    scanf("%d", &amp;key);
+
+    temp = head;
+    while (temp != NULL &amp;&amp; temp-&gt;data != key) {
+        temp = temp-&gt;next;
+        position++;
+    }
+
+    if (temp != NULL)
+        printf("Value found at position %d\n", position);
+    else
+        printf("Value not found\n");
+
+    while (head != NULL) {
+        temp = head;
+        head = head-&gt;next;
+        free(temp);
+    }
+
+    return 0;
+}</code></pre>
+        <div class="output">Example Output:
+Enter number of nodes: 3
+Enter value: 10
+Enter value: 20
+Enter value: 30
+Enter value to search: 20
+Value found at position 2</div>
+    </div>
+
+    <h3>Program 3: Insert a Node at the Beginning</h3>
+    <div class="code-card">
+        <div class="code-head">Insertion <button class="copy" onclick="copyCode(this)">Copy Code</button></div>
+        <pre><code>#include &lt;stdio.h&gt;
+#include &lt;stdlib.h&gt;
+
+struct Node {
+    int data;
+    struct Node *next;
+};
+
+int main(void) {
+    struct Node *head = NULL, *node, *temp;
+    int n, i, value;
+
+    printf("Enter number of nodes: ");
+    scanf("%d", &amp;n);
+
+    for (i = 0; i &lt; n; i++) {
+        node = malloc(sizeof(struct Node));
+        if (node == NULL) return 1;
+
+        printf("Enter value: ");
+        scanf("%d", &amp;value);
+        node-&gt;data = value;
+        node-&gt;next = head;
+        head = node;
+    }
+
+    printf("List: ");
+    temp = head;
+    while (temp != NULL) {
+        printf("%d -&gt; ", temp-&gt;data);
+        temp = temp-&gt;next;
+    }
+    printf("NULL\n");
+
+    while (head != NULL) {
+        temp = head;
+        head = head-&gt;next;
+        free(temp);
+    }
+
+    return 0;
+}</code></pre>
+        <div class="output">Example Output:
+Enter number of nodes: 3
+Enter value: 10
+Enter value: 20
+Enter value: 30
+List: 30 -> 20 -> 10 -> NULL</div>
+    </div>
+
+    <h3>Program 4: Delete the First Node</h3>
+    <div class="code-card">
+        <div class="code-head">Deletion <button class="copy" onclick="copyCode(this)">Copy Code</button></div>
+        <pre><code>#include &lt;stdio.h&gt;
+#include &lt;stdlib.h&gt;
+
+struct Node {
+    int data;
+    struct Node *next;
+};
+
+int main(void) {
+    struct Node *head, *second, *temp;
+
+    head = malloc(sizeof(struct Node));
+    second = malloc(sizeof(struct Node));
+
+    if (head == NULL || second == NULL) {
+        free(head);
+        free(second);
+        return 1;
+    }
+
+    head-&gt;data = 10;
+    head-&gt;next = second;
+    second-&gt;data = 20;
+    second-&gt;next = NULL;
+
+    printf("Before deletion: ");
+    for (temp = head; temp != NULL; temp = temp-&gt;next)
+        printf("%d -&gt; ", temp-&gt;data);
+    printf("NULL\n");
+
+    temp = head;
+    head = head-&gt;next;
+    free(temp);
+
+    printf("After deletion: ");
+    for (temp = head; temp != NULL; temp = temp-&gt;next)
+        printf("%d -&gt; ", temp-&gt;data);
+    printf("NULL\n");
+
+    free(head);
+    return 0;
+}</code></pre>
+        <div class="output">Example Output:
+Before deletion: 10 -> 20 -> NULL
+After deletion: 20 -> NULL</div>
+    </div>
+
+    <h3>Program 5: Doubly Linked List Traversal</h3>
+    <div class="code-card">
+        <div class="code-head">Doubly Linked List <button class="copy" onclick="copyCode(this)">Copy Code</button></div>
+        <pre><code>#include &lt;stdio.h&gt;
+#include &lt;stdlib.h&gt;
+
+struct Node {
+    int data;
+    struct Node *prev;
+    struct Node *next;
+};
+
+int main(void) {
+    struct Node *first, *second, *third, *temp;
+
+    first = malloc(sizeof(struct Node));
+    second = malloc(sizeof(struct Node));
+    third = malloc(sizeof(struct Node));
+
+    if (first == NULL || second == NULL || third == NULL) {
+        free(first);
+        free(second);
+        free(third);
+        return 1;
+    }
+
+    first-&gt;data = 10;
+    first-&gt;prev = NULL;
+    first-&gt;next = second;
+
+    second-&gt;data = 20;
+    second-&gt;prev = first;
+    second-&gt;next = third;
+
+    third-&gt;data = 30;
+    third-&gt;prev = second;
+    third-&gt;next = NULL;
+
+    printf("Forward: ");
+    for (temp = first; temp != NULL; temp = temp-&gt;next)
+        printf("%d ", temp-&gt;data);
+
+    printf("\nBackward: ");
+    for (temp = third; temp != NULL; temp = temp-&gt;prev)
+        printf("%d ", temp-&gt;data);
+
+    printf("\n");
+
+    free(first);
+    free(second);
+    free(third);
+
+    return 0;
+}</code></pre>
+        <div class="output">Example Output:
+Forward: 10 20 30
+Backward: 30 20 10</div>
+    </div>
+
+    <h3>Program 6: Add Two Polynomials</h3>
+    <div class="code-card">
+        <div class="code-head">Polynomial Addition <button class="copy" onclick="copyCode(this)">Copy Code</button></div>
+        <pre><code>#include &lt;stdio.h&gt;
+#include &lt;stdlib.h&gt;
+
+struct Poly {
+    int coeff, exp;
+    struct Poly *next;
+};
+
+void append(struct Poly **head, int coeff, int exp) {
+    struct Poly *node = malloc(sizeof(struct Poly));
+    struct Poly *temp;
+
+    if (node == NULL) {
+        printf("Memory allocation failed.\n");
+        exit(1);
+    }
+
+    node-&gt;coeff = coeff;
+    node-&gt;exp = exp;
+    node-&gt;next = NULL;
+
+    if (*head == NULL) {
+        *head = node;
+        return;
+    }
+
+    temp = *head;
+    while (temp-&gt;next != NULL)
+        temp = temp-&gt;next;
+
+    temp-&gt;next = node;
+}
+
+void display(struct Poly *p) {
+    int first = 1;
+
+    while (p != NULL) {
+        if (!first) printf(" + ");
+        printf("%dx^%d", p-&gt;coeff, p-&gt;exp);
+        first = 0;
+        p = p-&gt;next;
+    }
+    printf("\n");
+}
+
+int main(void) {
+    struct Poly *a = NULL, *b = NULL, *result = NULL;
+    struct Poly *p, *q;
+    int n, m, c, e, i;
+
+    printf("Number of terms in first polynomial: ");
+    scanf("%d", &amp;n);
+    printf("Enter each coefficient and exponent in descending exponent order:\n");
+
+    for (i = 0; i &lt; n; i++) {
+        scanf("%d%d", &amp;c, &amp;e);
+        append(&amp;a, c, e);
+    }
+
+    printf("Number of terms in second polynomial: ");
+    scanf("%d", &amp;m);
+    printf("Enter each coefficient and exponent in descending exponent order:\n");
+
+    for (i = 0; i &lt; m; i++) {
+        scanf("%d%d", &amp;c, &amp;e);
+        append(&amp;b, c, e);
+    }
+
+    p = a;
+    q = b;
+
+    while (p != NULL &amp;&amp; q != NULL) {
+        if (p-&gt;exp == q-&gt;exp) {
+            c = p-&gt;coeff + q-&gt;coeff;
+            if (c != 0) append(&amp;result, c, p-&gt;exp);
+            p = p-&gt;next;
+            q = q-&gt;next;
+        } else if (p-&gt;exp &gt; q-&gt;exp) {
+            append(&amp;result, p-&gt;coeff, p-&gt;exp);
+            p = p-&gt;next;
+        } else {
+            append(&amp;result, q-&gt;coeff, q-&gt;exp);
+            q = q-&gt;next;
+        }
+    }
+
+    while (p != NULL) {
+        append(&amp;result, p-&gt;coeff, p-&gt;exp);
+        p = p-&gt;next;
+    }
+
+    while (q != NULL) {
+        append(&amp;result, q-&gt;coeff, q-&gt;exp);
+        q = q-&gt;next;
+    }
+
+    printf("Sum: ");
+    if (result == NULL) printf("0\n");
+    else display(result);
+
+    while (a != NULL) {
+        p = a; a = a-&gt;next; free(p);
+    }
+    while (b != NULL) {
+        p = b; b = b-&gt;next; free(p);
+    }
+    while (result != NULL) {
+        p = result; result = result-&gt;next; free(p);
+    }
+
+    return 0;
+}</code></pre>
+        <div class="output">Example Input:
+First polynomial terms: 2
+3 2
+2 1
+Second polynomial terms: 2
+4 2
+5 0
+
+Example Output:
+Sum: 7x^2 + 2x^1 + 5x^0</div>
+    </div>
+</section>
+
+</main>
+</div>
+
+<footer>
+    <p>DS•Learn | Data Structures and Algorithms</p>
+    <p>Learn • Practice • Build</p>
+</footer>
+
+<script>
+function copyCode(button) {
+    const code = button.closest(".code-card").querySelector("pre code").innerText;
+
+    if (navigator.clipboard && window.isSecureContext) {
+        navigator.clipboard.writeText(code).then(() => {
+            button.textContent = "Copied!";
+            setTimeout(() => button.textContent = "Copy Code", 1500);
+        }).catch(() => fallbackCopy(code, button));
+    } else {
+        fallbackCopy(code, button);
+    }
+}
+
+function fallbackCopy(code, button) {
+    const area = document.createElement("textarea");
+    area.value = code;
+    area.style.position = "fixed";
+    area.style.opacity = "0";
+    document.body.appendChild(area);
+    area.select();
+
+    try {
+        document.execCommand("copy");
+        button.textContent = "Copied!";
+    } catch (error) {
+        button.textContent = "Select Code";
+    }
+
+    document.body.removeChild(area);
+    setTimeout(() => button.textContent = "Copy Code", 1500);
+}
+</script>
+
+</body>
+</html>

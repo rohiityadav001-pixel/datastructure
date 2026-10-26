@@ -1,0 +1,965 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Arrays | Data Structures</title>
+
+<style>
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    scroll-behavior: smooth;
+}
+
+:root {
+    --bg: #0b1120;
+    --panel: #141d30;
+    --text: #e5e7eb;
+    --muted: #a5b4cc;
+    --accent: #38bdf8;
+    --border: #28364e;
+}
+
+body {
+    font-family: "Segoe UI", Arial, sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    line-height: 1.7;
+}
+
+/* Header */
+header {
+    background: rgba(11, 17, 32, 0.96);
+    border-bottom: 1px solid var(--border);
+    padding: 17px 7%;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    position: sticky;
+    top: 0;
+    z-index: 100;
+}
+
+.logo {
+    color: var(--accent);
+    font-size: 22px;
+    font-weight: 800;
+}
+
+header nav {
+    display: flex;
+    gap: 22px;
+}
+
+header nav a {
+    color: var(--text);
+    text-decoration: none;
+    font-size: 14px;
+}
+
+header nav a:hover {
+    color: var(--accent);
+}
+
+/* Hero */
+.hero {
+    padding: 75px 8% 65px;
+    background:
+        radial-gradient(ellipse at top right,
+        #173957 0%, transparent 55%);
+}
+
+.tag {
+    display: inline-block;
+    color: var(--accent);
+    background: #10283d;
+    border: 1px solid #245171;
+    padding: 5px 13px;
+    border-radius: 20px;
+    font-size: 13px;
+    margin-bottom: 18px;
+}
+
+.hero h1 {
+    font-size: clamp(38px, 6vw, 64px);
+    line-height: 1.15;
+    margin-bottom: 18px;
+}
+
+.hero h1 span {
+    color: var(--accent);
+}
+
+.hero p {
+    color: var(--muted);
+    max-width: 650px;
+    margin-bottom: 28px;
+}
+
+.btn {
+    display: inline-block;
+    background: var(--accent);
+    color: #06111f;
+    text-decoration: none;
+    padding: 11px 20px;
+    border-radius: 8px;
+    font-weight: 700;
+    transition: 0.25s;
+}
+
+.btn:hover {
+    transform: translateY(-3px);
+    background: #7dd3fc;
+}
+
+/* Layout */
+.layout {
+    display: grid;
+    grid-template-columns: 235px minmax(0, 1fr);
+    gap: 30px;
+    padding: 35px 7%;
+    align-items: start;
+}
+
+.sidebar {
+    position: sticky;
+    top: 90px;
+    background: var(--panel);
+    border: 1px solid var(--border);
+    border-radius: 14px;
+    padding: 20px;
+}
+
+.sidebar h3 {
+    font-size: 15px;
+    margin-bottom: 14px;
+    color: var(--accent);
+}
+
+.sidebar a {
+    display: block;
+    color: var(--muted);
+    text-decoration: none;
+    padding: 10px;
+    border-radius: 7px;
+    font-size: 14px;
+    margin-bottom: 4px;
+}
+
+.sidebar a:hover {
+    color: var(--accent);
+    background: #1c2a40;
+}
+
+.content {
+    min-width: 0;
+}
+
+.section {
+    margin-bottom: 35px;
+    scroll-margin-top: 100px;
+}
+
+.section-title {
+    font-size: 27px;
+    margin-bottom: 8px;
+}
+
+.description {
+    color: var(--muted);
+    margin-bottom: 20px;
+}
+
+/* Cards */
+.cards {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 15px;
+}
+
+.card {
+    background: var(--panel);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 20px;
+    transition: 0.25s;
+}
+
+.card:hover {
+    border-color: var(--accent);
+    transform: translateY(-3px);
+}
+
+.card h3 {
+    color: var(--accent);
+    margin-bottom: 8px;
+}
+
+.card p {
+    color: var(--muted);
+    font-size: 14px;
+}
+
+/* Information boxes */
+.info {
+    background: var(--panel);
+    border: 1px solid var(--border);
+    border-left: 4px solid var(--accent);
+    border-radius: 9px;
+    padding: 20px;
+    margin: 18px 0;
+}
+
+.info strong {
+    color: var(--accent);
+}
+
+/* Code blocks */
+.code-card {
+    background: #080d18;
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    overflow: hidden;
+    margin: 18px 0 25px;
+}
+
+.code-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 10px;
+    padding: 12px 17px;
+    background: #182338;
+    border-bottom: 1px solid var(--border);
+}
+
+.code-header span {
+    font-size: 14px;
+    font-weight: 600;
+}
+
+.code-header button {
+    background: #24354c;
+    color: var(--text);
+    border: 1px solid #40516b;
+    padding: 6px 11px;
+    border-radius: 6px;
+    cursor: pointer;
+}
+
+.code-header button:hover {
+    background: var(--accent);
+    color: #06111f;
+}
+
+pre {
+    padding: 20px;
+    overflow-x: auto;
+    color: #b8e2ff;
+    font-family: Consolas, monospace;
+    font-size: 13px;
+    line-height: 1.8;
+}
+
+code {
+    font-family: Consolas, monospace;
+}
+
+/* Memory representation */
+.memory {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0;
+    margin: 22px 0;
+}
+
+.memory-item {
+    flex: 1 1 75px;
+    text-align: center;
+    border: 1px solid var(--accent);
+    background: #10283d;
+    padding: 12px 5px;
+}
+
+.memory-item small {
+    display: block;
+    color: var(--muted);
+    font-size: 11px;
+}
+
+.memory-item strong {
+    color: var(--accent);
+}
+
+ul {
+    padding-left: 22px;
+    color: var(--muted);
+}
+
+li {
+    margin-bottom: 7px;
+}
+
+footer {
+    text-align: center;
+    padding: 28px 15px;
+    color: var(--muted);
+    border-top: 1px solid var(--border);
+    font-size: 13px;
+}
+
+@media (max-width: 850px) {
+    .layout {
+        grid-template-columns: 1fr;
+        padding: 25px 5%;
+    }
+
+    .sidebar {
+        position: static;
+    }
+
+    .sidebar nav {
+        display: grid;
+        grid-template-columns: repeat(2, 1fr);
+        gap: 3px;
+    }
+
+    header {
+        padding: 15px 5%;
+    }
+
+    header nav {
+        gap: 10px;
+    }
+}
+
+@media (max-width: 520px) {
+    header nav a {
+        font-size: 12px;
+    }
+
+    .cards {
+        grid-template-columns: 1fr;
+    }
+
+    .hero {
+        padding: 55px 6%;
+    }
+}
+</style>
+</head>
+
+<body>
+
+<header>
+    <div class="logo">Data<span style="color:white">Structure</span></div>
+
+    <nav>
+        <a href="#introduction">Home</a>
+        <a href="#types">Topics</a>
+        <a href="programs_array.html">Programs</a>
+    </nav>
+</header>
+
+<section class="hero">
+    <span class="tag">UNIT 01 · DATA STRUCTURES</span>
+    <h1>Learn <span>Arrays</span><br>With C Programs.</h1>
+    <p>
+        Understand array concepts, types, memory representation,
+        applications and basic operations through simple explanations
+        and practical C programs.
+    </p>
+    <a href="#introduction" class="btn">Start Learning →</a>
+</section>
+
+<div class="layout">
+
+    <aside class="sidebar">
+        <h3>ARRAYS — CONTENTS</h3>
+        <nav>
+            <a href="#introduction">01. Introduction</a>
+            <a href="#types">02. Types of Arrays</a>
+            <a href="#memory">03. Memory Representation</a>
+            <a href="#applications">04. Applications</a>
+            <a href="#traversal">05. Traversal</a>
+            <a href="#insertion">06. Insertion</a>
+            <a href="#deletion">07. Deletion</a>
+            <a href="#searching">08. Searching</a>
+            <a href="#sorting">09. Sorting</a>
+            <a href="#advantages">10. Advantages</a>
+        </nav>
+    </aside>
+
+    <main class="content">
+
+        <!-- INTRODUCTION -->
+        <section class="section" id="introduction">
+            <h2 class="section-title">01. Introduction to Arrays</h2>
+            <p class="description">
+                An array is a linear data structure that stores multiple
+                elements of the same data type in contiguous memory
+                locations. Each element is accessed using an index.
+            </p>
+
+            <div class="info">
+                <strong>Syntax:</strong>
+                <p><code>data_type array_name[size];</code></p>
+                <p>Example: <code>int marks[5];</code></p>
+                <p>Array indexing in C starts from 0.</p>
+            </div>
+
+            <div class="code-card">
+                <div class="code-header">
+                    <span>Program: Declare and Display an Array</span>
+                    <button onclick="copyCode(this)">Copy Code</button>
+                </div>
+                <pre><code>#include &lt;stdio.h&gt;
+
+int main() {
+    int a[5] = {10, 20, 30, 40, 50};
+
+    for (int i = 0; i &lt; 5; i++) {
+        printf("%d ", a[i]);
+    }
+
+    return 0;
+}</code></pre>
+            </div>
+
+            <div class="info">
+                <strong>Output:</strong>
+                <p>10 20 30 40 50</p>
+            </div>
+        </section>
+
+        <!-- TYPES -->
+        <section class="section" id="types">
+            <h2 class="section-title">02. Types of Arrays</h2>
+            <p class="description">
+                Arrays are commonly classified according to their dimensions.
+            </p>
+
+            <div class="cards">
+                <div class="card">
+                    <h3>01. One-Dimensional Array</h3>
+                    <p>Stores elements in a single sequence.</p>
+                    <p><code>int a[5];</code></p>
+                </div>
+
+                <div class="card">
+                    <h3>02. Two-Dimensional Array</h3>
+                    <p>Stores elements in rows and columns.</p>
+                    <p><code>int a[3][3];</code></p>
+                </div>
+
+                <div class="card">
+                    <h3>03. Multidimensional Array</h3>
+                    <p>Stores data using three or more dimensions.</p>
+                    <p><code>int a[2][3][4];</code></p>
+                </div>
+
+                <div class="card">
+                    <h3>04. Character Array</h3>
+                    <p>Stores characters and can represent strings.</p>
+                    <p><code>char name[20];</code></p>
+                </div>
+            </div>
+
+            <div class="code-card">
+                <div class="code-header">
+                    <span>Program: Two-Dimensional Array</span>
+                    <button onclick="copyCode(this)">Copy Code</button>
+                </div>
+                <pre><code>#include &lt;stdio.h&gt;
+
+int main() {
+    int a[2][2] = {{1, 2}, {3, 4}};
+
+    for (int i = 0; i &lt; 2; i++) {
+        for (int j = 0; j &lt; 2; j++) {
+            printf("%d ", a[i][j]);
+        }
+        printf("\n");
+    }
+
+    return 0;
+}</code></pre>
+            </div>
+
+            <div class="info">
+                <strong>Output:</strong>
+                <p>1 2</p>
+                <p>3 4</p>
+            </div>
+        </section>
+
+        <!-- MEMORY -->
+        <section class="section" id="memory">
+            <h2 class="section-title">03. Memory Representation</h2>
+            <p class="description">
+                Array elements are stored in contiguous memory locations.
+                The address of each element depends on its index and size.
+            </p>
+
+            <p><strong>Example: int a[4] = {10, 20, 30, 40};</strong></p>
+
+            <div class="memory">
+                <div class="memory-item">
+                    <small>Index 0</small>
+                    <strong>10</strong>
+                    <small>1000</small>
+                </div>
+                <div class="memory-item">
+                    <small>Index 1</small>
+                    <strong>20</strong>
+                    <small>1004</small>
+                </div>
+                <div class="memory-item">
+                    <small>Index 2</small>
+                    <strong>30</strong>
+                    <small>1008</small>
+                </div>
+                <div class="memory-item">
+                    <small>Index 3</small>
+                    <strong>40</strong>
+                    <small>1012</small>
+                </div>
+            </div>
+
+            <p class="description">
+                Illustration assumes a 4-byte integer and a starting
+                address of 1000. Actual addresses vary by system.
+            </p>
+
+            <div class="info">
+                <strong>Address Formula (1D Array)</strong>
+                <p>LOC(A[i]) = Base Address + i × Element Size</p>
+                <p>For example, LOC(A[2]) = 1000 + 2 × 4 = 1008.</p>
+            </div>
+
+            <h3>Row-Major Representation of a 2D Array</h3>
+            <p class="description">
+                In C, a two-dimensional array is stored row by row.
+            </p>
+
+            <div class="code-card">
+                <div class="code-header">
+                    <span>Program: Display Array Addresses</span>
+                    <button onclick="copyCode(this)">Copy Code</button>
+                </div>
+                <pre><code>#include &lt;stdio.h&gt;
+
+int main() {
+    int a[3] = {10, 20, 30};
+
+    for (int i = 0; i &lt; 3; i++) {
+        printf("a[%d] = %d, Address = %p\n",
+               i, a[i], (void *)&amp;a[i]);
+    }
+
+    return 0;
+}</code></pre>
+            </div> 
+            
+<h3>Column-Major Representation of a 2D Array</h3>
+
+<p class="description">
+    In column-major representation, elements of a two-dimensional
+    array are stored column by column in consecutive memory locations.
+    This is commonly used in languages such as Fortran. C uses
+    row-major representation by default.
+</p>
+
+<p><strong>Example: A[2][3]</strong></p>
+
+<div class="memory">
+    <div class="memory-item">
+        <small>A[0][0]</small>
+        <strong>10</strong>
+        <small>1000</small>
+    </div>
+    <div class="memory-item">
+        <small>A[1][0]</small>
+        <strong>40</strong>
+        <small>1004</small>
+    </div>
+    <div class="memory-item">
+        <small>A[0][1]</small>
+        <strong>20</strong>
+        <small>1008</small>
+    </div>
+    <div class="memory-item">
+        <small>A[1][1]</small>
+        <strong>50</strong>
+        <small>1012</small>
+    </div>
+    <div class="memory-item">
+        <small>A[0][2]</small>
+        <strong>30</strong>
+        <small>1016</small>
+    </div>
+    <div class="memory-item">
+        <small>A[1][2]</small>
+        <strong>60</strong>
+        <small>1020</small>
+    </div>
+</div>
+
+<div class="info">
+    <strong>Column-Major Address Formula</strong>
+    <p>
+        LOC(A[i][j]) = Base Address + (j × Number of Rows + i)
+        × Element Size
+    </p>
+    <p>
+        Example: LOC(A[1][1]) = 1000 + (1 × 2 + 1) × 4 = 1012.
+    </p>
+</div>
+
+<div class="code-card">
+    <div class="code-header">
+        <span>Program: Simulate Column-Major Storage</span>
+        <button onclick="copyCode(this)">Copy Code</button>
+    </div>
+    <pre><code>#include &lt;stdio.h&gt;
+
+int main() {
+    int a[2][3] = {
+        {10, 20, 30},
+        {40, 50, 60}
+    };
+
+    int rows = 2, cols = 3;
+
+    printf("Column-Major Order:\n");
+
+    for (int j = 0; j &lt; cols; j++) {
+        for (int i = 0; i &lt; rows; i++) {
+            printf("%d ", a[i][j]);
+        }
+    }
+
+    return 0;
+}</code></pre>
+</div>
+
+<div class="info">
+    <strong>Output:</strong>
+    <p>10 40 20 50 30 60</p>
+    <strong>Time Complexity:</strong> O(rows × cols)
+</div>
+
+<p class="description">
+    Note: This C program simulates the column-major traversal order.
+    The actual two-dimensional array is still stored in row-major
+    order in C.
+</p>
+    
+        </section>
+
+        <!-- APPLICATIONS -->
+        <section class="section" id="applications">
+            <h2 class="section-title">04. Applications of Arrays</h2>
+
+            <div class="cards">
+                <div class="card">
+                    <h3>Student Records</h3>
+                    <p>Store marks, roll numbers and student data.</p>
+                </div>
+                <div class="card">
+                    <h3>Searching & Sorting</h3>
+                    <p>Search for values and arrange data in order.</p>
+                </div>
+                <div class="card">
+                    <h3>Matrices</h3>
+                    <p>Represent matrices and perform matrix operations.</p>
+                </div>
+                <div class="card">
+                    <h3>Other Data Structures</h3>
+                    <p>Implement stacks, queues and lookup tables.</p>
+                </div>
+            </div>
+            
+        </section>
+
+        <!-- TRAVERSAL -->
+        <section class="section" id="traversal">
+            <h2 class="section-title">05. Array Traversal</h2>
+            <p class="description">
+                Traversal means visiting each element of an array one by one.
+            </p>
+
+            <div class="code-card">
+                <div class="code-header">
+                    <span>C Program: Traversal</span>
+                    <button onclick="copyCode(this)">Copy Code</button>
+                </div>
+                <pre><code>#include &lt;stdio.h&gt;
+
+int main() {
+    int a[] = {5, 10, 15, 20, 25};
+    int n = 5;
+
+    for (int i = 0; i &lt; n; i++) {
+        printf("%d ", a[i]);
+    }
+
+    return 0;
+}</code></pre>
+            </div>
+
+            <div class="info">
+                <strong>Output:</strong>
+                <p>5 10 15 20 25</p>
+                <strong>Time Complexity:</strong> O(n)
+            </div>
+        </section>
+
+        <!-- INSERTION -->
+        <section class="section" id="insertion">
+            <h2 class="section-title">06. Array Insertion</h2>
+            <p class="description">
+                Insertion adds a new element at a specified position.
+                Existing elements may need to be shifted to the right.
+            </p>
+
+            <div class="code-card">
+                <div class="code-header">
+                    <span>C Program: Insert an Element</span>
+                    <button onclick="copyCode(this)">Copy Code</button>
+                </div>
+                <pre><code>#include &lt;stdio.h&gt;
+
+int main() {
+    int a[10] = {10, 20, 30, 40};
+    int n = 4, pos = 2, value = 25;
+
+    if (n &lt; 10 &amp;&amp; pos &gt;= 0 &amp;&amp; pos &lt;= n) {
+        for (int i = n; i &gt; pos; i--) {
+            a[i] = a[i - 1];
+        }
+
+        a[pos] = value;
+        n++;
+
+        for (int i = 0; i &lt; n; i++) {
+            printf("%d ", a[i]);
+        }
+    } else {
+        printf("Invalid position or full array");
+    }
+
+    return 0;
+}</code></pre>
+            </div>
+
+            <div class="info">
+                <strong>Output:</strong>
+                <p>10 20 25 30 40</p>
+                <strong>Time Complexity:</strong> O(n)
+            </div>
+            <p class="description">
+                Note: Position is zero-based, so position 2 inserts
+                the element as the third element.
+            </p>
+        </section>
+
+        <!-- DELETION -->
+        <section class="section" id="deletion">
+            <h2 class="section-title">07. Array Deletion</h2>
+            <p class="description">
+                Deletion removes an element from a specified position.
+                The following elements shift one place to the left.
+            </p>
+
+            <div class="code-card">
+                <div class="code-header">
+                    <span>C Program: Delete an Element</span>
+                    <button onclick="copyCode(this)">Copy Code</button>
+                </div>
+                <pre><code>#include &lt;stdio.h&gt;
+
+int main() {
+    int a[5] = {10, 20, 30, 40, 50};
+    int n = 5, pos = 2;
+
+    if (pos &gt;= 0 &amp;&amp; pos &lt; n) {
+        for (int i = pos; i &lt; n - 1; i++) {
+            a[i] = a[i + 1];
+        }
+
+        n--;
+
+        for (int i = 0; i &lt; n; i++) {
+            printf("%d ", a[i]);
+        }
+    } else {
+        printf("Invalid position");
+    }
+
+    return 0;
+}</code></pre>
+            </div>
+
+            <div class="info">
+                <strong>Output:</strong>
+                <p>10 20 40 50</p>
+                <strong>Time Complexity:</strong> O(n)
+            </div>
+        </section>
+
+        <!-- SEARCHING -->
+        <section class="section" id="searching">
+            <h2 class="section-title">08. Searching in an Array</h2>
+            <p class="description">
+                Linear search checks each element until the required
+                value is found or the array ends.
+            </p>
+
+            <div class="code-card">
+                <div class="code-header">
+                    <span>C Program: Linear Search</span>
+                    <button onclick="copyCode(this)">Copy Code</button>
+                </div>
+                <pre><code>#include &lt;stdio.h&gt;
+
+int main() {
+    int a[] = {10, 20, 30, 40, 50};
+    int n = 5, key = 30, found = 0;
+
+    for (int i = 0; i &lt; n; i++) {
+        if (a[i] == key) {
+            printf("Element found at index %d", i);
+            found = 1;
+            break;
+        }
+    }
+
+    if (!found) {
+        printf("Element not found");
+    }
+
+    return 0;
+}</code></pre>
+            </div>
+
+            <div class="info">
+                <strong>Output:</strong>
+                <p>Element found at index 2</p>
+                <strong>Time Complexity:</strong> O(n)
+            </div>
+        </section>
+
+        <!-- SORTING -->
+        <section class="section" id="sorting">
+            <h2 class="section-title">09. Sorting an Array</h2>
+            <p class="description">
+                Sorting arranges array elements in ascending or descending
+                order. Bubble sort compares adjacent elements and swaps them
+                when they are in the wrong order.
+            </p>
+
+            <div class="code-card">
+                <div class="code-header">
+                    <span>C Program: Bubble Sort</span>
+                    <button onclick="copyCode(this)">Copy Code</button>
+                </div>
+                <pre><code>#include &lt;stdio.h&gt;
+
+int main() {
+    int a[] = {40, 10, 30, 20, 50};
+    int n = 5, temp;
+
+    for (int i = 0; i &lt; n - 1; i++) {
+        for (int j = 0; j &lt; n - 1 - i; j++) {
+            if (a[j] &gt; a[j + 1]) {
+                temp = a[j];
+                a[j] = a[j + 1];
+                a[j + 1] = temp;
+            }
+        }
+    }
+
+    for (int i = 0; i &lt; n; i++) {
+        printf("%d ", a[i]);
+    }
+
+    return 0;
+}</code></pre>
+            </div>
+
+            <div class="info">
+                <strong>Output:</strong>
+                <p>10 20 30 40 50</p>
+                <strong>Time Complexity:</strong> O(n²) in the average
+                and worst cases.
+            </div>
+        </section>
+
+        <!-- ADVANTAGES -->
+        <section class="section" id="advantages">
+            <h2 class="section-title">10. Advantages & Limitations</h2>
+
+            <div class="cards">
+                <div class="card">
+                    <h3>Advantages</h3>
+                    <ul>
+                        <li>Fast access using an index.</li>
+                        <li>Simple to understand and implement.</li>
+                        <li>Stores multiple values under one name.</li>
+                        <li>Useful for searching and sorting.</li>
+                    </ul>
+                </div>
+
+                <div class="card">
+                    <h3>Limitations</h3>
+                    <ul>
+                        <li>Fixed size for ordinary C arrays.</li>
+                        <li>Insertion and deletion may require shifting.</li>
+                        <li>Elements normally share one data type.</li>
+                        <li>Resizing can require creating another array.</li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="info">
+                <strong>Conclusion</strong>
+                <p>
+                    Arrays are one of the fundamental data structures.
+                    They provide efficient indexed access and are widely
+                    used in searching, sorting, matrices and the
+                    implementation of other data structures.
+                </p>
+            </div>
+        </section>
+ <a href="units.html" class="btn">back →</a>
+    </main>
+</div>
+
+<footer>
+    <p>DS.Learn · Data Structures Study Hub</p>
+    <p>Learn the concept. Understand the logic. </p>
+</footer>
+
+<script>
+function copyCode(button) {
+    const code = button.closest(".code-card")
+                      .querySelector("pre code").innerText;
+
+    navigator.clipboard.writeText(code).then(() => {
+        button.innerText = "Copied!";
+
+        setTimeout(() => {
+            button.innerText = "Copy Code";
+        }, 1500);
+    }).catch(() => {
+        button.innerText = "Copy failed";
+    });
+}
+</script>
+
+</body>
+</html>
